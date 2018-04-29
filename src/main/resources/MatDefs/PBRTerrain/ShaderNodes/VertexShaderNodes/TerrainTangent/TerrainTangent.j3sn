@@ -1,0 +1,37 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainTangent {
+        Type: Vertex
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainTangent/TerrainTangent.vert
+
+        Documentation { }
+
+        Input {
+            vec3 inPosition;
+            vec3 inNormal;
+            vec4 inTangent;
+
+            vec4 vLightDir;
+
+            mat4 gWorldViewMatrix;
+            mat4 gViewMatrix;
+            mat3 gNormalMatrix;
+
+            vec4 gLightPosition;
+            vec4 gLightColor;
+        }
+
+        Output {
+            vec3 vPosition;
+            vec3 vNormal;
+
+            vec3 wPosition;
+            vec3 wNormal;
+            vec4 wTangent;
+
+            vec3 lightVec;
+
+            vec3 wViewDir;
+            vec4 wLightDir;
+        }
+    }
+} 

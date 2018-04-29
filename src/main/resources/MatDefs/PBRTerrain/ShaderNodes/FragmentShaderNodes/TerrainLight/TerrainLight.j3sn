@@ -1,0 +1,30 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainLight {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.frag
+
+        Documentation { }
+
+        Input {
+            float shininess;
+            vec4 gLightDirection;
+
+            vec3 lightVec;
+
+            vec3 vNormal;
+            vec4 vLightDir;
+            vec3 vViewDir;
+
+            vec2 texCoord;
+
+            sampler2D pathNormalMap;
+            sampler2D hillNormalMap;
+            sampler2D mountainNormalMap;
+        }
+
+        Output {
+            vec2 light;
+        }
+    }
+} 
+
