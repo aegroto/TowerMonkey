@@ -1,0 +1,16 @@
+Material Terrain : MatDefs/TerrainLight/TerrainLighting.j3md {
+    MaterialParameters {
+        useTriPlanarMapping : True
+        isTerrainGrid : True
+
+        DiffuseMap : Repeat Textures/better terrain/hill/hill_d.png
+        NormalMap : Repeat Textures/better terrain/hill/hill_hn.png
+
+        DiffuseMap_0_scale : 0.1
+
+        // ParallaxMap : Repeat Textures/better terrain/path/path_h.jpg
+
+        // ParallaxHeight : 0.005
+        // SteepParallax : True
+    }
+}

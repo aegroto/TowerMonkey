@@ -4,17 +4,33 @@ apply plugin: 'application'
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-def jmerepo='com.github.jmonkeyengine.jMonkeyEngine'
-def jmeversion='v3.2.0-stable'
+def jmerepo='com.github.aegroto.jMonkeyEngine'
+def jmeversion='-SNAPSHOT'
 
-mainClassName = 'mygame.Main'
+mainClassName = 'com.aegroto.tof.Main'
 
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
 
-dependencies {    
+project(":assets") {
+    apply plugin: "java"
+    
+    buildDir = rootProject.file("build/assets")
+    
+    sourceSets {
+        main {
+            resources {
+                srcDir '.'
+            }
+        }
+    }    
+}
+
+dependencies {  
+    compileOnly 'org.projectlombok:lombok:1.16.20'
+      
     compile jmerepo + ':jme3-core:' + jmeversion
     compile jmerepo + ':jme3-desktop:' + jmeversion
     compile jmerepo + ':jme3-lwjgl:' + jmeversion
@@ -22,4 +38,5 @@ dependencies {
     compile jmerepo + ':jme3-terrain:' + jmeversion
     
     testCompile group: 'junit', name: 'junit', version: '4.10'
+    runtime project(':assets')
 }

@@ -1,0 +1,183 @@
+MaterialDef PBRTerrain {
+    MaterialParameters {
+        Texture2D PathTex
+        Texture2D PathNormalMap
+        Float PathTexScale
+
+        Texture2D HillTex
+        Texture2D HillNormalMap
+        Float HillTexScale
+        
+        Texture2D MountainTex
+        Texture2D MountainNormalMap
+        Float MountainTexScale
+
+        Float HillMinHeight
+        Float MountainMinHeight
+
+        Float PathMaxHeight
+        Float HillMaxHeight
+
+        Boolean TriPlanarMapping
+
+        Float Shininess
+    }
+
+    Technique {
+
+        LightMode MultiPass
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            WorldViewMatrix
+            ViewMatrix
+            NormalMatrix
+
+            LightPosition
+            LightDirection
+
+            AmbientLightColor
+            LightColor
+        }
+
+        Defines {
+            TRIPLANAR_MAPPING : TriPlanarMapping
+            PATH_NORMALMAP : PathNormalMap
+            HILL_NORMALMAP : HillNormalMap
+            MOUNTAIN_NORMALMAP : MountainNormalMap
+        }
+
+        VertexShaderNodes {
+            ShaderNode TerrainTangent {
+                Definition : TerrainTangent : MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainTangent/TerrainTangent.j3sn
+
+                InputMappings {
+                    inPosition = Attr.inPosition;
+                    inNormal = Attr.inNormal;
+                    inTangent = Attr.inTangent;
+
+                    vLightDir = Attr.inLightDir;
+
+                    gWorldViewMatrix = WorldParam.WorldViewMatrix;
+                    gNormalMatrix = WorldParam.NormalMatrix;
+                    gViewMatrix = WorldParam.ViewMatrix;
+
+                    gLightPosition = WorldParam.LightPosition;
+                    gLightColor = WorldParam.LightColor;
+                }
+            }
+
+            ShaderNode TerrainProjection {
+                Definition : TerrainProjection : MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainProjection/TerrainProjection.j3sn
+
+                InputMappings {
+                    worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix
+                    inPosition = TerrainTangent.vPosition
+                    inNormal = TerrainTangent.vNormal
+                }
+
+                OutputMappings {
+                    Global.outPosition = projPosition
+                }
+            }
+        }
+
+        FragmentShaderNodes {
+            ShaderNode TerrainTriplanarBlending {
+                Definition : TerrainTriplanarBlending : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainTriplanarBlending/TerrainTriplanarBlending.j3sn
+
+                InputMappings {
+                    vNormal = TerrainTangent.vNormal;
+                }
+            }
+
+            ShaderNode PathTerrainFactor {
+                Definition : TerrainLowestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
+                
+                InputMappings {
+                    vVertex = TerrainTangent.vPosition;
+
+                    Tex = MatParam.PathTex
+                    TexScale = MatParam.PathTexScale
+                    blending = TerrainTriplanarBlending.blending
+
+                    LayerMaxHeight = MatParam.PathMaxHeight;
+
+                    NextLayerMinHeight = MatParam.HillMinHeight;
+                }
+            }
+
+            ShaderNode HillTerrainFactor {
+                Definition : TerrainFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
+                
+                InputMappings {
+                    vVertex = TerrainTangent.vPosition;
+
+                    Tex = MatParam.HillTex
+                    TexScale = MatParam.HillTexScale
+                    blending = TerrainTriplanarBlending.blending
+
+                    PrevLayerMaxHeight = MatParam.PathMaxHeight;
+
+                    LayerMinHeight = MatParam.HillMinHeight;
+                    LayerMaxHeight = MatParam.HillMaxHeight;
+
+                    NextLayerMinHeight = MatParam.MountainMinHeight;
+                }
+            }
+
+            ShaderNode MountainTerrainFactor {
+                Definition : TerrainHighestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
+                
+                InputMappings {
+                    vVertex = TerrainTangent.vPosition;
+
+                    Tex = MatParam.MountainTex
+                    TexScale = MatParam.MountainTexScale
+                    blending = TerrainTriplanarBlending.blending
+
+                    PrevLayerMaxHeight = MatParam.HillMaxHeight;
+
+                    LayerMinHeight = MatParam.MountainMinHeight;
+                }
+            }
+
+            ShaderNode TerrainLight {
+                Definition : TerrainLight : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+
+                InputMappings {
+                    shininess = MatParam.Shininess
+                    gLightDirection = WorldParam.LightDirection;
+                    lightVec = TerrainTangent.lightVec;
+
+                    vNormal = TerrainTangent.wNormal;
+                    vLightDir = TerrainTangent.wLightDir;
+                    vViewDir = TerrainTangent.wViewDir;
+                }
+            }
+
+            ShaderNode TerrainColorMix {
+                Definition : TerrainColorMix : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainColorMix/TerrainColorMix.j3sn
+
+                InputMappings {
+                    tex1 = PathTerrainFactor.color
+                    tex2 = HillTerrainFactor.color
+                    tex3 = MountainTerrainFactor.color
+
+                    tex1Factor = PathTerrainFactor.factor
+                    tex2Factor = HillTerrainFactor.factor
+                    tex3Factor = MountainTerrainFactor.factor
+
+                    ambientSum = WorldParam.AmbientLightColor
+                    diffuseSum = WorldParam.LightColor
+
+                    light = TerrainLight.light
+                }
+
+                OutputMappings {
+                    Global.outColor = outColor
+                }
+            }
+        }
+    }
+}

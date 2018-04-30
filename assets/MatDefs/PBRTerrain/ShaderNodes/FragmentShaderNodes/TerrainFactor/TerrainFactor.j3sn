@@ -1,0 +1,35 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainFactor {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.frag
+
+        Documentation { 
+            Terrain Fragment shader node
+
+            @input HillMinHeight HillMinHeight
+            @input HillMaxHeight HillMaxHeight
+
+            @input MountainMinHeight MountainMinHeight
+        }
+
+        Input {
+            vec3 vVertex;
+
+            sampler2D Tex;
+            float TexScale;
+            vec3 blending;
+
+            float PrevLayerMaxHeight;
+
+            float LayerMinHeight;
+            float LayerMaxHeight;
+
+            float NextLayerMinHeight;
+        }
+
+        Output {
+            vec4 color;
+            float factor;
+        }
+    }
+}
