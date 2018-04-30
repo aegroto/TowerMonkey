@@ -1,0 +1,16 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainTriplanarBlending {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainTriplanarBlending/TerrainTriplanarBlending.frag
+
+        Documentation { }
+
+        Input {
+            vec3 vNormal
+        }
+
+        Output {
+            vec3 blending
+        }
+    }
+}

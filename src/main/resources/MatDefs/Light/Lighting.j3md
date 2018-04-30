@@ -1,0 +1,76 @@
+MaterialDef Phong Lighting {
+
+    MaterialParameters {
+
+        // Specular power/shininess
+        Float Shininess : 1
+
+        // Diffuse map
+        Texture2D DiffuseMap
+
+        // Normal map
+        Texture2D NormalMap -LINEAR
+
+        // Specular/gloss map
+        Texture2D SpecularMap
+
+        // Parallax/height map
+        Texture2D ParallaxMap -LINEAR 
+
+        //Sets the relief height for parallax mapping
+        Float ParallaxHeight : 0.05       
+
+        //Set to true to activate Steep Parallax mapping
+        Boolean SteepParallax
+    }
+
+    Technique {
+        LightMode SinglePass
+
+        VertexShader GLSL100 GLSL150:   Common/MatDefs/Light/SPLighting.vert
+        FragmentShader GLSL100 GLSL150: Common/MatDefs/Light/SPLighting.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            NormalMatrix
+            WorldViewMatrix
+            ViewMatrix
+            CameraPosition
+            WorldMatrix
+            ViewProjectionMatrix            
+        }
+
+        Defines {           
+            DIFFUSEMAP : DiffuseMap
+            NORMALMAP : NormalMap
+            PARALLAXMAP : ParallaxMap
+            STEEP_PARALLAX : SteepParallax      
+        }
+    }
+
+    Technique {
+
+        LightMode MultiPass
+
+        VertexShader GLSL100 GLSL150:   Common/MatDefs/Light/Lighting.vert
+        FragmentShader GLSL100 GLSL150: Common/MatDefs/Light/Lighting.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            NormalMatrix
+            WorldViewMatrix
+            ViewMatrix
+            CameraPosition
+            WorldMatrix
+            ViewProjectionMatrix            
+        }
+
+        Defines {
+            DIFFUSEMAP : DiffuseMap
+            NORMALMAP : NormalMap
+            PARALLAXMAP : ParallaxMap
+            STEEP_PARALLAX : SteepParallax            
+        }
+    }
+}
+

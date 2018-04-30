@@ -1,0 +1,48 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainColor {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainColor/TerrainColor.frag
+
+        Documentation { 
+            Terrain Fragment shader node
+            @input PathTex PathTex
+            @input HillTex HillTex
+            @input MountainTex MountainTex
+
+            @input PathTexScale PathTexScale
+            @input HillTexScale HillTexScale
+            @input MountainTexScale MountainTexScale
+
+            @input PathMaxHeight PathMaxHeight
+
+            @input HillMinHeight HillMinHeight
+            @input HillMaxHeight HillMaxHeight
+
+            @input MountainMinHeight MountainMinHeight
+
+            @input vVertex Vertex Position
+            @input vNormal Vertex Normal
+
+            @output outColor Fragment output color
+        }
+
+        Input {
+            vec4 tex1;
+            vec4 tex2;
+            vec4 tex3;
+
+            float tex1Factor;
+            float tex2Factor;
+            float tex3Factor;
+
+            vec4 ambientSum;
+            vec4 diffuseSum;
+            vec4 specularSum;
+            vec2 light;
+        }
+
+        Output {
+            vec4 outColor
+        }
+    }
+}
