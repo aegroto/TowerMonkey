@@ -20,6 +20,8 @@ Material Terrain : MatDefs/PBRTerrain/PBRTerrain.j3md {
 
         MountainMinHeight : 2.6
 
+        Shininess : 1.0
+
         TriPlanarMapping : True
     }
 }

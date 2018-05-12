@@ -38,7 +38,10 @@ ShaderNodeDefinitions {
             vec4 ambientSum;
             vec4 diffuseSum;
             vec4 specularSum;
-            vec2 light;
+
+            vec2 light1;
+            vec2 light2;
+            vec2 light3;
         }
 
         Output {

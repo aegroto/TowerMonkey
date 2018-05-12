@@ -6,27 +6,18 @@ ShaderNodeDefinitions {
         Documentation { }
 
         Input {
-            // globals
             float shininess;
             vec4 gLightDirection;
 
             vec3 lightVec;
             
-            vec3 vVertex;
             vec3 vNormal;
             vec4 vLightDir;
             vec3 vViewDir;
 
-            vec3 blending;
-
-            sampler2D normalMapTex;
-            float texScale;
-            float factor;
-
-            // locals
-            float spotFallOff;
-            vec3 normal;
-            vec4 lightDir;
+            sampler2D pathNormalMap;
+            sampler2D hillNormalMap;
+            sampler2D mountainNormalMap;
         }
 
         Output {

@@ -4,8 +4,8 @@ apply plugin: 'application'
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-def jmerepo='com.github.aegroto.jMonkeyEngine'
-def jmeversion='-SNAPSHOT'
+def jmerepo='com.github.jmonkeyengine.jMonkeyEngine'
+def jmeversion='302e746a94'
 
 mainClassName = 'com.aegroto.tof.Main'
 

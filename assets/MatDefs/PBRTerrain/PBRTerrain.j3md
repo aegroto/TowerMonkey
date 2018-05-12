@@ -20,7 +20,7 @@ MaterialDef PBRTerrain {
 
         Boolean TriPlanarMapping
 
-        Float Shininess
+        Float Shininess : 1.0
     }
 
     Technique {
@@ -142,7 +142,7 @@ MaterialDef PBRTerrain {
                 }
             }
 
-            ShaderNode TerrainLight {
+            ShaderNode PathTerrainLight {
                 Definition : TerrainLight : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
 
                 InputMappings {
@@ -150,9 +150,58 @@ MaterialDef PBRTerrain {
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainTangent.lightVec;
 
+                    vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
                     vLightDir = TerrainTangent.wLightDir;
                     vViewDir = TerrainTangent.wViewDir;
+
+                    blending = TerrainTriplanarBlending.blending
+
+                    normalMapTex = MatParam.PathNormalMap;
+                    texScale = MatParam.PathTexScale;
+                    factor = PathTerrainFactor.factor;
+                }
+            }
+
+            ShaderNode HillTerrainLight {
+                Definition : TerrainLight : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+
+                InputMappings {
+                    shininess = MatParam.Shininess
+                    gLightDirection = WorldParam.LightDirection;
+                    lightVec = TerrainTangent.lightVec;
+
+                    vVertex = TerrainTangent.vPosition;
+                    vNormal = TerrainTangent.wNormal;
+                    vLightDir = TerrainTangent.wLightDir;
+                    vViewDir = TerrainTangent.wViewDir;
+
+                    blending = TerrainTriplanarBlending.blending
+
+                    normalMapTex = MatParam.HillNormalMap;
+                    texScale = MatParam.HillTexScale;
+                    factor = HillTerrainFactor.factor;
+                }
+            }
+
+            ShaderNode MountainTerrainLight {
+                Definition : TerrainLight : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+
+                InputMappings {
+                    shininess = MatParam.Shininess
+                    gLightDirection = WorldParam.LightDirection;
+                    lightVec = TerrainTangent.lightVec;
+
+                    vVertex = TerrainTangent.vPosition;
+                    vNormal = TerrainTangent.wNormal;
+                    vLightDir = TerrainTangent.wLightDir;
+                    vViewDir = TerrainTangent.wViewDir;
+
+                    blending = TerrainTriplanarBlending.blending
+
+                    normalMapTex = MatParam.MountainNormalMap;
+                    texScale = MatParam.MountainTexScale;
+                    factor = MountainTerrainFactor.factor;
                 }
             }
 
@@ -171,7 +220,9 @@ MaterialDef PBRTerrain {
                     ambientSum = WorldParam.AmbientLightColor
                     diffuseSum = WorldParam.LightColor
 
-                    light = TerrainLight.light
+                    light1 = PathTerrainLight.light;
+                    light2 = HillTerrainLight.light;
+                    light3 = MountainTerrainLight.light;
                 }
 
                 OutputMappings {

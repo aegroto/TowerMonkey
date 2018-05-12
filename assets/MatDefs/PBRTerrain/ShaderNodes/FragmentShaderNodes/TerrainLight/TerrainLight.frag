@@ -1,56 +1,32 @@
-#import "Common/ShaderLib/BlinnPhongLighting.glsllib"
+#ifndef TERRAIN_LIGHT_FUNCTIONS
+#define TERRAIN_LIGHT_FUNCTIONS 1
+    float lightComputeDiffuse(in vec3 norm, in vec3 lightdir){
+        return max(0.0, dot(norm, lightdir));
+    }
 
-vec3 calculateNormal(in vec2 texCoord) {
-  vec3 normal = vec3(0,0,1);
-  vec3 n = vec3(0,0,0);
+    float lightComputeSpecular(in vec3 norm, in vec3 viewdir, in vec3 lightdir, in float shiny){
+        vec3 H = normalize(viewdir + lightdir);
+        float HdotN = max(0.0, dot(H, norm));
+        return pow(HdotN, shiny);
+    }
 
-  #ifdef NORMALMAP
-    n = texture2D(hillNormalMap, texCoord * m_DiffuseMap_0_scale).xyz;
-    normal += n;
-  #else
-    normal += vec3(0.5,0.5,1);
-  #endif
-
-  normal = (normal.xyz * vec3(2.0) - vec3(1.0));
-  return normalize(normal);
-}
-
-vec3 calculateNormalTriPlanar(in vec3 wNorm, in vec4 wVert,in vec2 texCoord) {
-    vec3 blending = abs( wNorm );
-    blending = (blending -0.2) * 0.7;
-    blending = normalize(max(blending, 0.00001));
-    float b = (blending.x + blending.y + blending.z);
-    blending /= vec3(b, b, b);
-
-    // texture coords
-    vec4 coords = wVert;
-
-    vec3 normal = vec3(0,0,1);
-    vec3 n = vec3(0,0,0);
-
-    #ifdef NORMALMAP
-        n = getTriPlanarBlend(coords, blending, hillNormalMap, m_DiffuseMap_0_scale).xyz;
-        normal += n;
-    #else
-        normal += vec3(0.5,0.5,1);
-    #endif
-
-    normal = (normal.xyz * vec3(2.0) - vec3(1.0));
-    return normalize(normal);
-}
+    vec2 computeLighting(in vec3 norm, in vec3 viewDir, in vec3 lightDir, in float attenuation, in float shininess){
+        float diffuseFactor = lightComputeDiffuse(norm, lightDir);
+        float specularFactor = lightComputeSpecular(norm, viewDir, lightDir, shininess);      
+        if (shininess <= 1.0) {
+            specularFactor = 0.0;
+        }
+        specularFactor *= diffuseFactor;
+        return vec2(diffuseFactor, specularFactor) * vec2(attenuation);
+    }
+#endif
 
 void main(){
-    float spotFallOff;
-
-    if(gLightDirection.w != 0.0) {
-        vec3 L = normalize(lightVec.xyz);
-        vec3 spotdir = normalize(gLightDirection.xyz);
-        float curAngleCos = dot(-L, spotdir);             
-        float innerAngleCos = floor(gLightDirection.w) * 0.001;
-        float outerAngleCos = fract(gLightDirection.w);
-        float innerMinusOuter = innerAngleCos - outerAngleCos;
-
-        spotFallOff = (curAngleCos - outerAngleCos) / innerMinusOuter;
+    if(gLightDirection.w == 0.0) {
+        spotFallOff = 1.0;
+    } else {
+        float curAngleCos = dot(-normalize(lightVec.xyz), normalize(gLightDirection.xyz));
+        spotFallOff = (curAngleCos - (fract(gLightDirection.w) * 0.001)) / floor(gLightDirection.w);
 
         if(spotFallOff <= 0.0){
             light = vec2(0, 0);
@@ -58,22 +34,25 @@ void main(){
         } else {
             spotFallOff = clamp(spotFallOff, 0.0, 1.0);
         }
-    } else {
-        spotFallOff = 1.0;
     }
 
     #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
-      #ifdef TRI_PLANAR_MAPPING
-        vec3 normal = calculateNormalTriPlanar(wNormal, wVertex, wVertex.xz);
-      #else
-        vec3 normal = calculateNormal(wVertex.xz);
-      #endif
+        #if defined(TRIPLANAR_MAPPING)
+            normal = vec3(
+                    texture2D(normalMapTex, vVertex.yz * texScale) * blending.x +
+                    texture2D(normalMapTex, vVertex.xz * texScale) * blending.y +
+                    texture2D(normalMapTex, vVertex.xy * texScale) * blending.z);
+        #else
+            normal = vec3(0.0, 0.0, 0.0);
+            normal += texture2D(normalMapTex, vVertex.xz * texScale).xyz;
+        #endif
+
+        normal = normalize(normal.xyz * vec3(2.0) - vec3(1.0));
     #else
-      vec3 normal = vNormal;
+        normal = vNormal;
     #endif
 
-    vec4 lightDir = vLightDir;
-    lightDir.xyz = normalize(lightDir.xyz);
+    lightDir = vec4(normalize(vLightDir.xyz), vLightDir.w);
 
-    light = computeLighting(normal, vViewDir.xyz, lightDir.xyz, lightDir.w*spotFallOff, m_Shininess);
+    light = computeLighting(normal, vViewDir.xyz, lightDir.xyz, lightDir.w * spotFallOff, shininess);
 }
