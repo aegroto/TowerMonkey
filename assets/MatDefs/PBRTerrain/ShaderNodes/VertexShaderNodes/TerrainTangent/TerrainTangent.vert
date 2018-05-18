@@ -4,6 +4,8 @@ void main(){
     vPosition = inPosition;
     vNormal = inNormal;
 
+    texCoord = inTexCoord;
+
     vec3 wvPosition = (gWorldViewMatrix * vec4(inPosition, 1.0)).xyz;
     vec3 wvNormal = normalize(gNormalMatrix * inNormal);
     vec3 viewDir = normalize(-wvPosition);
@@ -21,13 +23,13 @@ void main(){
         wViewDir  = viewDir * tbnMat;
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
-        wLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
+        vLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
     #else
         wNormal = wvNormal;
 
         wPosition = wvPosition;
         wViewDir = viewDir;
 
-        lightComputeDir(wvPosition, gLightColor.w, wvLightPos, wLightDir, lightVec);
+        lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
     #endif
 }

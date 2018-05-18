@@ -9,6 +9,7 @@ ShaderNodeDefinitions {
             vec3 inPosition;
             vec3 inNormal;
             vec4 inTangent;
+            vec2 inTexCoord;
 
             vec4 vLightDir;
 
@@ -23,6 +24,7 @@ ShaderNodeDefinitions {
         Output {
             vec3 vPosition;
             vec3 vNormal;
+            vec2 texCoord;
 
             vec3 wPosition;
             vec3 wNormal;
@@ -31,7 +33,7 @@ ShaderNodeDefinitions {
             vec3 lightVec;
 
             vec3 wViewDir;
-            vec4 wLightDir;
+            vec4 vLightDir;
         }
     }
 } 

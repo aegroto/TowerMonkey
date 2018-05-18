@@ -19,6 +19,21 @@
         specularFactor *= diffuseFactor;
         return vec2(diffuseFactor, specularFactor) * vec2(attenuation);
     }
+
+    vec3 calculateNormal(in vec2 texCoord, in sampler2D normalMapTex, float texScale) {
+        vec3 normal = vec3(0,0,1);
+        vec3 n = vec3(0,0,0);
+
+        #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
+            n = texture2D(normalMapTex, texCoord * texScale).xyz;
+            normal += n;
+        #else
+            normal += vec3(0.5,0.5,1);
+        #endif
+
+        normal = (normal.xyz * vec3(2.0) - vec3(1.0));
+        return normalize(normal);
+    }
 #endif
 
 void main(){
@@ -38,16 +53,16 @@ void main(){
 
     #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
         #if defined(TRIPLANAR_MAPPING)
-            normal = vec3(
-                    texture2D(normalMapTex, vVertex.yz * texScale) * blending.x +
-                    texture2D(normalMapTex, vVertex.xz * texScale) * blending.y +
-                    texture2D(normalMapTex, vVertex.xy * texScale) * blending.z);
+            normal = (
+                      texture2D(normalMapTex, vVertex.yz * texScale) * blending.x +
+                      texture2D(normalMapTex, vVertex.xz * texScale) * blending.y +
+                      texture2D(normalMapTex, vVertex.xy * texScale) * blending.z).xyz;
         #else
-            normal = vec3(0.0, 0.0, 0.0);
-            normal += texture2D(normalMapTex, vVertex.xz * texScale).xyz;
+            normal = calculateNormal(vVertex.xz, normalMapTex, texScale);
         #endif
 
-        normal = normalize(normal.xyz * vec3(2.0) - vec3(1.0));
+        normal = normal.xyz * vec3(2.0) - vec3(1.0);
+        normal = normalize(normal);
     #else
         normal = vNormal;
     #endif

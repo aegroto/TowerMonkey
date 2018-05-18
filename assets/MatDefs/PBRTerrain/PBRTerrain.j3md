@@ -55,6 +55,7 @@ MaterialDef PBRTerrain {
                     inPosition = Attr.inPosition;
                     inNormal = Attr.inNormal;
                     inTangent = Attr.inTangent;
+                    inTexCoord = Attr.inTexCoord;
 
                     vLightDir = Attr.inLightDir;
 
@@ -152,9 +153,10 @@ MaterialDef PBRTerrain {
 
                     vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
-                    vLightDir = TerrainTangent.wLightDir;
+                    vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
+                    texCoord = TerrainTangent.texCoord
                     blending = TerrainTriplanarBlending.blending
 
                     normalMapTex = MatParam.PathNormalMap;
@@ -173,7 +175,7 @@ MaterialDef PBRTerrain {
 
                     vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
-                    vLightDir = TerrainTangent.wLightDir;
+                    vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
                     blending = TerrainTriplanarBlending.blending
@@ -194,7 +196,7 @@ MaterialDef PBRTerrain {
 
                     vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
-                    vLightDir = TerrainTangent.wLightDir;
+                    vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
                     blending = TerrainTriplanarBlending.blending
