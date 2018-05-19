@@ -27,6 +27,7 @@ ShaderNodeDefinitions {
             // locals
             float spotFallOff;
             vec3 normal;
+            vec3 n;
             vec4 lightDir;
         }
 

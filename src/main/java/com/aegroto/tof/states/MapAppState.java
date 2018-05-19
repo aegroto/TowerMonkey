@@ -46,7 +46,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(64, 16);
+            generateMapGeometry(512, 16);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class MapAppState extends BaseAppState {
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
         
-        map = new TerrainQuad("Map mesh", 257, size + 1, heightmapGenerator.getHeightmap());
+        map = new TerrainQuad("Map mesh", 513, size + 1, heightmapGenerator.getHeightMap());
         // TangentBinormalGenerator.generate(map);
         
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/PBRTerrain.j3m");

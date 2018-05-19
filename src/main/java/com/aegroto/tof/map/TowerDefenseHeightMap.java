@@ -38,7 +38,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             mountainBaseTerrainThreshold = minMountainHeight * .75f;
     
     @Getter private TowerDefenseGrid grid;
-    @Getter float[] heightmap;
     
     public TowerDefenseHeightMap() { }
     
@@ -72,10 +71,10 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     private void generateRawHeightmap() {
         int heightmapLSize = (size * 2);
         int heightmapSize = heightmapLSize * heightmapLSize;
-        heightmap = new float[heightmapSize];
+        heightData = new float[heightmapSize];
         
         for(int i = 0; i < heightmapSize; ++i) {
-            heightmap[i] = randomHillPointHeight();
+            heightData[i] = randomHillPointHeight();
         }
     }
     
@@ -228,7 +227,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyRandomMountainPoint(int x, int z) {
-        heightmap[arrayIndex(x, z)] = getPointHeight(x, z) + randomMountainPointHeight();
+        heightData[arrayIndex(x, z)] = getPointHeight(x, z) + randomMountainPointHeight();
     }
     
     private void applyPathToHeightmap() {        
@@ -251,7 +250,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
-                heightmap[arrayIndex(i, j)] = randomPathPointHeight();
+                heightData[arrayIndex(i, j)] = randomPathPointHeight();
             }
         }
     }
@@ -292,7 +291,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
-                heightmap[arrayIndex(i, j)] = randomPathPointHeight();
+                heightData[arrayIndex(i, j)] = randomPathPointHeight();
             }
         }
     }
@@ -308,7 +307,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
-                heightmap[arrayIndex(i, j)] = randomPathPointHeight();
+                heightData[arrayIndex(i, j)] = randomPathPointHeight();
             }
         }
     }
@@ -324,7 +323,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
-                heightmap[arrayIndex(i, j)] = randomPathPointHeight();
+                heightData[arrayIndex(i, j)] = randomPathPointHeight();
             }
         }  
     }
@@ -340,13 +339,13 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
-                heightmap[arrayIndex(i, j)] = randomPathPointHeight();
+                heightData[arrayIndex(i, j)] = randomPathPointHeight();
             }
         }    
     }
     
     private float getPointHeight(int x, int z) {
-        return heightmap[arrayIndex(x, z)];
+        return heightData[arrayIndex(x, z)];
     }
     
     private int tileToMeshScale(int coord) {

@@ -37,15 +37,19 @@ void main(){
     }
 
     #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
+        normal = vec3(0, 0, 1);
+        n = vec3(0, 0, 0);
+
         #if defined(TRIPLANAR_MAPPING)
-            normal = (
+            n = (
                       texture2D(normalMapTex, vVertex.yz * texScale) * blending.x +
                       texture2D(normalMapTex, vVertex.xz * texScale) * blending.y +
                       texture2D(normalMapTex, vVertex.xy * texScale) * blending.z).xyz;
         #else
-            normal = texture2D(normalMapTex, vVertex.xz * texScale).xyz;
+            n = texture2D(normalMapTex, vVertex.xz * texScale).xyz;
         #endif
 
+        normal += n;
         normal = normal.xyz * vec3(2.0) - vec3(1.0);
         normal = normalize(normal);
     #else
