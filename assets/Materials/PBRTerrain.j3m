@@ -6,7 +6,7 @@ Material Terrain : MatDefs/PBRTerrain/PBRTerrain.j3md {
         // PathParallaxHeight : 1.0
 
         HillTex : Repeat Textures/better terrain/hill/hill_d.png
-        HillNormalMap : Repeat Textures/better terrain/hill/hill_n.png
+        HillNormalMap : Repeat Textures/better terrain/hill/hill_ln.png
         // HillParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
         // HillParallaxHeight : 1.0
         
@@ -16,14 +16,14 @@ Material Terrain : MatDefs/PBRTerrain/PBRTerrain.j3md {
         // MountainParallaxHeight : 1.0
 
         // Triplanar Scaling
-        // PathTexScale : 0.125
-        // HillTexScale : 0.0625
-        // MountainTexScale : 0.0625
+        PathTexScale : 0.125
+        HillTexScale : 0.0625
+        MountainTexScale : 0.0625
 
         // Non-triplanar scaling
-        PathTexScale : 1.0
-        HillTexScale : 1.0
-        MountainTexScale : 1.0
+        // PathTexScale : 1.0
+        // HillTexScale : 1.0
+        // MountainTexScale : 1.0
 
         PathMaxHeight : 1.01
 
@@ -34,6 +34,6 @@ Material Terrain : MatDefs/PBRTerrain/PBRTerrain.j3md {
 
         Shininess : 1.0
 
-        TriPlanarMapping : False
+        TriPlanarMapping : True
     }
 }

@@ -71,8 +71,8 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setPathSnakyness(5);
         heightmapGenerator.setPathVariation(.25f);
         
-        heightmapGenerator.setMinHillHeight(1f);        
-        heightmapGenerator.setHillVariation(0f);
+        heightmapGenerator.setMinHillHeight(2f);        
+        heightmapGenerator.setHillVariation(.5f);
                 
         heightmapGenerator.setTotalMountains(5);
         heightmapGenerator.setMountainMinSize((int) (size * .1f));
@@ -82,7 +82,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setMountainBorderFragmentation(.5f);
         heightmapGenerator.setMinMountainHeight(2f);     
         heightmapGenerator.setMountainVariation(.1f);
-        heightmapGenerator.setMountainBaseTerrainThreshold(1.9f);
+        heightmapGenerator.setMountainBaseTerrainThreshold(3f);
         
         heightmapGenerator.load();   
         /** A white ambient light source. */ 
