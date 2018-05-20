@@ -72,7 +72,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
-        heightmapGenerator.setHillVariation(.5f);
+        heightmapGenerator.setHillVariation(0f);
                 
         heightmapGenerator.setTotalMountains(5);
         heightmapGenerator.setMountainMinSize((int) (size * .1f));

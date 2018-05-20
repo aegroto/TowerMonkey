@@ -30,6 +30,6 @@ void main(){
     #endif
 
     texCoord = inTexCoord;
-    vVertex = inPosition;
+    vPosition = inPosition;
     vNormal = inNormal;
 }

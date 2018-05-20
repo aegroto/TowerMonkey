@@ -1,9 +1,9 @@
 #import "ShaderLib/TriplanarMapping.glsllib"
 
 void main(){
-    if(vVertex.y >= LayerMinHeight) {
-        if(vVertex.y <= PrevLayerMaxHeight) {
-            factor = ((vVertex.y - LayerMinHeight) / (PrevLayerMaxHeight - LayerMinHeight));
+    if(vPosition.y >= LayerMinHeight) {
+        if(vPosition.y <= PrevLayerMaxHeight) {
+            factor = ((vPosition.y - LayerMinHeight) / (PrevLayerMaxHeight - LayerMinHeight));
         } else { 
             factor = 1.0;
         }

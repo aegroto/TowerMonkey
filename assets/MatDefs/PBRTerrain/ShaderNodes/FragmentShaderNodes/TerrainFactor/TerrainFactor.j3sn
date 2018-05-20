@@ -13,7 +13,8 @@ ShaderNodeDefinitions {
         }
 
         Input {
-            vec3 vVertex;
+            vec3 vPosition;
+            vec3 vVertex;            
 
             sampler2D Tex;
             vec2 texCoord;

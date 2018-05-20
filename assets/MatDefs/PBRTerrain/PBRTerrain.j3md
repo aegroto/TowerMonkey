@@ -25,6 +25,7 @@ MaterialDef PBRTerrain {
         Float HillMaxHeight
 
         Boolean TriPlanarMapping
+        Boolean SteepParallax
 
         Float Shininess : 1.0
     }
@@ -48,6 +49,7 @@ MaterialDef PBRTerrain {
 
         Defines {
             TRIPLANAR_MAPPING : TriPlanarMapping
+            STEEP_PARALLAX : SteepParallax
             PATH_NORMALMAP : PathNormalMap
             HILL_NORMALMAP : HillNormalMap
             MOUNTAIN_NORMALMAP : MountainNormalMap
@@ -82,7 +84,7 @@ MaterialDef PBRTerrain {
 
                 InputMappings {
                     worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix
-                    inPosition = TerrainTangent.vVertex
+                    inPosition = TerrainTangent.vPosition
                     inNormal = TerrainTangent.vNormal
                 }
 
@@ -105,7 +107,7 @@ MaterialDef PBRTerrain {
                 Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
                     texCoord = TerrainTangent.texCoord;
@@ -121,7 +123,7 @@ MaterialDef PBRTerrain {
                 Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
                     texCoord = TerrainTangent.texCoord;
@@ -137,7 +139,7 @@ MaterialDef PBRTerrain {
                 Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
                     texCoord = TerrainTangent.texCoord;
@@ -152,9 +154,10 @@ MaterialDef PBRTerrain {
             ShaderNode PathTerrainFactor {
                 Definition : TerrainLowestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
                 
-                InputMappings {
-                    vVertex = TerrainTangent.vVertex;                    
-                    texCoord = TerrainTangent.texCoord;
+                InputMappings {               
+                    vPosition = TerrainTangent.vPosition;
+                    vVertex = PathTerrainParallax.vVertexParallax;
+                    texCoord = PathTerrainParallax.texCoordParallax;
 
                     Tex = MatParam.PathTex;
                     TexScale = MatParam.PathTexScale;
@@ -170,8 +173,9 @@ MaterialDef PBRTerrain {
                 Definition : TerrainFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
                 
                 InputMappings {
-                    vVertex = TerrainTangent.vVertex;                    
-                    texCoord = TerrainTangent.texCoord;
+                    vPosition = TerrainTangent.vPosition;
+                    vVertex = HillTerrainParallax.vVertexParallax;
+                    texCoord = HillTerrainParallax.texCoordParallax;
 
                     Tex = MatParam.HillTex;
                     TexScale = MatParam.HillTexScale;
@@ -190,8 +194,10 @@ MaterialDef PBRTerrain {
                 Definition : TerrainHighestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
                 
                 InputMappings {
-                    vVertex = TerrainTangent.vVertex;                    
-                    texCoord = TerrainTangent.texCoord;
+                    vPosition = TerrainTangent.vPosition;
+                    vVertex = MountainTerrainParallax.vVertexParallax;
+                    texCoord = MountainTerrainParallax.texCoordParallax;
+                    // texCoord = TerrainTangent.texCoord;
 
                     Tex = MatParam.MountainTex;
                     TexScale = MatParam.MountainTexScale;
@@ -208,11 +214,11 @@ MaterialDef PBRTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.PathNormalMap;
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = PathTerrainParallax.texCoordParallax;
                     TexScale = MatParam.PathTexScale;
                     factor = PathTerrainFactor.factor;
                 }
@@ -223,11 +229,11 @@ MaterialDef PBRTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.HillNormalMap;
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = HillTerrainParallax.texCoordParallax;
                     TexScale = MatParam.HillTexScale;
                     factor = HillTerrainFactor.factor;
                 }
@@ -238,11 +244,11 @@ MaterialDef PBRTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainTangent.vVertex;
+                    vVertex = TerrainTangent.vPosition;
                     vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.MountainNormalMap;
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = MountainTerrainParallax.texCoordParallax;
                     TexScale = MatParam.MountainTexScale;
                     factor = MountainTerrainFactor.factor;
                 }
