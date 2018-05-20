@@ -10,6 +10,8 @@ ShaderNodeDefinitions {
             vec3 vViewDirParallax;
             vec3 blending;
 
+            vec2 texCoord;
+
             float parallaxHeight;
 
             sampler2D parallaxMapTex;
@@ -18,6 +20,7 @@ ShaderNodeDefinitions {
 
         Output {
             vec3 vVertexParallax;
+            vec2 texCoordParallax;
         }
     }
 }

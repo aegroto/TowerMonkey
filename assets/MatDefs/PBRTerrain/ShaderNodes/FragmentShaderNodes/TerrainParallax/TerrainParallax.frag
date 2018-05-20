@@ -9,8 +9,13 @@ void main(){
         #if defined(TRIPLANAR_MAPPING)
 
         #else
-            vVertexParallax = vVertex;
-            vVertexParallax.xz = parallaxOffset(parallaxMapTex, vViewDirParallax, vVertex.xz, parallaxHeight);
+            texCoord = parallaxOffset(parallaxMapTex, texScale, vViewDirParallax, texCoord, parallaxHeight);
+        #endif
+    #else
+        #if defined(TRIPLANAR_MAPPING)
+            vVertexParallax = vVertex; 
+        #else
+            texCoordParallax = texCoord;
         #endif
     #endif
 }

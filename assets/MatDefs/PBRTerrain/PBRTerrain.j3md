@@ -108,6 +108,7 @@ MaterialDef PBRTerrain {
                     vVertex = TerrainTangent.vVertex;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
+                    texCoord = TerrainTangent.texCoord;
 
                     parallaxHeight = MatParam.PathParallaxHeight;
 
@@ -123,6 +124,7 @@ MaterialDef PBRTerrain {
                     vVertex = TerrainTangent.vVertex;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
+                    texCoord = TerrainTangent.texCoord;
 
                     parallaxHeight = MatParam.HillParallaxHeight;
 
@@ -138,6 +140,7 @@ MaterialDef PBRTerrain {
                     vVertex = TerrainTangent.vVertex;
                     vViewDirParallax = TerrainTangent.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
+                    texCoord = TerrainTangent.texCoord;
 
                     parallaxHeight = MatParam.MountainParallaxHeight;
 
@@ -151,12 +154,11 @@ MaterialDef PBRTerrain {
                 
                 InputMappings {
                     vVertex = PathTerrainParallax.vVertexParallax;                    
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = PathTerrainParallax.texCoordParallax;
 
-                    Tex = MatParam.PathTex
-                    texCoord = TerrainTangent.texCoord;
-                    TexScale = MatParam.PathTexScale
-                    blending = TerrainTriplanarBlending.blending
+                    Tex = MatParam.PathTex;
+                    TexScale = MatParam.PathTexScale;
+                    blending = TerrainTriplanarBlending.blending;
 
                     LayerMaxHeight = MatParam.PathMaxHeight;
 
@@ -169,12 +171,11 @@ MaterialDef PBRTerrain {
                 
                 InputMappings {
                     vVertex = HillTerrainParallax.vVertexParallax; 
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = HillTerrainParallax.texCoordParallax;
 
-                    Tex = MatParam.HillTex
-                    texCoord = TerrainTangent.texCoord;
-                    TexScale = MatParam.HillTexScale
-                    blending = TerrainTriplanarBlending.blending
+                    Tex = MatParam.HillTex;
+                    TexScale = MatParam.HillTexScale;
+                    blending = TerrainTriplanarBlending.blending;
 
                     PrevLayerMaxHeight = MatParam.PathMaxHeight;
 
@@ -190,12 +191,11 @@ MaterialDef PBRTerrain {
                 
                 InputMappings {
                     vVertex = MountainTerrainParallax.vVertexParallax; 
-                    texCoord = TerrainTangent.texCoord;
+                    texCoord = MountainTerrainParallax.texCoordParallax;
 
-                    Tex = MatParam.MountainTex
-                    texCoord = TerrainTangent.texCoord;
-                    TexScale = MatParam.MountainTexScale
-                    blending = TerrainTriplanarBlending.blending
+                    Tex = MatParam.MountainTex;
+                    TexScale = MatParam.MountainTexScale;
+                    blending = TerrainTriplanarBlending.blending;
 
                     PrevLayerMaxHeight = MatParam.HillMaxHeight;
 
