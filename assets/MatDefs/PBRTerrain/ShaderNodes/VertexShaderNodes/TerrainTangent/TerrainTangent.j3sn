@@ -26,6 +26,8 @@ ShaderNodeDefinitions {
             vec3 vNormal;
             vec2 texCoord;
 
+            vec3 wNormal;
+
             vec3 lightVec;
 
             vec3 vViewDir;

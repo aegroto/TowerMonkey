@@ -19,6 +19,7 @@ void main(){
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
         vLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
     #else
+        wNormal = wvNormal;
         vViewDir = viewDir;
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);

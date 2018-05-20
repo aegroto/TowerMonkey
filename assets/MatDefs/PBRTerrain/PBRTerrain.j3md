@@ -153,8 +153,8 @@ MaterialDef PBRTerrain {
                 Definition : TerrainLowestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
                 
                 InputMappings {
-                    vVertex = PathTerrainParallax.vVertexParallax;                    
-                    texCoord = PathTerrainParallax.texCoordParallax;
+                    vVertex = TerrainTangent.vVertex;                    
+                    texCoord = TerrainTangent.texCoord;
 
                     Tex = MatParam.PathTex;
                     TexScale = MatParam.PathTexScale;
@@ -170,8 +170,8 @@ MaterialDef PBRTerrain {
                 Definition : TerrainFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
                 
                 InputMappings {
-                    vVertex = HillTerrainParallax.vVertexParallax; 
-                    texCoord = HillTerrainParallax.texCoordParallax;
+                    vVertex = TerrainTangent.vVertex;                    
+                    texCoord = TerrainTangent.texCoord;
 
                     Tex = MatParam.HillTex;
                     TexScale = MatParam.HillTexScale;
@@ -190,8 +190,8 @@ MaterialDef PBRTerrain {
                 Definition : TerrainHighestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
                 
                 InputMappings {
-                    vVertex = MountainTerrainParallax.vVertexParallax; 
-                    texCoord = MountainTerrainParallax.texCoordParallax;
+                    vVertex = TerrainTangent.vVertex;                    
+                    texCoord = TerrainTangent.texCoord;
 
                     Tex = MatParam.MountainTex;
                     TexScale = MatParam.MountainTexScale;
@@ -209,7 +209,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vVertex;
-                    vNormal = TerrainTangent.vNormal;
+                    vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.PathNormalMap;
                     texCoord = TerrainTangent.texCoord;
@@ -224,7 +224,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vVertex;
-                    vNormal = TerrainTangent.vNormal;
+                    vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.HillNormalMap;
                     texCoord = TerrainTangent.texCoord;
@@ -239,7 +239,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vVertex;
-                    vNormal = TerrainTangent.vNormal;
+                    vNormal = TerrainTangent.wNormal;
 
                     NormalMapTex = MatParam.MountainNormalMap;
                     texCoord = TerrainTangent.texCoord;
