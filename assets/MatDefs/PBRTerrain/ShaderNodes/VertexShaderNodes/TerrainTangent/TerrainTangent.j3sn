@@ -22,7 +22,7 @@ ShaderNodeDefinitions {
         }
 
         Output {
-            vec4 vPosition;
+            vec3 vVertex;
             vec3 vNormal;
             vec2 texCoord;
 

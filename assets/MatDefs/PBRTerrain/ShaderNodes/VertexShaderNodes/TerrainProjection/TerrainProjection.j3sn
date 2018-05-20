@@ -13,7 +13,7 @@ ShaderNodeDefinitions {
 
         Input {
             mat4 worldViewProjectionMatrix;
-            vec4 inPosition;
+            vec3 inPosition;
             vec3 inNormal;
         }
 

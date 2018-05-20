@@ -1,13 +1,11 @@
 #import "Common/ShaderLib/Lighting.glsllib"
 
 void main(){
-    texCoord = inTexCoord;
-
     vec3 wvPosition = (gWorldViewMatrix * vec4(inPosition, 1.0)).xyz;
     vec3 wvNormal = normalize(gNormalMatrix * inNormal);
     vec3 viewDir = normalize(-wvPosition);
 
-    vec4 wvLightPos = (gViewMatrix * vec4(gLightPosition.xyz, clamp(gLightColor.w,0.0,1.0)));
+    vec4 wvLightPos = (gViewMatrix * vec4(gLightPosition.xyz, clamp(gLightColor.w, 0.0, 1.0)));
     wvLightPos.w = gLightPosition.w;
 
     #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
@@ -20,16 +18,17 @@ void main(){
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
         vLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
-
-        #if defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
-            vViewDirParallax = -wvPosition * tbnMat;
-        #endif
     #else
         vViewDir = viewDir;
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
     #endif
 
-    vPosition = vec4(inPosition, 1.0);
+    #if defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
+        vViewDirParallax = -wvPosition * tbnMat;
+    #endif
+
+    texCoord = inTexCoord;
+    vVertex = inPosition;
     vNormal = inNormal;
 }

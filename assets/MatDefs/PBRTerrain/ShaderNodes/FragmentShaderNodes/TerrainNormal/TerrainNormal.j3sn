@@ -6,8 +6,7 @@ ShaderNodeDefinitions {
         Documentation { }
 
         Input {
-            // globals   
-            vec4 vVertex;         
+            vec3 vVertex;         
             vec3 vNormal;
 
             vec3 blending;

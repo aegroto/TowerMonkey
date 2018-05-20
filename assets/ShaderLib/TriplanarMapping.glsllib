@@ -6,7 +6,7 @@ vec3 calculateBlending(vec3 vNormal) {
     return blending;
 }
 
-vec4 triplanarColor(sampler2D tex, vec4 coords, float scale, vec3 blending) {
+vec4 triplanarColor(sampler2D tex, vec3 coords, float scale, vec3 blending) {
     return texture2D(tex, coords.yz * scale) * blending.x +
            texture2D(tex, coords.xz * scale) * blending.y +
            texture2D(tex, coords.xy * scale) * blending.z;

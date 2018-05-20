@@ -13,6 +13,7 @@ ShaderNodeDefinitions {
             float parallaxHeight;
 
             sampler2D parallaxMapTex;
+            float texScale;
         }
 
         Output {
