@@ -1,9 +1,6 @@
 #import "Common/ShaderLib/Lighting.glsllib"
 
 void main(){
-    vPosition = inPosition;
-    vNormal = inNormal;
-
     texCoord = inTexCoord;
 
     vec3 wvPosition = (gWorldViewMatrix * vec4(inPosition, 1.0)).xyz;
@@ -36,4 +33,7 @@ void main(){
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
     #endif
+
+    vPosition = vec4(inPosition, 1.0);
+    vNormal = inNormal;
 }

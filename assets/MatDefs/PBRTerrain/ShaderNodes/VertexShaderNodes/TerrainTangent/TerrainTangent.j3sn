@@ -22,7 +22,7 @@ ShaderNodeDefinitions {
         }
 
         Output {
-            vec3 vPosition;
+            vec4 vPosition;
             vec3 vNormal;
             vec2 texCoord;
 
@@ -34,8 +34,6 @@ ShaderNodeDefinitions {
 
             vec3 wViewDir;
             vec4 vLightDir;
-
-            vec3 vViewDirParallax;
         }
     }
 } 

@@ -10,15 +10,15 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
-import com.jme3.light.SpotLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.util.TangentBinormalGenerator;
-import java.lang.reflect.Method;
+
 import lombok.Getter;
 
 /**
@@ -95,12 +95,16 @@ public class MapAppState extends BaseAppState {
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
         
-        map = new TerrainQuad("Map mesh", 513, size + 1, heightmapGenerator.getHeightMap());
+        map = new TerrainQuad("Map mesh", (int) FastMath.pow(2, 9) + 1, size + 1, heightmapGenerator.getHeightMap());
         // TangentBinormalGenerator.generate(map);
         
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/PBRTerrain.j3m");
-        
-        
         map.setMaterial(mapMaterial);
+
+        TerrainQuad simpleMap = map.clone();
+        simpleMap.setLocalTranslation(70f, 0f, 0f);
+        Material simpleMapMaterial = getApplication().getAssetManager().loadMaterial("Materials/LightTerrain.j3m");  
+        simpleMap.setMaterial(simpleMapMaterial);
+        rootNode.attachChild(simpleMap);
     }
 }

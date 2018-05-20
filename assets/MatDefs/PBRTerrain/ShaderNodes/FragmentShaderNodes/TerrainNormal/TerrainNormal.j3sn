@@ -1,0 +1,27 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainNormal {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.frag
+
+        Documentation { }
+
+        Input {
+            // globals   
+            vec4 vVertex;         
+            vec3 vNormal;
+
+            vec3 blending;
+
+            sampler2D NormalMapTex;
+            float TexScale;
+
+            vec2 texCoord;
+            float factor;
+        }
+
+        Output {
+            vec3 normal;
+        }
+    }
+} 
+

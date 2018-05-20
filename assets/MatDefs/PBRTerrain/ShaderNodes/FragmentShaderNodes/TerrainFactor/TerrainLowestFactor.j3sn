@@ -13,9 +13,10 @@ ShaderNodeDefinitions {
         }
 
         Input {
-            vec3 vVertex;
+            vec4 vVertex;
             
             sampler2D Tex;
+            vec2 texCoord;
             float TexScale;
             vec3 blending;
 

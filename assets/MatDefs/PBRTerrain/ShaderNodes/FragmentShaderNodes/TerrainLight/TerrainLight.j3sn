@@ -12,7 +12,6 @@ ShaderNodeDefinitions {
 
             vec3 lightVec;
             
-            vec3 vVertex;
             vec3 vNormal;
             vec4 vLightDir;
             vec3 vViewDir;
@@ -20,13 +19,14 @@ ShaderNodeDefinitions {
             vec3 blending;
 
             sampler2D normalMapTex;
+            vec2 texCoord;
             float texScale;
             float factor;
 
+            vec3 normal;
+
             // locals
             float spotFallOff;
-            vec3 normal;
-            vec3 n;
             vec4 lightDir;
         }
 

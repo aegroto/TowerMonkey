@@ -1,32 +1,34 @@
 Material Terrain : MatDefs/PBRTerrain/PBRTerrain.j3md {
     MaterialParameters {
         PathTex : Repeat Textures/better terrain/path/path_d.png
-        PathNormalMap : Repeat Textures/better terrain/path/path_ln.png
-        PathParallaxMap : Repeat Textures/better terrain/path/path_h.png
-        PathParallaxHeight : 1.0
+        PathNormalMap : Repeat Textures/better terrain/path/path_n.png
+        // PathParallaxMap : Repeat Textures/better terrain/path/path_h.png
+        // PathParallaxHeight : 1.0
 
-        // HillTex : Repeat Textures/better terrain/hill/hill_d.png
-        // HillNormalMap : Repeat Textures/better terrain/hill/hill_ln.png
-        // HillParallaxMap : Repeat Textures/better terrain/hill/hill_h.png
-
-        HillTex : Repeat Textures/better terrain/mountain/mountain_d.png
-        HillNormalMap : Repeat Textures/better terrain/mountain/mountain_n.png
-        HillParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
-        HillParallaxHeight : 1.0
+        HillTex : Repeat Textures/better terrain/hill/hill_d.png
+        HillNormalMap : Repeat Textures/better terrain/hill/hill_n.png
+        // HillParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
+        // HillParallaxHeight : 1.0
         
         MountainTex : Repeat Textures/better terrain/mountain/mountain_d.png
-        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_ln.png
-        MountainParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
-        MountainParallaxHeight : 1.0
+        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_n.png
+        // MountainParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
+        // MountainParallaxHeight : 1.0
 
-        PathTexScale : 0.2
-        HillTexScale : 0.1
-        MountainTexScale : 0.2
+        // Triplanar Scaling
+        // PathTexScale : 0.125
+        // HillTexScale : 0.0625
+        // MountainTexScale : 0.0625
 
-        PathMaxHeight : 1.3
+        // Non-triplanar scaling
+        PathTexScale : 1.0
+        HillTexScale : 1.0
+        MountainTexScale : 1.0
 
-        HillMinHeight : 0.1
-        HillMaxHeight : 5.0
+        PathMaxHeight : 1.01
+
+        HillMinHeight : 0.5
+        HillMaxHeight : 3.0
 
         MountainMinHeight : 2.6
 

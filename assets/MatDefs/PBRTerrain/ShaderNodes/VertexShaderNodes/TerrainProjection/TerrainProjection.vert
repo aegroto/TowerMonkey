@@ -1,6 +1,6 @@
 void main(){
-    vPosition = inPosition;
+    vPosition = inPosition.xyz;
     vNormal = inNormal;
 
-    projPosition = worldViewProjectionMatrix * vec4(inPosition, 1.0);
+    projPosition = worldViewProjectionMatrix * vec4(inPosition.xyz, 1.0);
 }

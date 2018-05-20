@@ -1,13 +1,7 @@
-Material Terrain : Common/MatDefs/Terrain/TerrainLighting.j3md {
+Material Terrain : Common/MatDefs/Light/Lighting.j3md {
     MaterialParameters {
-        useTriPlanarMapping : false
-        isTerrainGrid : false
-
-        AlphaMap : Repeat Textures/noalpha.png
-        NormalMap : Repeat Textures/better terrain/hill/hill_hn.png
         DiffuseMap : Repeat Textures/better terrain/hill/hill_d.png
-
-        DiffuseMap_0_scale : 1.0
+        NormalMap : Repeat Textures/better terrain/hill/hill_n.png
 
         // ParallaxMap : Repeat Textures/better terrain/path/path_h.jpg
 

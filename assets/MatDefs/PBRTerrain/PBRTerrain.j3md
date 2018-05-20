@@ -101,52 +101,14 @@ MaterialDef PBRTerrain {
                 }
             }
 
-            ShaderNode PathTerrainParallax {
-                Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
-
-                InputMappings {      
-                    vVertex = TerrainTangent.vPosition;              
-                    vViewDirParallax = TerrainTangent.vViewDirParallax;                    
-                    parallaxMapTex = MatParam.PathParallaxMap;
-                    parallaxHeight = MatParam.PathParallaxHeight;
-
-                    blending = TerrainTriplanarBlending.blending;
-                }
-            }
-            
-            ShaderNode HillTerrainParallax {
-                Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
-
-                InputMappings {         
-                    vVertex = TerrainTangent.vPosition;            
-                    vViewDirParallax = TerrainTangent.vViewDirParallax;                    
-                    parallaxMapTex = MatParam.HillParallaxMap;
-                    parallaxHeight = MatParam.HillParallaxHeight;
-
-                    blending = TerrainTriplanarBlending.blending;
-                }
-            }
-            
-            ShaderNode MountainTerrainParallax {
-                Definition : TerrainParallax : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
-
-                InputMappings {                    
-                    vVertex = TerrainTangent.vPosition; 
-                    vViewDirParallax = TerrainTangent.vViewDirParallax;                    
-                    parallaxMapTex = MatParam.MountainParallaxMap;
-                    parallaxHeight = MatParam.MountainParallaxHeight;
-
-                    blending = TerrainTriplanarBlending.blending;
-                }
-            }
-
             ShaderNode PathTerrainFactor {
                 Definition : TerrainLowestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
                 
                 InputMappings {
-                    vVertex = PathTerrainParallax.vVertexParallax;
+                    vVertex = TerrainTangent.vPosition;                    
 
                     Tex = MatParam.PathTex
+                    texCoord = TerrainTangent.texCoord;
                     TexScale = MatParam.PathTexScale
                     blending = TerrainTriplanarBlending.blending
 
@@ -160,9 +122,11 @@ MaterialDef PBRTerrain {
                 Definition : TerrainFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
                 
                 InputMappings {
-                    vVertex = HillTerrainParallax.vVertexParallax;
+                    vVertex = TerrainTangent.vPosition;
+                    texCoord = TerrainTangent.texCoord;
 
                     Tex = MatParam.HillTex
+                    texCoord = TerrainTangent.texCoord;
                     TexScale = MatParam.HillTexScale
                     blending = TerrainTriplanarBlending.blending
 
@@ -179,15 +143,61 @@ MaterialDef PBRTerrain {
                 Definition : TerrainHighestFactor : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
                 
                 InputMappings {
-                    vVertex = MountainTerrainParallax.vVertexParallax;
+                    vVertex = TerrainTangent.vPosition;
 
                     Tex = MatParam.MountainTex
+                    texCoord = TerrainTangent.texCoord;
                     TexScale = MatParam.MountainTexScale
                     blending = TerrainTriplanarBlending.blending
 
                     PrevLayerMaxHeight = MatParam.HillMaxHeight;
 
                     LayerMinHeight = MatParam.MountainMinHeight;
+                }
+            }
+
+            ShaderNode PathTerrainNormal {
+                Definition : TerrainNormal : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainTangent.vPosition;
+                    vNormal = TerrainTangent.wNormal;
+
+                    NormalMapTex = MatParam.PathNormalMap;
+                    texCoord = TerrainTangent.texCoord;
+                    TexScale = MatParam.PathTexScale;
+                    factor = PathTerrainFactor.factor;
+                }
+            }
+
+            ShaderNode HillTerrainNormal {
+                Definition : TerrainNormal : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainTangent.vPosition;
+                    vNormal = TerrainTangent.wNormal;
+
+                    NormalMapTex = MatParam.HillNormalMap;
+                    texCoord = TerrainTangent.texCoord;
+                    TexScale = MatParam.HillTexScale;
+                    factor = HillTerrainFactor.factor;
+                }
+            }
+
+            ShaderNode MountainTerrainNormal {
+                Definition : TerrainNormal : MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainTangent.vPosition;
+                    vNormal = TerrainTangent.wNormal;
+
+                    NormalMapTex = MatParam.MountainNormalMap;
+                    texCoord = TerrainTangent.texCoord;
+                    TexScale = MatParam.MountainTexScale;
+                    factor = MountainTerrainFactor.factor;
                 }
             }
 
@@ -199,16 +209,10 @@ MaterialDef PBRTerrain {
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainTangent.lightVec;
 
-                    vVertex = PathTerrainParallax.vVertexParallax;
-                    vNormal = TerrainTangent.wNormal;
                     vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
-                    blending = TerrainTriplanarBlending.blending
-
-                    normalMapTex = MatParam.PathNormalMap;
-                    texScale = MatParam.PathTexScale;
-                    factor = PathTerrainFactor.factor;
+                    normal = PathTerrainNormal.normal;
                 }
             }
 
@@ -220,16 +224,10 @@ MaterialDef PBRTerrain {
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainTangent.lightVec;
 
-                    vVertex = HillTerrainParallax.vVertexParallax;
-                    vNormal = TerrainTangent.wNormal;
                     vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
-                    blending = TerrainTriplanarBlending.blending
-
-                    normalMapTex = MatParam.HillNormalMap;
-                    texScale = MatParam.HillTexScale;
-                    factor = HillTerrainFactor.factor;
+                    normal = HillTerrainNormal.normal;
                 }
             }
 
@@ -241,16 +239,10 @@ MaterialDef PBRTerrain {
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainTangent.lightVec;
 
-                    vVertex = MountainTerrainParallax.vVertexParallax;
-                    vNormal = TerrainTangent.wNormal;
                     vLightDir = TerrainTangent.vLightDir;
                     vViewDir = TerrainTangent.wViewDir;
 
-                    blending = TerrainTriplanarBlending.blending
-
-                    normalMapTex = MatParam.MountainNormalMap;
-                    texScale = MatParam.MountainTexScale;
-                    factor = MountainTerrainFactor.factor;
+                    normal = MountainTerrainNormal.normal;
                 }
             }
 
