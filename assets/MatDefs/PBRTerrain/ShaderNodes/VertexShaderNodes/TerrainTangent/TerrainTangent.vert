@@ -16,8 +16,7 @@ void main(){
 
         mat3 tbnMat = mat3(wvTangent, wvBinormal * inTangent.w, wvNormal);
 
-        wPosition = wvPosition * tbnMat;
-        wViewDir  = viewDir * tbnMat;
+        vViewDir  = viewDir * tbnMat;
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
         vLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
@@ -26,10 +25,7 @@ void main(){
             vViewDirParallax = -wvPosition * tbnMat;
         #endif
     #else
-        wNormal = wvNormal;
-
-        wPosition = wvPosition;
-        wViewDir = viewDir;
+        vViewDir = viewDir;
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
     #endif

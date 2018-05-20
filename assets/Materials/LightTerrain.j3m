@@ -3,9 +3,9 @@ Material Terrain : Common/MatDefs/Light/Lighting.j3md {
         DiffuseMap : Repeat Textures/better terrain/hill/hill_d.png
         NormalMap : Repeat Textures/better terrain/hill/hill_n.png
 
-        // ParallaxMap : Repeat Textures/better terrain/path/path_h.jpg
+        ParallaxMap : Repeat Textures/better terrain/hill/hill_h.png
 
-        // ParallaxHeight : 0.005
+        ParallaxHeight : 0.05
         // SteepParallax : True
     }
 }

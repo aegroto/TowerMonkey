@@ -85,10 +85,11 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setMountainBaseTerrainThreshold(3f);
         
         heightmapGenerator.load();   
+        
         /** A white ambient light source. */ 
-        AmbientLight ambient = new AmbientLight();
+        /*AmbientLight ambient = new AmbientLight();
         ambient.setColor(ColorRGBA.White);
-        // rootNode.addLight(ambient); 
+        rootNode.addLight(ambient); */
         
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());

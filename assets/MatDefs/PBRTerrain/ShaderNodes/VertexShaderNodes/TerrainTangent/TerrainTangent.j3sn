@@ -26,13 +26,10 @@ ShaderNodeDefinitions {
             vec3 vNormal;
             vec2 texCoord;
 
-            vec3 wPosition;
-            vec3 wNormal;
-            vec4 wTangent;
-
             vec3 lightVec;
 
-            vec3 wViewDir;
+            vec3 vViewDir;
+            vec3 vViewDirParallax;
             vec4 vLightDir;
         }
     }

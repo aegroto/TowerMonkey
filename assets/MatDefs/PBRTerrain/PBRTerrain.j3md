@@ -162,7 +162,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vPosition;
-                    vNormal = TerrainTangent.wNormal;
+                    vNormal = TerrainTangent.vNormal;
 
                     NormalMapTex = MatParam.PathNormalMap;
                     texCoord = TerrainTangent.texCoord;
@@ -177,7 +177,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vPosition;
-                    vNormal = TerrainTangent.wNormal;
+                    vNormal = TerrainTangent.vNormal;
 
                     NormalMapTex = MatParam.HillNormalMap;
                     texCoord = TerrainTangent.texCoord;
@@ -192,7 +192,7 @@ MaterialDef PBRTerrain {
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
                     vVertex = TerrainTangent.vPosition;
-                    vNormal = TerrainTangent.wNormal;
+                    vNormal = TerrainTangent.vNormal;
 
                     NormalMapTex = MatParam.MountainNormalMap;
                     texCoord = TerrainTangent.texCoord;
@@ -210,7 +210,7 @@ MaterialDef PBRTerrain {
                     lightVec = TerrainTangent.lightVec;
 
                     vLightDir = TerrainTangent.vLightDir;
-                    vViewDir = TerrainTangent.wViewDir;
+                    vViewDir = TerrainTangent.vViewDir;
 
                     normal = PathTerrainNormal.normal;
                 }
@@ -225,7 +225,7 @@ MaterialDef PBRTerrain {
                     lightVec = TerrainTangent.lightVec;
 
                     vLightDir = TerrainTangent.vLightDir;
-                    vViewDir = TerrainTangent.wViewDir;
+                    vViewDir = TerrainTangent.vViewDir;
 
                     normal = HillTerrainNormal.normal;
                 }
@@ -240,7 +240,7 @@ MaterialDef PBRTerrain {
                     lightVec = TerrainTangent.lightVec;
 
                     vLightDir = TerrainTangent.vLightDir;
-                    vViewDir = TerrainTangent.wViewDir;
+                    vViewDir = TerrainTangent.vViewDir;
 
                     normal = MountainTerrainNormal.normal;
                 }
