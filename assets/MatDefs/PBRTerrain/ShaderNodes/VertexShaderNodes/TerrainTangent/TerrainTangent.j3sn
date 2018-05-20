@@ -34,6 +34,8 @@ ShaderNodeDefinitions {
 
             vec3 wViewDir;
             vec4 vLightDir;
+
+            vec3 vViewDirParallax;
         }
     }
 } 

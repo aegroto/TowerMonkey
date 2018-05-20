@@ -24,6 +24,10 @@ void main(){
 
         lightComputeDir(wvPosition, gLightColor.w, wvLightPos, vLightDir, lightVec);
         vLightDir.xyz = (vLightDir.xyz * tbnMat).xyz;
+
+        #if defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
+            vViewDirParallax = -wvPosition * tbnMat;
+        #endif
     #else
         wNormal = wvNormal;
 

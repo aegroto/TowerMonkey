@@ -1,0 +1,22 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainParallax {
+        Type: Fragment
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.frag
+
+        Documentation { }
+
+        Input {
+            vec3 vVertex;
+            vec3 vViewDirParallax;
+            vec3 blending;
+
+            float parallaxHeight;
+
+            sampler2D parallaxMapTex;
+        }
+
+        Output {
+            vec3 vVertexParallax;
+        }
+    }
+}

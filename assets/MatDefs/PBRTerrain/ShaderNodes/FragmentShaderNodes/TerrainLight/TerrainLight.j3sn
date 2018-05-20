@@ -17,7 +17,6 @@ ShaderNodeDefinitions {
             vec4 vLightDir;
             vec3 vViewDir;
 
-            vec2 texCoord;
             vec3 blending;
 
             sampler2D normalMapTex;

@@ -46,7 +46,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(512, 16);
+            generateMapGeometry(64, 16);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(1f);        
-        heightmapGenerator.setHillVariation(1f);
+        heightmapGenerator.setHillVariation(0f);
                 
         heightmapGenerator.setTotalMountains(5);
         heightmapGenerator.setMountainMinSize((int) (size * .1f));
