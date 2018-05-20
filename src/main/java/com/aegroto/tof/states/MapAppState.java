@@ -68,7 +68,7 @@ public class MapAppState extends BaseAppState {
         
         heightmapGenerator.setPathTileBorderFactor(.2f);
         heightmapGenerator.setPathTileBorderNeckFactor(.01f);
-        heightmapGenerator.setPathSnakyness(5);
+        heightmapGenerator.setPathSnakyness(15);
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
