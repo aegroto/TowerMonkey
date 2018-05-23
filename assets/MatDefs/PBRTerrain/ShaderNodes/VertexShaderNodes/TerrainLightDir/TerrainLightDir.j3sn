@@ -1,15 +1,18 @@
 ShaderNodeDefinitions {
-     ShaderNodeDefinition TerrainTangent {
+     ShaderNodeDefinition TerrainLightDir {
         Type: Vertex
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainTangent/TerrainTangent.vert
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainLightDir/TerrainLightDir.vert
 
         Documentation { }
 
         Input {
-            vec3 inPosition;
-            vec3 inNormal;
-            vec4 inTangent;
-            vec2 inTexCoord;
+            vec3 worldViewPosition;
+            vec3 worldViewNormal;
+            vec3 worldViewDir;
+            vec4 worldViewLightPos;
+            vec3 worldViewTangent;
+            vec3 worldViewBinormal;
+            mat3 tangentSpaceMat;
 
             vec4 vLightDir;
 
@@ -22,12 +25,6 @@ ShaderNodeDefinitions {
         }
 
         Output {
-            vec3 vPosition;
-            vec3 vNormal;
-            vec2 texCoord;
-
-            vec3 wNormal;
-
             vec3 lightVec;
 
             vec3 vViewDir;

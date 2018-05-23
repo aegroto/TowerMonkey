@@ -1,0 +1,20 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainPNT {
+        Type: Vertex
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainPNT/TerrainPNT.vert
+
+        Documentation { }
+
+        Input {
+            vec3 inPosition;
+            vec3 inNormal;
+            vec2 inTexCoord;
+        }
+
+        Output {
+            vec3 vPosition;
+            vec3 vNormal;
+            vec2 texCoord;
+        }
+    }
+} 

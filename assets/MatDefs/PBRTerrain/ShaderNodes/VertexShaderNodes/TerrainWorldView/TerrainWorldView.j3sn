@@ -1,0 +1,31 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainWorldView {
+        Type: Vertex
+        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainWorldView/TerrainWorldView.vert
+
+        Documentation { }
+
+        Input {
+            vec3 inPosition;
+            vec4 inTangent;
+            vec3 inNormal;
+
+            mat4 gWorldViewMatrix;
+            mat4 gViewMatrix;
+            mat3 gNormalMatrix;
+
+            vec4 gLightPosition;
+            vec4 gLightColor;
+        }
+
+        Output {
+            vec3 worldViewPosition;
+            vec3 worldViewNormal;
+            vec3 worldViewDir;
+            vec4 worldViewLightPos;
+            vec3 worldViewTangent;
+            vec3 worldViewBinormal;
+            mat3 tangentSpaceMat;
+        }
+    }
+} 
