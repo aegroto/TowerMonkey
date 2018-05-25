@@ -10,9 +10,9 @@ void main(){
             vVertexParallax = vVertex;
         #else
             #if defined(STEEP_PARALLAX)
-                texCoordParallax = steepParallaxOffset(parallaxMapTex, texScale, vViewDirParallax, texCoord, parallaxHeight);
+                // texCoordParallax = steepParallaxOffset(parallaxMapTex, texScale, vViewDirParallax, texCoord, parallaxHeight);
             #else 
-                texCoordParallax = parallaxOffset(parallaxMapTex, texScale, vViewDirParallax, texCoord, parallaxHeight);
+                vVertexParallax = triplanarParallaxOffset(parallaxMapTex, texScale, vViewDirParallax, vVertex, parallaxHeight, blending);
             #endif
         #endif
     #else

@@ -58,3 +58,15 @@ vec2 parallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec2 t
     h = (h * parallaxHeight + heightBias) * normalizedViewDir.z;
     return texCoord + (h * normalizedViewDir.xy);
 }
+
+vec3 triplanarParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec3 vVertex, float parallaxHeight, vec3 blending) {
+    float h = (
+        texture2D(parallaxMap, vVertex.yz * texScale) * blending.x +
+        texture2D(parallaxMap, vVertex.xz * texScale) * blending.y +
+        texture2D(parallaxMap, vVertex.xy * texScale) * blending.z).r;
+
+    float heightBias = parallaxHeight * -0.6;
+    vec3 normalizedViewDir = normalize(vViewDir);       
+    h = (h * parallaxHeight + heightBias) * normalizedViewDir.z;
+    return vVertex + vec3(h);
+}

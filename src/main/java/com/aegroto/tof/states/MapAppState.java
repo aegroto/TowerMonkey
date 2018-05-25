@@ -102,10 +102,10 @@ public class MapAppState extends BaseAppState {
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/PBRTerrain.j3m");
         map.setMaterial(mapMaterial);
 
-        TerrainQuad simpleMap = map.clone();
+        /*TerrainQuad simpleMap = map.clone();
         simpleMap.setLocalTranslation(70f, 0f, 0f);
         Material simpleMapMaterial = getApplication().getAssetManager().loadMaterial("Materials/LightTerrain.j3m");  
         simpleMap.setMaterial(simpleMapMaterial);
-        rootNode.attachChild(simpleMap);
+        rootNode.attachChild(simpleMap);*/
     }
 }
