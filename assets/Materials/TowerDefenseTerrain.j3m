@@ -3,17 +3,17 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
         PathTex : Repeat Textures/better terrain/path/path_d.png
         PathNormalMap : Repeat Textures/better terrain/path/path_n.png
         // PathParallaxMap : Repeat Textures/better terrain/path/path_h.png
-        PathParallaxHeight : 1.1
+        // PathParallaxHeight : 1.1
 
         HillTex : Repeat Textures/better terrain/hill/hill_d.png
         HillNormalMap : Repeat Textures/better terrain/hill/hill_ln.png
         // HillParallaxMap : Repeat Textures/better terrain/hill/hill_h.png
-        HillParallaxHeight : 1.1
+        // HillParallaxHeight : 1.1
         
         MountainTex : Repeat Textures/better terrain/mountain/mountain_d.png
         MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_n.png
         // MountainParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
-        MountainParallaxHeight : 1.1
+        // MountainParallaxHeight : 1.1
 
         // Triplanar Scaling
         PathTexScale : 0.125

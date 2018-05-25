@@ -8,16 +8,14 @@ package com.aegroto.tof.states;
 import com.aegroto.tof.map.TowerDefenseHeightMap;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.util.TangentBinormalGenerator;
 
 import lombok.Getter;
 
@@ -46,7 +44,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(64, 16);
+            generateMapGeometry(512, 16);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -72,11 +70,11 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
-        heightmapGenerator.setHillVariation(0f);
+        heightmapGenerator.setHillVariation(1f);
                 
         heightmapGenerator.setTotalMountains(5);
-        heightmapGenerator.setMountainMinSize((int) (size * .1f));
-        heightmapGenerator.setMountainMaxSize((int) (size * .15f));
+        heightmapGenerator.setMountainMinSize((int) (size * .15f));
+        heightmapGenerator.setMountainMaxSize((int) (size * .2f));
         heightmapGenerator.setMountainMinLevels(size * 50);
         heightmapGenerator.setMountainMaxLevels(size * 60);
         heightmapGenerator.setMountainBorderFragmentation(.5f);
@@ -84,7 +82,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setMountainVariation(.1f);
         heightmapGenerator.setMountainBaseTerrainThreshold(3f);
         
-        heightmapGenerator.load();   
+        heightmapGenerator.load();
         
         /** A white ambient light source. */ 
         /*AmbientLight ambient = new AmbientLight();
@@ -97,11 +95,17 @@ public class MapAppState extends BaseAppState {
         rootNode.addLight(sun);
         
         map = new TerrainQuad("Map mesh", (int) FastMath.pow(2, 9) + 1, size + 1, heightmapGenerator.getHeightMap());
-        // TangentBinormalGenerator.generate(map);
         
-        mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");
-        map.setMaterial(mapMaterial);
+        mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
 
+        // Scaling mesh and textures, adapting to a lower or higher size
+        float scale = 64f / size;
+        map.setLocalScale(scale);
+        mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
+        mapMaterial.setFloat("HillTexScale",     ((float) mapMaterial.getParam("HillTexScale").getValue()) * scale);
+        mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);
+
+        map.setMaterial(mapMaterial);
         /*TerrainQuad simpleMap = map.clone();
         simpleMap.setLocalTranslation(70f, 0f, 0f);
         Material simpleMapMaterial = getApplication().getAssetManager().loadMaterial("Materials/LightTerrain.j3m");  

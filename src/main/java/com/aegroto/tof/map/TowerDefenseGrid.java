@@ -5,10 +5,11 @@
  */
 package com.aegroto.tof.map;
 
+import java.util.LinkedList;
+
 import com.aegroto.tof.utils.Vector2i;
 import com.jme3.math.FastMath;
-import com.jme3.math.Vector2f;
-import java.util.LinkedList;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,8 @@ public class TowerDefenseGrid {
             SHIFT_RIGHT = new Vector2i(0, 1),
             SHIFT_LEFT = new Vector2i(0, -1);
     
+    private static final int GENESIS_TILES_DISTANCE = 5;
+    
     private final int gridSize, snakyness;
     
     @Setter private Vector2i startTilePos, endTilePos;
@@ -34,18 +37,14 @@ public class TowerDefenseGrid {
         this.gridSize = gridSize;
         this.snakyness = snakyness;
         grid = new MapTile[gridSize][gridSize];
-        pathTiles = new LinkedList();
+        pathTiles = new LinkedList<>();
     }
     
     public void generateGrid() {
-        Vector2i sTile = randomSideTile();
-        Vector2i eTile;
+        Vector2i sTile = randomSideTile(null, 1);
+        Vector2i eTile = randomSideTile(sTile, GENESIS_TILES_DISTANCE);
         
-        do {
-            eTile = randomSideTile();
-        } while (sTile.equals(eTile));
-        
-        generateGrid(randomSideTile(), randomSideTile());
+        generateGrid(sTile, eTile);
     }
     
     public void generateGrid(final Vector2i startTilePos, final Vector2i endTilePos) {
@@ -55,7 +54,7 @@ public class TowerDefenseGrid {
         addTileToPath(placeTile(startTilePos, MapTile.TYPE_START));
         placeTile(endTilePos, MapTile.TYPE_END);        
         
-        Vector2i lastTilePos = doSnakySteps();      
+        Vector2i lastTilePos = doSnakySteps(); 
         
         fillMidTiles(lastTilePos, endTilePos);
         
@@ -73,7 +72,8 @@ public class TowerDefenseGrid {
         float tuckProbability = 1f;        
         
         while(snakySteps < snakyness) {
-            if(FastMath.nextRandomFloat() <= tuckProbability || isPosOutOfRange(currentTilePos.add(lastShift))) {
+            if(FastMath.nextRandomFloat() <= tuckProbability
+               || isPosOutOfRange(currentTilePos.add(lastShift))) {
                 lastShift = randomPosShift(currentTilePos, lastShift);
                 tuckProbability = 0f;
             } else {
@@ -99,6 +99,10 @@ public class TowerDefenseGrid {
     private boolean isPosOutOfRange(Vector2i pos) {
         return pos.getX() < 0 || pos.getX() >= gridSize || pos.getY() < 0 || pos.getY() >= gridSize;
     }
+
+    private boolean isPosNearEndTile(Vector2i pos, int minDistance) {
+        return pos.distanceFrom(endTilePos) < minDistance;
+    }
     
     private void fillMidTiles(final Vector2i firstTilePos, final Vector2i secondTilePos) {
         int distance = firstTilePos.distanceFrom(secondTilePos);
@@ -107,9 +111,11 @@ public class TowerDefenseGrid {
             int minX, maxX, minY, maxY;
             
             if(firstTilePos.getX() <= secondTilePos.getX()) {
-                minX = firstTilePos.getX(); maxX = secondTilePos.getX();
+                minX = firstTilePos.getX();
+                maxX = secondTilePos.getX();
             } else {
-                minX = secondTilePos.getX(); maxX = firstTilePos.getX();
+                minX = secondTilePos.getX();
+                maxX = firstTilePos.getX();
             }
             
             if(firstTilePos.getY() <= secondTilePos.getY()) {
@@ -200,18 +206,27 @@ public class TowerDefenseGrid {
         return pos.getY() > 0 && !SHIFT_RIGHT.equals(lastShift);
     }
     
-    private Vector2i randomSideTile() {
+    private Vector2i randomSideTile(Vector2i referenceTile, int minDistance) {
+        if(referenceTile == null)
+            referenceTile = new Vector2i(-minDistance - 1, -minDistance - 1);
+
         final float sideRandomFactor = FastMath.nextRandomFloat();
         final int randomOffset = FastMath.nextRandomInt(0, gridSize - 1);
-        if(sideRandomFactor <= .25f) {
-            return new Vector2i(0, randomOffset);
-        } else if(sideRandomFactor <= .5f) {
-            return  new Vector2i(randomOffset, 0);
-        } else if(sideRandomFactor <= .75f) {
-            return new Vector2i(gridSize - 1, randomOffset);
-        } else {
-            return new Vector2i(randomOffset, gridSize - 1);
-        }
+        Vector2i coords = null;
+
+        do {
+            if(sideRandomFactor <= .25f) {
+                coords = new Vector2i(0, randomOffset);
+            } else if(sideRandomFactor <= .5f) {
+                coords =  new Vector2i(randomOffset, 0);
+            } else if(sideRandomFactor <= .75f) {
+                coords = new Vector2i(gridSize - 1, randomOffset);
+            } else {
+                coords = new Vector2i(randomOffset, gridSize - 1);
+            }
+        } while(coords.distanceFrom(referenceTile) < minDistance--);
+
+        return coords;
     }
     
     public boolean isPathTile(int x, int y) {
