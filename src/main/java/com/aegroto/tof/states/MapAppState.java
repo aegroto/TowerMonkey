@@ -99,7 +99,7 @@ public class MapAppState extends BaseAppState {
         map = new TerrainQuad("Map mesh", (int) FastMath.pow(2, 9) + 1, size + 1, heightmapGenerator.getHeightMap());
         // TangentBinormalGenerator.generate(map);
         
-        mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/PBRTerrain.j3m");
+        mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");
         map.setMaterial(mapMaterial);
 
         /*TerrainQuad simpleMap = map.clone();

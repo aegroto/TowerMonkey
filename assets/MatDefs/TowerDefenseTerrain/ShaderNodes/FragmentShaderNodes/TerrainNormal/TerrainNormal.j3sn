@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainNormal {
         Type: Fragment
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.frag
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.frag
 
         Documentation { }
 

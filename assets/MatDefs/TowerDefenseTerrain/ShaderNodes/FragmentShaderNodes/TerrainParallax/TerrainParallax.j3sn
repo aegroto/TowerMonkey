@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainParallax {
         Type: Fragment
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.frag
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.frag
 
         Documentation { }
 

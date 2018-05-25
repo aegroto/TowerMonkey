@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainLight {
         Type: Fragment
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.frag
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.frag
 
         Documentation { }
 

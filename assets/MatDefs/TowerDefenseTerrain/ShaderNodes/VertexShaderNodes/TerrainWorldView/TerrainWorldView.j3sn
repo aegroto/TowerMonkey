@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainWorldView {
         Type: Vertex
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainWorldView/TerrainWorldView.vert
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainWorldView/TerrainWorldView.vert
 
         Documentation { }
 

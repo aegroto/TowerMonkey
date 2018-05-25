@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainLowestFactor {
         Type: Fragment
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.frag
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.frag
 
         Documentation { 
             Terrain Fragment shader node

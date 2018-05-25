@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
-     ShaderNodeDefinition TerrainFactor {
+     ShaderNodeDefinition TerrainHighestFactor {
         Type: Fragment
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.frag
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.frag
 
         Documentation { 
             Terrain Fragment shader node
@@ -14,7 +14,7 @@ ShaderNodeDefinitions {
 
         Input {
             vec3 vPosition;
-            vec3 vVertex;            
+            vec3 vVertex;
 
             sampler2D Tex;
             vec2 texCoord;
@@ -24,9 +24,6 @@ ShaderNodeDefinitions {
             float PrevLayerMaxHeight;
 
             float LayerMinHeight;
-            float LayerMaxHeight;
-
-            float NextLayerMinHeight;
         }
 
         Output {

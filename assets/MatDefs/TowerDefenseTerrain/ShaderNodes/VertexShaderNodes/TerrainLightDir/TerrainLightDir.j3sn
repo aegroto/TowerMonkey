@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
      ShaderNodeDefinition TerrainLightDir {
         Type: Vertex
-        Shader GLSL100: MatDefs/PBRTerrain/ShaderNodes/VertexShaderNodes/TerrainLightDir/TerrainLightDir.vert
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainLightDir/TerrainLightDir.vert
 
         Documentation { }
 
