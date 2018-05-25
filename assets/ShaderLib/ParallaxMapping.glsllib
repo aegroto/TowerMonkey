@@ -68,5 +68,5 @@ vec3 triplanarParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDi
     float heightBias = parallaxHeight * -0.6;
     vec3 normalizedViewDir = normalize(vViewDir);       
     h = (h * parallaxHeight + heightBias) * normalizedViewDir.z;
-    return vVertex + vec3(h);
+    return vVertex + vec3(h * normalizedViewDir.xyz);
 }
