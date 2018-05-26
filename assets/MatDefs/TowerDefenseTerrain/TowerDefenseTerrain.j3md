@@ -2,18 +2,21 @@ MaterialDef TowerDefenseTerrain {
     MaterialParameters {
         Texture2D PathTex
         Texture2D PathNormalMap
+        Texture2D PathSpecularMap
         Texture2D PathParallaxMap
         Float PathTexScale
         Float PathParallaxHeight
 
         Texture2D HillTex
         Texture2D HillNormalMap
+        Texture2D HillSpecularMap
         Texture2D HillParallaxMap
         Float HillTexScale
         Float HillParallaxHeight
         
         Texture2D MountainTex
         Texture2D MountainNormalMap
+        Texture2D MountainSpecularMap
         Texture2D MountainParallaxMap
         Float MountainTexScale
         Float MountainParallaxHeight
@@ -25,7 +28,12 @@ MaterialDef TowerDefenseTerrain {
         Float HillMaxHeight
 
         Boolean TriPlanarMapping
+        Boolean NormalMapping
+        Boolean SpecularMapping
+        Boolean ParallaxMapping
         Boolean SteepParallax
+
+        Color SpecularColor : 0 0 0 1
 
         Float Shininess : 1.0
     }
@@ -50,29 +58,27 @@ MaterialDef TowerDefenseTerrain {
         Defines {
             TRIPLANAR_MAPPING : TriPlanarMapping
             STEEP_PARALLAX : SteepParallax
-            PATH_NORMALMAP : PathNormalMap
-            HILL_NORMALMAP : HillNormalMap
-            MOUNTAIN_NORMALMAP : MountainNormalMap
-            PATH_PARALLAXMAP : PathParallaxMap
-            HILL_PARALLAXMAP : HillParallaxMap
-            MOUNTAIN_PARALLAXMAP : MountainParallaxMap
+            NORMAL_MAPPING : NormalMapping
+            PARALLAX_MAPPING : ParallaxMapping
+            SPECULAR_MAPPING : SpecularMapping
         }
 
         VertexShaderNodes {
-            ShaderNode TerrainPNT {
-                Definition : TerrainPNT : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainPNT/TerrainPNT.j3sn
+            ShaderNode TerrainBaseValues {
+                Definition : TerrainBaseValues : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainBaseValues/TerrainBaseValues.j3sn
                 InputMappings {
                     inPosition = Attr.inPosition;
                     inNormal = Attr.inNormal;
                     inTexCoord = Attr.inTexCoord;
                 }
             }
+
             ShaderNode TerrainWorldView {
                 Definition : TerrainWorldView : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainWorldView/TerrainWorldView.j3sn
 
                 InputMappings {
-                    inPosition = TerrainPNT.vPosition;
-                    inNormal = TerrainPNT.vNormal;
+                    inPosition = TerrainBaseValues.vPosition;
+                    inNormal = TerrainBaseValues.vNormal;
                     inTangent = Attr.inTangent;
 
                     gWorldViewMatrix = WorldParam.WorldViewMatrix;
@@ -112,8 +118,8 @@ MaterialDef TowerDefenseTerrain {
 
                 InputMappings {
                     worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix
-                    inPosition = TerrainPNT.vPosition
-                    inNormal = TerrainPNT.vNormal
+                    inPosition = TerrainBaseValues.vPosition
+                    inNormal = TerrainBaseValues.vNormal
                 }
 
                 OutputMappings {
@@ -127,7 +133,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainTriplanarBlending : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainTriplanarBlending/TerrainTriplanarBlending.j3sn
 
                 InputMappings {
-                    vNormal = TerrainPNT.vNormal;
+                    vNormal = TerrainBaseValues.vNormal;
                 }
             }
 
@@ -135,10 +141,10 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vViewDirParallax = TerrainLightDir.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
-                    texCoord = TerrainPNT.texCoord;
+                    texCoord = TerrainBaseValues.texCoord;
 
                     parallaxHeight = MatParam.PathParallaxHeight;
 
@@ -151,10 +157,10 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vViewDirParallax = TerrainLightDir.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
-                    texCoord = TerrainPNT.texCoord;
+                    texCoord = TerrainBaseValues.texCoord;
 
                     parallaxHeight = MatParam.HillParallaxHeight;
 
@@ -167,10 +173,10 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
 
                 InputMappings {
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vViewDirParallax = TerrainLightDir.vViewDirParallax;
                     blending = TerrainTriplanarBlending.blending;
-                    texCoord = TerrainPNT.texCoord;
+                    texCoord = TerrainBaseValues.texCoord;
 
                     parallaxHeight = MatParam.MountainParallaxHeight;
 
@@ -183,7 +189,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainLowestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
                 
                 InputMappings {               
-                    vPosition = TerrainPNT.vPosition;
+                    vPosition = TerrainBaseValues.vPosition;
                     vVertex = PathTerrainParallax.vVertexParallax;
                     texCoord = PathTerrainParallax.texCoordParallax;
 
@@ -201,7 +207,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
                 
                 InputMappings {
-                    vPosition = TerrainPNT.vPosition;
+                    vPosition = TerrainBaseValues.vPosition;
                     vVertex = HillTerrainParallax.vVertexParallax;
                     texCoord = HillTerrainParallax.texCoordParallax;
 
@@ -222,7 +228,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainHighestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
                 
                 InputMappings {
-                    vPosition = TerrainPNT.vPosition;
+                    vPosition = TerrainBaseValues.vPosition;
                     vVertex = MountainTerrainParallax.vVertexParallax;
                     texCoord = MountainTerrainParallax.texCoordParallax;
 
@@ -241,13 +247,12 @@ MaterialDef TowerDefenseTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vNormal = TerrainWorldView.worldViewNormal;
 
                     NormalMapTex = MatParam.PathNormalMap;
                     texCoord = PathTerrainParallax.texCoordParallax;
                     TexScale = MatParam.PathTexScale;
-                    factor = PathTerrainFactor.factor;
                 }
             }
 
@@ -256,13 +261,12 @@ MaterialDef TowerDefenseTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vNormal = TerrainWorldView.worldViewNormal;
 
                     NormalMapTex = MatParam.HillNormalMap;
                     texCoord = HillTerrainParallax.texCoordParallax;
                     TexScale = MatParam.HillTexScale;
-                    factor = HillTerrainFactor.factor;
                 }
             }
 
@@ -271,13 +275,57 @@ MaterialDef TowerDefenseTerrain {
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
-                    vVertex = TerrainPNT.vPosition;
+                    vVertex = TerrainBaseValues.vPosition;
                     vNormal = TerrainWorldView.worldViewNormal;
 
                     NormalMapTex = MatParam.MountainNormalMap;
                     texCoord = MountainTerrainParallax.texCoordParallax;
                     TexScale = MatParam.MountainTexScale;
-                    factor = MountainTerrainFactor.factor;
+                }
+            }
+
+            ShaderNode PathTerrainShininess {
+                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainBaseValues.vPosition;
+
+                    SpecularMapTex = MatParam.PathSpecularMap;
+                    texCoord = PathTerrainParallax.texCoordParallax;
+                    TexScale = MatParam.PathTexScale;
+
+                    fixedShininess = MatParam.Shininess;
+                }
+            }
+
+            ShaderNode HillTerrainShininess {
+                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainBaseValues.vPosition;
+
+                    SpecularMapTex = MatParam.HillSpecularMap;
+                    texCoord = HillTerrainParallax.texCoordParallax;
+                    TexScale = MatParam.HillTexScale;
+
+                    fixedShininess = MatParam.Shininess;
+                }
+            }
+
+            ShaderNode MountainTerrainShininess {
+                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+
+                InputMappings {
+                    blending = TerrainTriplanarBlending.blending
+                    vVertex = TerrainBaseValues.vPosition;
+
+                    SpecularMapTex = MatParam.MountainSpecularMap;
+                    texCoord = MountainTerrainParallax.texCoordParallax;
+                    TexScale = MatParam.MountainTexScale;
+
+                    fixedShininess = MatParam.Shininess;
                 }
             }
 
@@ -285,7 +333,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
 
                 InputMappings {
-                    shininess = MatParam.Shininess
+                    shininess = PathTerrainShininess.shininess
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainLightDir.lightVec;
 
@@ -300,7 +348,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
 
                 InputMappings {
-                    shininess = MatParam.Shininess
+                    shininess = HillTerrainShininess.shininess
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainLightDir.lightVec;
 
@@ -315,7 +363,7 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
 
                 InputMappings {
-                    shininess = MatParam.Shininess
+                    shininess = MountainTerrainShininess.shininess
                     gLightDirection = WorldParam.LightDirection;
                     lightVec = TerrainLightDir.lightVec;
 
@@ -330,20 +378,21 @@ MaterialDef TowerDefenseTerrain {
                 Definition : TerrainColorMix : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainColorMix/TerrainColorMix.j3sn
 
                 InputMappings {
-                    tex1 = PathTerrainFactor.color
-                    tex2 = HillTerrainFactor.color
-                    tex3 = MountainTerrainFactor.color
+                    pathColor = PathTerrainFactor.color
+                    hillColor = HillTerrainFactor.color
+                    mountainColor = MountainTerrainFactor.color
 
-                    tex1Factor = PathTerrainFactor.factor
-                    tex2Factor = HillTerrainFactor.factor
-                    tex3Factor = MountainTerrainFactor.factor
+                    pathFactor = PathTerrainFactor.factor
+                    hillFactor = HillTerrainFactor.factor
+                    mountainFactor = MountainTerrainFactor.factor
 
                     ambientSum = WorldParam.AmbientLightColor
                     diffuseSum = WorldParam.LightColor
+                    specularSum = MatParam.SpecularColor;
 
-                    light1 = PathTerrainLight.light;
-                    light2 = HillTerrainLight.light;
-                    light3 = MountainTerrainLight.light;
+                    pathLight = PathTerrainLight.light;
+                    hillLight = HillTerrainLight.light;
+                    mountainLight = MountainTerrainLight.light;
                 }
 
                 OutputMappings {

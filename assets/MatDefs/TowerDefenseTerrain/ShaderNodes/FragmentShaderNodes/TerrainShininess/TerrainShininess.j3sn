@@ -1,0 +1,25 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TerrainShininess {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.frag
+
+        Documentation { }
+
+        Input {
+            vec3 vVertex;
+
+            vec3 blending;
+
+            sampler2D SpecularMapTex;
+            float TexScale;
+            float fixedShininess;
+
+            vec2 texCoord;
+        }
+
+        Output {
+            float shininess;
+        }
+    }
+} 
+

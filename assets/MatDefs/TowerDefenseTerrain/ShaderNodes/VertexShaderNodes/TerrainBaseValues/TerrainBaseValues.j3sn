@@ -1,7 +1,7 @@
 ShaderNodeDefinitions {
-     ShaderNodeDefinition TerrainPNT {
+     ShaderNodeDefinition TerrainBaseValues {
         Type: Vertex
-        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainPNT/TerrainPNT.vert
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainBaseValues/TerrainBaseValues.vert
 
         Documentation { }
 

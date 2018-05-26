@@ -27,21 +27,20 @@ ShaderNodeDefinitions {
         }
 
         Input {
-            vec4 tex1;
-            vec4 tex2;
-            vec4 tex3;
-
-            float tex1Factor;
-            float tex2Factor;
-            float tex3Factor;
+            vec4 pathColor;
+            vec4 hillColor;
+            vec4 mountainColor;
+            float pathFactor;
+            float hillFactor;
+            float mountainFactor;
 
             vec4 ambientSum;
             vec4 diffuseSum;
             vec4 specularSum;
 
-            vec2 light1;
-            vec2 light2;
-            vec2 light3;
+            vec2 pathLight;
+            vec2 hillLight;
+            vec2 mountainLight;
         }
 
         Output {

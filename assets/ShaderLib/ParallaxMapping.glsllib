@@ -53,7 +53,7 @@ vec2 steepParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir,ve
 
 vec2 parallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec2 texCoord, float parallaxHeight) { 
     float h = texture2D(parallaxMap, texCoord * texScale).r;
-    float heightBias = parallaxHeight * -0.6;
+    float heightBias = parallaxHeight * 0.5;
     vec3 normalizedViewDir = normalize(vViewDir);       
     h = (h * parallaxHeight + heightBias) * normalizedViewDir.z;
     return texCoord + (h * normalizedViewDir.xy);

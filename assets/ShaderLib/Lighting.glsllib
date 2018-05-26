@@ -1,0 +1,21 @@
+float lightComputeDiffuse(in vec3 norm, in vec3 lightdir){
+    return max(0.0, dot(norm, lightdir));
+}
+
+float lightComputeSpecularPhong(in vec3 norm, in vec3 viewdir, in vec3 lightdir, in float shininess){
+    vec3 R = reflect(-lightdir, norm);
+    return pow(max(dot(R, viewdir), 0.0), shininess);
+}
+
+vec2 computeLighting(in vec3 norm, in vec3 viewDir, in vec3 lightDir, in float attenuation, in float shininess){
+    float diffuseFactor = lightComputeDiffuse(norm, lightDir);
+    float specularFactor = lightComputeSpecularPhong(norm, viewDir, lightDir, shininess);   
+
+    if (shininess <= 1.0) {
+        specularFactor = 0.0;
+    } else {
+        specularFactor *= diffuseFactor;
+    }
+
+    return vec2(diffuseFactor, specularFactor) * attenuation;
+}

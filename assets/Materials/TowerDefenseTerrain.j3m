@@ -1,29 +1,32 @@
 Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
     MaterialParameters {
         PathTex : Repeat Textures/better terrain/path/path_d.png
-        PathNormalMap : Repeat Textures/better terrain/path/path_n.png
+        PathNormalMap : Repeat Textures/better terrain/path/path_mn.png
+        PathSpecularMap : Repeat Textures/better terrain/path/path_s.png
         PathParallaxMap : Repeat Textures/better terrain/path/path_h.png
         PathParallaxHeight : 0.005
 
         HillTex : Repeat Textures/better terrain/hill/hill_d.png
         HillNormalMap : Repeat Textures/better terrain/hill/hill_ln.png
+        HillSpecularMap : Repeat Textures/better terrain/hill/hill_s.png
         HillParallaxMap : Repeat Textures/better terrain/hill/hill_h.png
-        HillParallaxHeight : 0.005
+        HillParallaxHeight : 0.01
         
         MountainTex : Repeat Textures/better terrain/mountain/mountain_d.png
-        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_n.png
+        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_ln.png
+        MountainSpecularMap : Repeat Textures/better terrain/mountain/mountain_s.png
         MountainParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
         MountainParallaxHeight : 0.005
 
         // Triplanar Scaling
-        // PathTexScale : 0.125
-        // HillTexScale : 0.0625
-        // MountainTexScale : 0.0625
+        PathTexScale : 0.125
+        HillTexScale : 0.0625
+        MountainTexScale : 0.2
 
         // Non-triplanar scaling
-        PathTexScale : 15.0
-        HillTexScale : 5.0
-        MountainTexScale : 20.0
+        // PathTexScale : 15.0
+        // HillTexScale : 5.0
+        // MountainTexScale : 20.0
 
         PathMaxHeight : 1.01
 
@@ -33,8 +36,12 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
         MountainMinHeight : 2.6
 
         Shininess : 1.0
+        SpecularColor : 1.0 1.0 1.0 1.0
 
-        TriPlanarMapping : False
+        TriPlanarMapping : True
+        NormalMapping : True
+        SpecularMapping : True
+        ParallaxMapping : False
         SteepParallax : False
     }
 }

@@ -1,7 +1,7 @@
 #import "ShaderLib/TriplanarMapping.glsllib"
 
 void main(){
-    #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP)
+    #if defined(NORMAL_MAPPING)
         #if defined(TRIPLANAR_MAPPING)
             normal = triplanarColor(NormalMapTex, vVertex, TexScale, blending).xyz;
 

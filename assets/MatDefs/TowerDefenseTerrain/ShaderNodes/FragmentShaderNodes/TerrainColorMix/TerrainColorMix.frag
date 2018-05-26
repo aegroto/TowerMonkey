@@ -1,9 +1,14 @@
 void main(){
-    vec4 diffuseColor = tex1 * tex1Factor * light1.x +
-                        tex2 * tex2Factor * light2.x +
-                        tex3 * tex3Factor * light3.x;
+    vec4 diffuseColor = pathColor * pathFactor * pathLight.x +
+                        hillColor * hillFactor * hillLight.x +
+                        mountainColor * mountainFactor * mountainLight.x;
+
+    float specularFactor = pathLight.y * pathFactor + 
+                           hillLight.y * hillFactor +
+                           mountainLight.y * mountainFactor;
                         
     outColor = ambientSum * diffuseColor +
-               diffuseSum * diffuseColor;
+               diffuseSum * diffuseColor + 
+               specularSum * specularFactor;
 }
 

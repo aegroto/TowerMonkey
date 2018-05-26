@@ -9,7 +9,7 @@ void main(){
     worldViewTangent = normalize(gNormalMatrix * inTangent.xyz);
     worldViewBinormal = cross(worldViewNormal, worldViewTangent);
 
-    #if defined(PATH_NORMALMAP) || defined(HILL_NORMALMAP) || defined(MOUNTAIN_NORMALMAP) || defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
+    #if defined(NORMAL_MAPPING) || defined(PARALLAX_MAPPING)
         tangentSpaceMat = mat3(
             worldViewTangent,
             worldViewBinormal * inTangent.w,

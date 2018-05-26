@@ -1,4 +1,4 @@
-#import "Common/ShaderLib/BlinnPhongLighting.glsllib"
+#import "ShaderLib/Lighting.glsllib"
 #ifndef TL_FRAG_H
     #define TL_FRAG_H 1
 #endif

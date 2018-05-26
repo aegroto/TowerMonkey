@@ -5,7 +5,7 @@
 #endif
 
 void main(){
-    #if defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
+    #if defined(PARALLAX_MAPPING)
         #if defined(TRIPLANAR_MAPPING)
             vVertexParallax = vVertex; // Unsupported
         #else

@@ -15,7 +15,6 @@ ShaderNodeDefinitions {
             float TexScale;
 
             vec2 texCoord;
-            float factor;
         }
 
         Output {
