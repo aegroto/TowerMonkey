@@ -7,11 +7,7 @@
 void main(){
     #if defined(PATH_PARALLAXMAP) || defined(HILL_PARALLAXMAP) || defined(MOUNTAIN_PARALLAXMAP)
         #if defined(TRIPLANAR_MAPPING)
-            #if defined(STEEP_PARALLAX)
-                vVertexParallax = vVertex;
-            #else     
-                vVertexParallax = triplanarParallaxOffset(parallaxMapTex, texScale, vViewDirParallax, vVertex, parallaxHeight, blending);
-            #endif
+            vVertexParallax = vVertex; // Unsupported
         #else
             #if defined(STEEP_PARALLAX)
                 texCoordParallax = steepParallaxOffset(parallaxMapTex, texScale, vViewDirParallax, texCoord, parallaxHeight);
