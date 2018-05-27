@@ -32,6 +32,10 @@ public class Vector2i implements Cloneable {
     public Vector2i add(Vector2i otherVec) {
         return new Vector2i(x + otherVec.x, y + otherVec.y);
     }
+
+    public Vector2i add(int ax, int ay) {
+        return new Vector2i(x + ax, y + ay);
+    }
     
     public Vector2i addLocal(Vector2i otherVec) {
         x += otherVec.x;

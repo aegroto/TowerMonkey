@@ -27,11 +27,12 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
               mountainMaxGenerationTries = 5;
     
     private int 
-              gridSize,
+              gridSize, ditchSize,
               pathTileSize, pathTileBorder, pathTileBorderNeck;
     
     @Getter @Setter private float 
-            pathVariation, hillVariation, mountainVariation,
+            ditchVariation, pathVariation, hillVariation, mountainVariation,
+            minDitchHeight,
             minHillHeight,
             minMountainHeight = 2f,
             mountainBorderFragmentation,
@@ -53,7 +54,12 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     
     public void setGridSize(int gridSize) {
         this.gridSize = gridSize;
-        this.pathTileSize = size / gridSize;
+        updatePathTileSize();
+    }
+
+    public void setDitchSize(int ditchSize) {
+        this.ditchSize = ditchSize;
+        updatePathTileSize();
     }
     
     public void setPathTileBorderFactor(float borderFactor) {
@@ -67,6 +73,10 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     public void createGrid() {
         this.grid = new TowerDefenseGrid(gridSize, pathSnakyness);
     }
+
+    private void updatePathTileSize() {
+        this.pathTileSize = size / totalGridSize();
+    }
     
     private void generateRawHeightmap() {
         int heightmapLSize = (size * 2);
@@ -77,6 +87,18 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             heightData[i] = randomHillPointHeight();
         }
     }
+
+    private void generateBorders() { 
+        int totalSize = gridSize + ditchSize * 2;       
+        for(int x = 0; x < totalSize; ++x) {
+            for(int z = 0; z < ditchSize; ++z) {
+                generateBorderTile(x, z);
+                // generateBorderTile(z, x);
+                // generateBorderTile(x, totalSize - z);
+            }
+        }
+    }
+    
     
     private void generateMountains() {
         int mountains, mountainSizeX, mountainSizeZ, x, z, generationTries;
@@ -243,6 +265,9 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void generatePathTile(int x, int z) {
+        x += ditchOffset();
+        z += ditchOffset();
+
         int iStart = x * pathTileSize + pathTileBorder,
             jStart = z * pathTileSize + pathTileBorder,
             iLimit = x * pathTileSize + pathTileSize - pathTileBorder,
@@ -251,6 +276,19 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
                 heightData[arrayIndex(i, j)] = randomPathPointHeight();
+            }
+        }
+    }
+
+    private void generateBorderTile(int x, int z) {
+        int iStart = x * pathTileSize,
+            jStart = z * pathTileSize,
+            iLimit = x * pathTileSize + pathTileSize,
+            jLimit = z * pathTileSize + pathTileSize;
+        
+        for(int i = iStart; i < iLimit; ++i) {
+            for(int j = jStart; j < jLimit; ++j) {
+                heightData[arrayIndex(i, j)] = randomDitchPointHeight();
             }
         }
     }
@@ -281,7 +319,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathUpConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos();
+        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
         
         int iStart = tileToMeshScale(firstPos.getX()),
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileBorder,
@@ -297,7 +335,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathDownConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos();
+        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize,
@@ -313,7 +351,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathLeftConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos();
+        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileBorder + pathTileBorderNeck,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder - pathTileBorderNeck,
@@ -329,7 +367,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathRightConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos();
+        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileBorder + pathTileBorderNeck,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder - pathTileBorderNeck,
@@ -359,6 +397,10 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     private int arrayIndex(int x, int z) {
         return (x * xArrayOffset) + (z);
     }
+
+    private float randomDitchPointHeight() {
+        return minDitchHeight + FastMath.nextRandomFloat() * ditchVariation;
+    }
     
     private float randomPathPointHeight() {
         return FastMath.nextRandomFloat() * pathVariation;
@@ -372,15 +414,33 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         return FastMath.nextRandomFloat() * mountainVariation;
     }
 
+    private int ditchOffset() {
+        return ditchSize;
+    }
+    private int totalGridSize() {
+        return gridSize + ditchSize * 2;
+    }
+
     @Override
     public boolean load() {
         createGrid();        
         grid.generateGrid();
         
         generateRawHeightmap();
-        generateMountains();
+        // generateBorders();
+        // generateMountains();
         
-        applyPathToHeightmap();
+        // applyPathToHeightmap();
+
+        /*generatePathTile(0, 0);
+        generatePathTile(0, 15);
+        generatePathTile(15, 0);
+        generatePathTile(15, 15);*/
+
+        generateBorderTile(0, 0);
+        generateBorderTile(0, totalGridSize() - 1);
+        generateBorderTile(totalGridSize() - 1, 0);
+        generateBorderTile(totalGridSize() - 1, totalGridSize() - 1);
         return true;
     }
 }

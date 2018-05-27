@@ -44,7 +44,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(64, 16);
+            generateMapGeometry(64, 4, 0);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -58,14 +58,18 @@ public class MapAppState extends BaseAppState {
     
     }
     
-    private void generateMapGeometry(final int size, final int gridSize) throws Exception {
+    private void generateMapGeometry(final int size, final int gridSize, final int ditchSize) throws Exception {
         TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap();
         
         heightmapGenerator.setSize(size);
         heightmapGenerator.setGridSize(gridSize);
+        heightmapGenerator.setDitchSize(ditchSize);
         
-        heightmapGenerator.setPathTileBorderFactor(.2f);
-        heightmapGenerator.setPathTileBorderNeckFactor(.01f);
+        heightmapGenerator.setMinDitchHeight(-5.0f);
+        heightmapGenerator.setDitchVariation(1f);
+
+        heightmapGenerator.setPathTileBorderFactor(0f);
+        heightmapGenerator.setPathTileBorderNeckFactor(0f);
         heightmapGenerator.setPathSnakyness(15);
         heightmapGenerator.setPathVariation(.25f);
         
