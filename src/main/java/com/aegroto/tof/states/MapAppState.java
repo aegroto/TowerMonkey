@@ -44,7 +44,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(64, 4, 0);
+            generateMapGeometry(64, 16, 1);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setDitchSize(ditchSize);
         
         heightmapGenerator.setMinDitchHeight(-5.0f);
-        heightmapGenerator.setDitchVariation(1f);
+        heightmapGenerator.setDitchVariation(2.5f);
 
         heightmapGenerator.setPathTileBorderFactor(0f);
         heightmapGenerator.setPathTileBorderNeckFactor(0f);

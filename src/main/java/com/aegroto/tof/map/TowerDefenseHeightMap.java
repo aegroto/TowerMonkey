@@ -59,7 +59,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
 
     public void setDitchSize(int ditchSize) {
         this.ditchSize = ditchSize;
-        updatePathTileSize();
     }
     
     public void setPathTileBorderFactor(float borderFactor) {
@@ -71,11 +70,11 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     public void createGrid() {
-        this.grid = new TowerDefenseGrid(gridSize, pathSnakyness);
+        this.grid = new TowerDefenseGrid(gridSize - ditchSize * 2, pathSnakyness);
     }
 
     private void updatePathTileSize() {
-        this.pathTileSize = size / totalGridSize();
+        this.pathTileSize = size / gridSize;
     }
     
     private void generateRawHeightmap() {
@@ -88,13 +87,13 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         }
     }
 
-    private void generateBorders() { 
-        int totalSize = gridSize + ditchSize * 2;       
-        for(int x = 0; x < totalSize; ++x) {
+    private void generateBorders() {       
+        for(int x = 0; x < gridSize; ++x) {
             for(int z = 0; z < ditchSize; ++z) {
                 generateBorderTile(x, z);
-                // generateBorderTile(z, x);
-                // generateBorderTile(x, totalSize - z);
+                generateBorderTile(z, x);
+                generateBorderTile(x, gridSize - z - 1);
+                generateBorderTile(gridSize - z - 1, x);
             }
         }
     }
@@ -417,9 +416,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     private int ditchOffset() {
         return ditchSize;
     }
-    private int totalGridSize() {
-        return gridSize + ditchSize * 2;
-    }
 
     @Override
     public boolean load() {
@@ -427,20 +423,18 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         grid.generateGrid();
         
         generateRawHeightmap();
-        // generateBorders();
-        // generateMountains();
+        generateBorders();
+        generateMountains();
         
-        // applyPathToHeightmap();
+        applyPathToHeightmap();
 
-        /*generatePathTile(0, 0);
-        generatePathTile(0, 15);
-        generatePathTile(15, 0);
-        generatePathTile(15, 15);*/
+        // generatePathTile(0, 0);
 
-        generateBorderTile(0, 0);
-        generateBorderTile(0, totalGridSize() - 1);
-        generateBorderTile(totalGridSize() - 1, 0);
-        generateBorderTile(totalGridSize() - 1, totalGridSize() - 1);
+        /*generateBorderTile(0, 0);
+        generateBorderTile(0, gridSize - 1);
+        generateBorderTile(gridSize - 1, 0);
+        generateBorderTile(gridSize - 1, gridSize - 1);*/
+
         return true;
     }
 }
