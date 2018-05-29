@@ -28,6 +28,8 @@ public class MapAppState extends BaseAppState {
     private Material mapMaterial;
     
     private final Node rootNode;
+
+    private static final float MAP_WORLD_SIZE = 256f;
     
     public MapAppState(Node rootNode) {
         this.rootNode = rootNode;
@@ -44,7 +46,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(64, 16, 1);
+            generateMapGeometry(256, 64, (64 - 16) / 2);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -66,7 +68,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setDitchSize(ditchSize);
         
         heightmapGenerator.setMinDitchHeight(-5.0f);
-        heightmapGenerator.setDitchVariation(2.5f);
+        heightmapGenerator.setDitchVariation(.5f);
 
         heightmapGenerator.setPathTileBorderFactor(0f);
         heightmapGenerator.setPathTileBorderNeckFactor(0f);
@@ -74,13 +76,15 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
-        heightmapGenerator.setHillVariation(0f);
+        heightmapGenerator.setHillVariation(.25f);
+
+        int battlegroundGridSize = size - ditchSize * 2;
                 
-        heightmapGenerator.setTotalMountains(5);
-        heightmapGenerator.setMountainMinSize((int) (size * .15f));
-        heightmapGenerator.setMountainMaxSize((int) (size * .2f));
-        heightmapGenerator.setMountainMinLevels(size * 50);
-        heightmapGenerator.setMountainMaxLevels(size * 60);
+        heightmapGenerator.setTotalMountains(10);
+        heightmapGenerator.setMountainMinSize((int) (battlegroundGridSize * .1f));
+        heightmapGenerator.setMountainMaxSize((int) (battlegroundGridSize * .15f));
+        heightmapGenerator.setMountainMinLevels(battlegroundGridSize * 40);
+        heightmapGenerator.setMountainMaxLevels(battlegroundGridSize * 50);
         heightmapGenerator.setMountainBorderFragmentation(.5f);
         heightmapGenerator.setMinMountainHeight(2f);     
         heightmapGenerator.setMountainVariation(.1f);
@@ -103,17 +107,18 @@ public class MapAppState extends BaseAppState {
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
 
         // Scaling mesh and textures, adapting to a lower or higher size
-        float scale = 64f / size;
+        float scale = MAP_WORLD_SIZE / size;
         map.setLocalScale(scale);
-        mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
+        /*mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
         mapMaterial.setFloat("HillTexScale",     ((float) mapMaterial.getParam("HillTexScale").getValue()) * scale);
-        mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);
+        mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);*/
 
         map.setMaterial(mapMaterial);
-        TerrainQuad simpleMap = map.clone();
+
+        /*TerrainQuad simpleMap = map.clone();
         simpleMap.setLocalTranslation(70f, 0f, 0f);
         Material simpleMapMaterial = getApplication().getAssetManager().loadMaterial("Materials/LightTerrain.j3m");  
         simpleMap.setMaterial(simpleMapMaterial);
-        rootNode.attachChild(simpleMap);
+        rootNode.attachChild(simpleMap);*/
     }
 }
