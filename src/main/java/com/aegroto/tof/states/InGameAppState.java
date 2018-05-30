@@ -32,9 +32,8 @@ public class InGameAppState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        getApplication().getCamera().setLocation(new Vector3f(0, 30, 65));
-        // getApplication().getCamera().setLocation(new Vector3f(0, 5, 10));
-        getApplication().getCamera().setRotation(new Quaternion().fromAngles(FastMath.QUARTER_PI / 2, FastMath.PI, 0f));      
+        getApplication().getCamera().setLocation(new Vector3f(0, 60, 65));
+        getApplication().getCamera().setRotation(new Quaternion().fromAngles(FastMath.QUARTER_PI, FastMath.PI, 0f));      
         
         getStateManager().attach(mapAppState);
     }

@@ -1,0 +1,5 @@
+Material Terrain : Common/MatDefs/Misc/Unshaded.j3md {
+    MaterialParameters {
+        Color: 0.7 0.7 1 0.35
+    }
+}

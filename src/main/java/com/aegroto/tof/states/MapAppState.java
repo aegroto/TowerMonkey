@@ -10,12 +10,15 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.util.TangentBinormalGenerator;
 
 import lombok.Getter;
 
@@ -25,7 +28,8 @@ import lombok.Getter;
  */
 public class MapAppState extends BaseAppState {
     @Getter private TerrainQuad map;
-    private Material mapMaterial;
+    private Geometry seaGeom;
+    private Material mapMaterial, seaMaterial;
     
     private final Node rootNode;
 
@@ -81,8 +85,8 @@ public class MapAppState extends BaseAppState {
         int battlegroundGridSize = size - ditchSize * 2;
                 
         heightmapGenerator.setTotalMountains(10);
-        heightmapGenerator.setMountainMinSize((int) (battlegroundGridSize * .1f));
-        heightmapGenerator.setMountainMaxSize((int) (battlegroundGridSize * .15f));
+        heightmapGenerator.setMountainMinSize((int) (battlegroundGridSize * .05f));
+        heightmapGenerator.setMountainMaxSize((int) (battlegroundGridSize * .1f));
         heightmapGenerator.setMountainMinLevels(battlegroundGridSize * 40);
         heightmapGenerator.setMountainMaxLevels(battlegroundGridSize * 50);
         heightmapGenerator.setMountainBorderFragmentation(.5f);
@@ -106,7 +110,7 @@ public class MapAppState extends BaseAppState {
         
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
 
-        // Scaling mesh and textures, adapting to a lower or higher size
+        // Scaling mesh, adapting to a lower or higher size
         float scale = MAP_WORLD_SIZE / size;
         map.setLocalScale(scale);
         /*mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
@@ -114,6 +118,15 @@ public class MapAppState extends BaseAppState {
         mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);*/
 
         map.setMaterial(mapMaterial);
+
+        seaGeom = new Geometry("Sea", new Quad(size, size));
+        seaMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseSea.j3m"); 
+        seaMaterial.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);     
+        seaGeom.setMaterial(seaMaterial);
+
+        seaGeom.setLocalTranslation(-size/2f, 0f, size/2f);
+        seaGeom.setLocalRotation(new Quaternion().fromAngles(-FastMath.HALF_PI, 0f, 0f));
+        rootNode.attachChild(seaGeom);
 
         /*TerrainQuad simpleMap = map.clone();
         simpleMap.setLocalTranslation(70f, 0f, 0f);
