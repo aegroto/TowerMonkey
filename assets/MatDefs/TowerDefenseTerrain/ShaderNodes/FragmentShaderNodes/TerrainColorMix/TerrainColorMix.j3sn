@@ -27,9 +27,12 @@ ShaderNodeDefinitions {
         }
 
         Input {
+            vec4 ditchColor;
             vec4 pathColor;
             vec4 hillColor;
             vec4 mountainColor;
+
+            float ditchFactor;
             float pathFactor;
             float hillFactor;
             float mountainFactor;
@@ -38,6 +41,7 @@ ShaderNodeDefinitions {
             vec4 diffuseSum;
             vec4 specularSum;
 
+            vec2 ditchLight;
             vec2 pathLight;
             vec2 hillLight;
             vec2 mountainLight;
