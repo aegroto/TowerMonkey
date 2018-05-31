@@ -77,23 +77,47 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         this.pathTileSize = size / gridSize;
     }
     
-    private void generateRawHeightmap() {
+    private void initRawHeightmap() {
         int heightmapLSize = (size * 2);
         int heightmapSize = heightmapLSize * heightmapLSize;
         heightData = new float[heightmapSize];
-        
-        for(int i = 0; i < heightmapSize; ++i) {
-            heightData[i] = randomHillPointHeight();
+    }
+
+    private void generateBattleground() {
+        int battlegroundSize = gridSize - ditchSize * 2;
+        int battlegroundTopBorder = gridSize - battlegroundSize - ditchSize;
+
+        for(int x = battlegroundTopBorder; x < battlegroundTopBorder + battlegroundSize; ++x) {
+            for(int z = battlegroundTopBorder; z < battlegroundTopBorder + battlegroundSize; ++z) {
+                generateHillTile(x, z);
+                generateHillTile(z, x);
+                generateHillTile(x, gridSize - z - 1);
+                generateHillTile(gridSize - z - 1, x);
+            }
         }
     }
 
-    private void generateBorders() {       
+    private void generateBattlegroundBorder() {
+        int battlegroundSize = gridSize - ditchSize * 2;
+        int battlegroundBorderStart = tileToMeshScale(gridSize - battlegroundSize - ditchSize - 1);
+
+        for(int x = battlegroundBorderStart; x < battlegroundBorderStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2; ++x) {
+            for(int z = battlegroundBorderStart; z < battlegroundBorderStart + pathTileSize; ++z) {
+                heightData[arrayIndex(x, z)] = randomBattlegroundBorderPointHeight();
+                heightData[arrayIndex(z, x)] = randomBattlegroundBorderPointHeight();
+                heightData[arrayIndex(x, tileToMeshScale(battlegroundSize) + pathTileSize + z)] = randomBattlegroundBorderPointHeight();
+                heightData[arrayIndex(tileToMeshScale(battlegroundSize) + pathTileSize + z, x)] = randomBattlegroundBorderPointHeight();
+            }
+        }
+    }
+
+    private void generateDitch() {       
         for(int x = 0; x < gridSize; ++x) {
             for(int z = 0; z < ditchSize; ++z) {
-                generateBorderTile(x, z);
-                generateBorderTile(z, x);
-                generateBorderTile(x, gridSize - z - 1);
-                generateBorderTile(gridSize - z - 1, x);
+                generateDitchTile(x, z);
+                generateDitchTile(z, x);
+                generateDitchTile(x, gridSize - z - 1);
+                generateDitchTile(gridSize - z - 1, x);
             }
         }
     }
@@ -279,7 +303,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         }
     }
 
-    private void generateBorderTile(int x, int z) {
+    private void generateDitchTile(int x, int z) {
         int iStart = x * pathTileSize,
             jStart = z * pathTileSize,
             iLimit = x * pathTileSize + pathTileSize,
@@ -288,6 +312,19 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         for(int i = iStart; i < iLimit; ++i) {
             for(int j = jStart; j < jLimit; ++j) {
                 heightData[arrayIndex(i, j)] = randomDitchPointHeight();
+            }
+        }
+    }
+
+    private void generateHillTile(int x, int z) {
+        int iStart = x * pathTileSize,
+            jStart = z * pathTileSize,
+            iLimit = x * pathTileSize + pathTileSize,
+            jLimit = z * pathTileSize + pathTileSize;
+        
+        for(int i = iStart; i < iLimit; ++i) {
+            for(int j = jStart; j < jLimit; ++j) {
+                heightData[arrayIndex(i, j)] = randomHillPointHeight();
             }
         }
     }
@@ -400,6 +437,11 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     private float randomDitchPointHeight() {
         return minDitchHeight + FastMath.nextRandomFloat() * ditchVariation;
     }
+
+    private float randomBattlegroundBorderPointHeight() {
+        float balance = FastMath.nextRandomFloat() * .6f;
+        return randomDitchPointHeight() * (1f - balance) * .4f + randomHillPointHeight() * balance * .6f;
+    }
     
     private float randomPathPointHeight() {
         return FastMath.nextRandomFloat() * pathVariation;
@@ -422,18 +464,14 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         createGrid();        
         grid.generateGrid();
         
-        generateRawHeightmap();
-        generateBorders();
+        initRawHeightmap();
+
+        generateDitch();
+        generateBattleground();
+        generateBattlegroundBorder();
         generateMountains();
         
         applyPathToHeightmap();
-
-        // generatePathTile(0, 0);
-
-        /*generateBorderTile(0, 0);
-        generateBorderTile(0, gridSize - 1);
-        generateBorderTile(gridSize - 1, 0);
-        generateBorderTile(gridSize - 1, gridSize - 1);*/
 
         return true;
     }

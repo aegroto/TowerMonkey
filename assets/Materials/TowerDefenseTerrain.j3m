@@ -36,9 +36,9 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
         // HillTexScale : 5.0
         // MountainTexScale : 20.0
 
-        DitchMaxHeight : -0.05
+        DitchMaxHeight : -0.1
 
-        PathMinHeight : -0.1
+        PathMinHeight : -1.0
         PathMaxHeight : 1.01
 
         HillMinHeight : 0.5

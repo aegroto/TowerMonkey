@@ -71,8 +71,8 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setGridSize(gridSize);
         heightmapGenerator.setDitchSize(ditchSize);
         
-        heightmapGenerator.setMinDitchHeight(-5.0f);
-        heightmapGenerator.setDitchVariation(.5f);
+        heightmapGenerator.setMinDitchHeight(-3.0f);
+        heightmapGenerator.setDitchVariation(1f);
 
         heightmapGenerator.setPathTileBorderFactor(0f);
         heightmapGenerator.setPathTileBorderNeckFactor(0f);
