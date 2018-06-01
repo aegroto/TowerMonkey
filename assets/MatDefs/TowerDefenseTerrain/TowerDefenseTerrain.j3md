@@ -296,9 +296,9 @@ MaterialDef TowerDefenseTerrain {
                     vVertex = TerrainBaseValues.vPosition;
                     vNormal = TerrainWorldView.worldViewNormal;
 
-                    NormalMapTex = MatParam.PathNormalMap;
-                    texCoord = PathTerrainParallax.texCoordParallax;
-                    TexScale = MatParam.PathTexScale;
+                    NormalMapTex = MatParam.DitchNormalMap;
+                    texCoord = DitchTerrainParallax.texCoordParallax;
+                    TexScale = MatParam.DitchTexScale;
                 }
             }
 

@@ -1,9 +1,9 @@
 Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
     MaterialParameters {
-        DitchTex : Repeat Textures/better terrain/mountain/mountain_d.png
-        DitchNormalMap : Repeat Textures/better terrain/mountain/mountain_ln.png
-        DitchSpecularMap : Repeat Textures/better terrain/mountain/mountain_s.png
-        DitchParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
+        DitchTex : Repeat Textures/better terrain/ditch/ditch_d.png
+        DitchNormalMap : Repeat Textures/better terrain/ditch/ditch_n.png
+        DitchSpecularMap : Repeat Textures/better terrain/ditch/ditch_s.png
+        DitchParallaxMap : Repeat Textures/better terrain/ditch/ditch_h.png
         DitchParallaxHeight : 0.005
 
         PathTex : Repeat Textures/better terrain/path/path_d.png
@@ -25,7 +25,7 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
         MountainParallaxHeight : 0.005
 
         // Triplanar Scaling
-        DitchTexScale : 0.2
+        DitchTexScale : 0.03125
         PathTexScale : 0.125
         HillTexScale : 0.0625
         MountainTexScale : 0.2
@@ -51,7 +51,7 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
 
         TriPlanarMapping : True
         NormalMapping : True
-        SpecularMapping : True
+        SpecularMapping : False
         ParallaxMapping : False
         SteepParallax : False
     }

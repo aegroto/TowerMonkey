@@ -71,8 +71,8 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setGridSize(gridSize);
         heightmapGenerator.setDitchSize(ditchSize);
         
-        heightmapGenerator.setMinDitchHeight(-3.0f);
-        heightmapGenerator.setDitchVariation(1f);
+        heightmapGenerator.setMinDitchHeight(-8.0f);
+        heightmapGenerator.setDitchVariation(.5f);
 
         heightmapGenerator.setPathTileBorderFactor(0f);
         heightmapGenerator.setPathTileBorderNeckFactor(0f);
@@ -124,7 +124,7 @@ public class MapAppState extends BaseAppState {
         seaMaterial.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);     
         seaGeom.setMaterial(seaMaterial);
 
-        seaGeom.setLocalTranslation(-size/2f, 0f, size/2f);
+        seaGeom.setLocalTranslation(-size/2f, -1f, size/2f);
         seaGeom.setLocalRotation(new Quaternion().fromAngles(-FastMath.HALF_PI, 0f, 0f));
         rootNode.attachChild(seaGeom);
 
