@@ -16,8 +16,6 @@ ShaderNodeDefinitions {
             vec4 vLightDir;
             vec3 vViewDir;
 
-            vec3 blending;
-
             vec3 normal;
 
             // locals
