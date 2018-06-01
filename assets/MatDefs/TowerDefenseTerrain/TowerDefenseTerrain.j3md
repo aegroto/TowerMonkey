@@ -76,7 +76,7 @@ MaterialDef TowerDefenseTerrain {
 
         VertexShaderNodes {
             ShaderNode TerrainBaseValues {
-                Definition : TerrainBaseValues : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainBaseValues/TerrainBaseValues.j3sn
+                Definition : BaseValues : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/BaseValues/BaseValues.j3sn
                 InputMappings {
                     inPosition = Attr.inPosition;
                     inNormal = Attr.inNormal;
@@ -85,7 +85,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode TerrainWorldView {
-                Definition : TerrainWorldView : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainWorldView/TerrainWorldView.j3sn
+                Definition : WorldView : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/WorldView/WorldView.j3sn
 
                 InputMappings {
                     inPosition = TerrainBaseValues.vPosition;
@@ -102,7 +102,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode TerrainLightDir {
-                Definition : TerrainLightDir : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainLightDir/TerrainLightDir.j3sn
+                Definition : LightDir : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/LightDir/LightDir.j3sn
 
                 InputMappings {
                     worldViewPosition = TerrainWorldView.worldViewPosition;
@@ -125,7 +125,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode TerrainProjection {
-                Definition : TerrainProjection : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/TerrainProjection/TerrainProjection.j3sn
+                Definition : Projection : MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/Projection/Projection.j3sn
 
                 InputMappings {
                     worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix
@@ -141,7 +141,7 @@ MaterialDef TowerDefenseTerrain {
 
         FragmentShaderNodes {
             ShaderNode TerrainTriplanarBlending {
-                Definition : TerrainTriplanarBlending : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainTriplanarBlending/TerrainTriplanarBlending.j3sn
+                Definition : TriplanarBlending : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TriplanarBlending/TriplanarBlending.j3sn
 
                 InputMappings {
                     vNormal = TerrainBaseValues.vNormal;
@@ -149,7 +149,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode DitchTerrainParallax {
-                Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
+                Definition : Parallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Parallax/Parallax.j3sn
 
                 InputMappings {
                     vVertex = TerrainBaseValues.vPosition;
@@ -165,7 +165,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode PathTerrainParallax {
-                Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
+                Definition : Parallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Parallax/Parallax.j3sn
 
                 InputMappings {
                     vVertex = TerrainBaseValues.vPosition;
@@ -181,7 +181,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode HillTerrainParallax {
-                Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
+                Definition : Parallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Parallax/Parallax.j3sn
 
                 InputMappings {
                     vVertex = TerrainBaseValues.vPosition;
@@ -197,7 +197,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode MountainTerrainParallax {
-                Definition : TerrainParallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainParallax/TerrainParallax.j3sn
+                Definition : Parallax : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Parallax/Parallax.j3sn
 
                 InputMappings {
                     vVertex = TerrainBaseValues.vPosition;
@@ -213,7 +213,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode DitchTerrainFactor {
-                Definition : TerrainLowestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainLowestFactor.j3sn
+                Definition : TextureLowestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TextureFactor/TextureLowestFactor.j3sn
                 
                 InputMappings {               
                     vPosition = TerrainBaseValues.vPosition;
@@ -231,7 +231,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode PathTerrainFactor {
-                Definition : TerrainFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
+                Definition : TextureFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TextureFactor/TextureFactor.j3sn
                 
                 InputMappings {               
                     vPosition = TerrainBaseValues.vPosition;
@@ -250,7 +250,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode HillTerrainFactor {
-                Definition : TerrainFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainFactor.j3sn
+                Definition : TextureFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TextureFactor/TextureFactor.j3sn
                 
                 InputMappings {
                     vPosition = TerrainBaseValues.vPosition;
@@ -271,7 +271,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode MountainTerrainFactor {
-                Definition : TerrainHighestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainFactor/TerrainHighestFactor.j3sn
+                Definition : TextureHighestFactor : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TextureFactor/TextureHighestFactor.j3sn
                 
                 InputMappings {
                     vPosition = TerrainBaseValues.vPosition;
@@ -289,7 +289,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode DitchTerrainNormal {
-                Definition : TerrainNormal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+                Definition : Normal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Normal/Normal.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -303,7 +303,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode PathTerrainNormal {
-                Definition : TerrainNormal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+                Definition : Normal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Normal/Normal.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -317,7 +317,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode HillTerrainNormal {
-                Definition : TerrainNormal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+                Definition : Normal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Normal/Normal.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -331,7 +331,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode MountainTerrainNormal {
-                Definition : TerrainNormal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainNormal/TerrainNormal.j3sn
+                Definition : Normal : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Normal/Normal.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -345,7 +345,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode DitchTerrainShininess {
-                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+                Definition : Shininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Shininess/Shininess.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -360,7 +360,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode PathTerrainShininess {
-                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+                Definition : Shininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Shininess/Shininess.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -375,7 +375,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode HillTerrainShininess {
-                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+                Definition : Shininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Shininess/Shininess.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -390,7 +390,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode MountainTerrainShininess {
-                Definition : TerrainShininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainShininess/TerrainShininess.j3sn
+                Definition : Shininess : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Shininess/Shininess.j3sn
 
                 InputMappings {
                     blending = TerrainTriplanarBlending.blending
@@ -405,7 +405,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode DitchTerrainLight {
-                Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+                Definition : Light : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Light/Light.j3sn
 
                 InputMappings {
                     shininess = DitchTerrainShininess.shininess
@@ -420,7 +420,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode PathTerrainLight {
-                Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+                Definition : Light : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Light/Light.j3sn
 
                 InputMappings {
                     shininess = PathTerrainShininess.shininess
@@ -435,7 +435,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode HillTerrainLight {
-                Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+                Definition : Light : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Light/Light.j3sn
 
                 InputMappings {
                     shininess = HillTerrainShininess.shininess
@@ -450,7 +450,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode MountainTerrainLight {
-                Definition : TerrainLight : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainLight/TerrainLight.j3sn
+                Definition : Light : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Light/Light.j3sn
 
                 InputMappings {
                     shininess = MountainTerrainShininess.shininess
@@ -465,7 +465,7 @@ MaterialDef TowerDefenseTerrain {
             }
 
             ShaderNode TerrainColorMix {
-                Definition : TerrainColorMix : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TerrainColorMix/TerrainColorMix.j3sn
+                Definition : ColorMix : MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/ColorMix/ColorMix.j3sn
 
                 InputMappings {
                     ditchColor = DitchTerrainFactor.color

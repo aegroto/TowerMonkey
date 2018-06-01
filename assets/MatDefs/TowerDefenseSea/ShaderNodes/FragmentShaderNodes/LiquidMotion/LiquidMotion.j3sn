@@ -1,0 +1,19 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition LiquidMotion {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/LiquidMotion/LiquidMotion.frag
+
+        Documentation { }
+
+        Input {
+            vec2 texCoord;
+
+            float Time;
+            float speed;
+        }
+
+        Output {
+            vec2 motionedTexCoord;
+        }
+    }
+}

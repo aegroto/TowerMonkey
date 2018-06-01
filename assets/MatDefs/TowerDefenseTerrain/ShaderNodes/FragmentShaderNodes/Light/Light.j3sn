@@ -1,0 +1,33 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition Light {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/Light/Light.frag
+
+        Documentation { }
+
+        Input {
+            // globals
+            float shininess;
+            vec4 gLightDirection;
+
+            vec3 lightVec;
+            
+            vec3 vNormal;
+            vec4 vLightDir;
+            vec3 vViewDir;
+
+            vec3 blending;
+
+            vec3 normal;
+
+            // locals
+            float spotFallOff;
+            vec4 lightDir;
+        }
+
+        Output {
+            vec2 light;
+        }
+    }
+} 
+

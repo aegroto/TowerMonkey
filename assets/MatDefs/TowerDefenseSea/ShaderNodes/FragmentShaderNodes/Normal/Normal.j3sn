@@ -1,0 +1,25 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition Normal {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/Normal/Normal.frag
+
+        Documentation { }
+
+        Input {
+            vec3 vVertex;         
+            vec3 vNormal;
+
+            vec3 blending;
+
+            sampler2D NormalMapTex;
+            float TexScale;
+
+            vec2 texCoord;
+        }
+
+        Output {
+            vec3 normal;
+        }
+    }
+} 
+

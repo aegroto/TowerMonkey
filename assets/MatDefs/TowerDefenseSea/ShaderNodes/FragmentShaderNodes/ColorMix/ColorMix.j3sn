@@ -1,0 +1,25 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition ColorMix {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/ColorMix/ColorMix.frag
+
+        Documentation { }
+
+        Input {
+            sampler2D diffuseMapTex;
+            vec2 texCoord;
+            float TexScale;
+            float alpha;
+
+            vec4 ambientSum;
+            vec4 diffuseSum;
+            vec4 specularSum;
+
+            vec2 light;
+        }
+
+        Output {
+            vec4 outColor
+        }
+    }
+}

@@ -1,5 +1,21 @@
-Material Terrain : Common/MatDefs/Misc/Unshaded.j3md {
+Material Terrain : MatDefs/TowerDefenseSea/TowerDefenseSea.j3md {
     MaterialParameters {
-        Color: 0.7 0.7 1 0.35
+        DiffuseMap : Repeat Textures/sea/sea.png
+        NormalMap : Repeat Textures/sea/sea_n.png
+        SpecularMap : Repeat Textures/sea/sea_s.png
+        ParallaxMap : Repeat Textures/sea/sea_h.png
+        TexScale : 20.0
+        ParallaxHeight : 0.1
+
+        NormalMapping : True
+        SpecularMapping : False
+        ParallaxMapping : False
+        SteepParallax : False
+
+        SpecularColor : 0 0 0 1
+
+        Shininess : 1.0
+        Alpha : 0.6
+        MotionSpeed : 0.01
     }
 }

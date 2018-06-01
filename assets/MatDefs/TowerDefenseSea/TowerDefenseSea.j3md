@@ -1,0 +1,204 @@
+MaterialDef TowerDefenseSea {
+    MaterialParameters {
+        Texture2D DiffuseMap
+        Texture2D NormalMap
+        Texture2D SpecularMap
+        Texture2D ParallaxMap
+        Float TexScale
+        Float ParallaxHeight
+
+        Boolean NormalMapping
+        Boolean SpecularMapping
+        Boolean ParallaxMapping
+        Boolean SteepParallax
+
+        Color SpecularColor : 0 0 0 1
+
+        Float Shininess : 1.0
+        Float Alpha : 1.0
+        Float MotionSpeed : 0.01
+    }
+
+    Technique {
+
+        LightMode MultiPass
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+            WorldViewMatrix
+            ViewMatrix
+            NormalMatrix
+
+            LightPosition
+            LightDirection
+
+            AmbientLightColor
+            LightColor
+
+            Time
+        }
+
+        Defines {
+            STEEP_PARALLAX : SteepParallax
+            NORMAL_MAPPING : NormalMapping
+            PARALLAX_MAPPING : ParallaxMapping
+            SPECULAR_MAPPING : SpecularMapping
+        }
+
+        VertexShaderNodes {
+            ShaderNode BaseValues {
+                Definition : BaseValues : MatDefs/TowerDefenseSea/ShaderNodes/VertexShaderNodes/BaseValues/BaseValues.j3sn
+                InputMappings {
+                    inPosition = Attr.inPosition;
+                    inNormal = Attr.inNormal;
+                    inTexCoord = Attr.inTexCoord;
+                }
+            }
+
+            ShaderNode WorldView {
+                Definition : WorldView : MatDefs/TowerDefenseSea/ShaderNodes/VertexShaderNodes/WorldView/WorldView.j3sn
+
+                InputMappings {
+                    inPosition = BaseValues.vPosition;
+                    inNormal = BaseValues.vNormal;
+                    inTangent = Attr.inTangent;
+
+                    gWorldViewMatrix = WorldParam.WorldViewMatrix;
+                    gNormalMatrix = WorldParam.NormalMatrix;
+                    gViewMatrix = WorldParam.ViewMatrix;
+
+                    gLightPosition = WorldParam.LightPosition;
+                    gLightColor = WorldParam.LightColor;
+                }
+            }
+
+            ShaderNode LightDir {
+                Definition : LightDir : MatDefs/TowerDefenseSea/ShaderNodes/VertexShaderNodes/LightDir/LightDir.j3sn
+
+                InputMappings {
+                    worldViewPosition = WorldView.worldViewPosition;
+                    worldViewNormal = WorldView.worldViewNormal;
+                    worldViewDir = WorldView.worldViewDir;
+                    worldViewLightPos = WorldView.worldViewLightPos;
+                    worldViewTangent = WorldView.worldViewTangent;
+                    worldViewBinormal = WorldView.worldViewBinormal;
+                    tangentSpaceMat = WorldView.tangentSpaceMat;
+                    
+                    vLightDir = Attr.inLightDir;
+
+                    gWorldViewMatrix = WorldParam.WorldViewMatrix;
+                    gNormalMatrix = WorldParam.NormalMatrix;
+                    gViewMatrix = WorldParam.ViewMatrix;
+
+                    gLightPosition = WorldParam.LightPosition;
+                    gLightColor = WorldParam.LightColor;
+                }
+            }
+
+            ShaderNode Projection {
+                Definition : Projection : MatDefs/TowerDefenseSea/ShaderNodes/VertexShaderNodes/Projection/Projection.j3sn
+
+                InputMappings {
+                    worldViewProjectionMatrix = WorldParam.WorldViewProjectionMatrix
+                    inPosition = BaseValues.vPosition
+                    inNormal = BaseValues.vNormal
+                }
+
+                OutputMappings {
+                    Global.outPosition = projPosition
+                }
+            }
+        }
+
+        FragmentShaderNodes {
+            ShaderNode LiquidMotion {
+                Definition : LiquidMotion : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/LiquidMotion/LiquidMotion.j3sn
+
+                InputMappings {
+                    texCoord = BaseValues.texCoord;
+                    Time = WorldParam.Time;
+
+                    speed = MatParam.MotionSpeed;
+                }
+            }
+
+            ShaderNode Parallax {
+                Definition : Parallax : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/Parallax/Parallax.j3sn
+
+                InputMappings {
+                    vVertex = BaseValues.vPosition;
+                    vViewDirParallax = LightDir.vViewDirParallax;
+                    texCoord = LiquidMotion.motionedTexCoord;
+
+                    parallaxHeight = MatParam.ParallaxHeight;
+
+                    parallaxMapTex = MatParam.ParallaxMap;
+                    texScale = MatParam.TexScale;
+                }
+            }
+
+            ShaderNode Normal {
+                Definition : Normal : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/Normal/Normal.j3sn
+
+                InputMappings {
+                    vVertex = BaseValues.vPosition;
+                    vNormal = WorldView.worldViewNormal;
+
+                    NormalMapTex = MatParam.NormalMap;
+                    texCoord = Parallax.texCoordParallax;
+                    TexScale = MatParam.TexScale;
+                }
+            }
+
+            ShaderNode Shininess {
+                Definition : Shininess : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/Shininess/Shininess.j3sn
+
+                InputMappings {
+                    vVertex = BaseValues.vPosition;
+
+                    SpecularMapTex = MatParam.SpecularMap;
+                    texCoord = Parallax.texCoordParallax;
+                    TexScale = MatParam.TexScale;
+
+                    fixedShininess = MatParam.Shininess;
+                }
+            }
+
+            ShaderNode Light {
+                Definition : Light : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/Light/Light.j3sn
+
+                InputMappings {
+                    shininess = Shininess.shininess
+                    gLightDirection = WorldParam.LightDirection;
+                    lightVec = LightDir.lightVec;
+
+                    vLightDir = LightDir.vLightDir;
+                    vViewDir = LightDir.vViewDir;
+
+                    normal = Normal.normal;
+                }
+            }
+
+            ShaderNode ColorMix {
+                Definition : ColorMix : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/ColorMix/ColorMix.j3sn
+
+                InputMappings {
+                    diffuseMapTex = MatParam.DiffuseMap;
+                    texCoord = Parallax.texCoordParallax;
+                    TexScale = MatParam.TexScale;
+                    alpha = MatParam.Alpha;
+
+                    ambientSum = WorldParam.AmbientLightColor
+                    diffuseSum = WorldParam.LightColor
+                    specularSum = MatParam.SpecularColor;
+
+                    light = Light.light;
+                }
+
+                OutputMappings {
+                    Global.outColor = outColor
+                }
+            }
+        }
+    }
+}

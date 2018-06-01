@@ -50,7 +50,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(256, 64, (64 - 16) / 2);
+            generateMapGeometry(512, 64, (64 - 16) / 2);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -74,8 +74,8 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setMinDitchHeight(-8.0f);
         heightmapGenerator.setDitchVariation(.5f);
 
-        heightmapGenerator.setPathTileBorderFactor(0f);
-        heightmapGenerator.setPathTileBorderNeckFactor(0f);
+        heightmapGenerator.setPathTileBorderFactor(.1f);
+        heightmapGenerator.setPathTileBorderNeckFactor(.05f);
         heightmapGenerator.setPathSnakyness(15);
         heightmapGenerator.setPathVariation(.25f);
         
@@ -111,8 +111,8 @@ public class MapAppState extends BaseAppState {
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
 
         // Scaling mesh, adapting to a lower or higher size
-        float scale = MAP_WORLD_SIZE / size;
-        map.setLocalScale(scale);
+        // float scale = size / MAP_WORLD_SIZE;
+        // map.setLocalScale(scale);
         /*mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
         mapMaterial.setFloat("HillTexScale",     ((float) mapMaterial.getParam("HillTexScale").getValue()) * scale);
         mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);*/

@@ -1,0 +1,27 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition Projection {
+        Type: Vertex
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/VertexShaderNodes/Projection/Projection.vert
+
+        Documentation {
+            Terrain Vertex shader node
+            @input worldViewProjectionMatrix World View Projection Matrix
+            @input inPosition Input Position
+
+            @output vVertex Vertex position
+        }
+
+        Input {
+            mat4 worldViewProjectionMatrix;
+            vec3 inPosition;
+            vec3 inNormal;
+        }
+
+        Output {
+            vec3 vPosition;
+            vec3 vNormal;
+
+            vec4 projPosition;
+        }
+    }
+} 

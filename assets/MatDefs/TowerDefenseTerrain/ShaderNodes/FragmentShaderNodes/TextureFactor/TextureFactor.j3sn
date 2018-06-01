@@ -1,0 +1,37 @@
+ShaderNodeDefinitions {
+     ShaderNodeDefinition TextureFactor {
+        Type: Fragment
+        Shader GLSL100: MatDefs/TowerDefenseTerrain/ShaderNodes/FragmentShaderNodes/TextureFactor/TextureFactor.frag
+
+        Documentation { 
+            Terrain Fragment shader node
+
+            @input HillMinHeight HillMinHeight
+            @input HillMaxHeight HillMaxHeight
+
+            @input MountainMinHeight MountainMinHeight
+        }
+
+        Input {
+            vec3 vPosition;
+            vec3 vVertex;            
+
+            sampler2D Tex;
+            vec2 texCoord;
+            float TexScale;
+            vec3 blending;
+
+            float PrevLayerMaxHeight;
+
+            float LayerMinHeight;
+            float LayerMaxHeight;
+
+            float NextLayerMinHeight;
+        }
+
+        Output {
+            vec4 color;
+            float factor;
+        }
+    }
+}
