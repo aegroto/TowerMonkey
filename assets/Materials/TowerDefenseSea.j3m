@@ -1,10 +1,10 @@
 Material Terrain : MatDefs/TowerDefenseSea/TowerDefenseSea.j3md {
     MaterialParameters {
         DiffuseMap : Repeat Textures/sea/sea.png
-        NormalMap : Repeat Textures/sea/sea_n.png
+        NormalMap : Repeat Textures/sea/sea_ln.png
         SpecularMap : Repeat Textures/sea/sea_s.png
         ParallaxMap : Repeat Textures/sea/sea_h.png
-        TexScale : 20.0
+        TexScale : 16.0
         ParallaxHeight : 0.01
 
         NormalMapping : True

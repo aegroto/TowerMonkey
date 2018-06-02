@@ -1,0 +1,11 @@
+vec4 interlaceTexture(sampler2D tex, vec2 texCoord, float scale, int iterations) {
+    vec4 color = vec4(0.0);
+    vec2 newTexCoord = texCoord;
+    for(int i = 1; i <= iterations; ++i) {
+        newTexCoord += sin(cos(texCoord.yx + vec2(i)));
+        color += texture2D(tex, newTexCoord * scale);
+    }
+
+    color /= float(iterations);
+    return color;
+}
