@@ -17,8 +17,7 @@ import lombok.Setter;
  */
 
 public class TowerDefenseHeightMap extends AbstractHeightMap {    
-    @Getter @Setter private int 
-              pathSnakyness,
+    @Getter @Setter private int
               xArrayOffset,
               totalMountains,
               mountainMinSize,
@@ -40,7 +39,9 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     
     @Getter private TowerDefenseGrid grid;
     
-    public TowerDefenseHeightMap() { }
+    public TowerDefenseHeightMap(TowerDefenseGrid grid) {
+        this.grid = grid;
+    }
     
     @Override
     public void setSize(int size) {
@@ -67,10 +68,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     
     public void setPathTileBorderNeckFactor(float borderNeckFactor) {
         this.pathTileBorderNeck = (int) (pathTileBorder * borderNeckFactor);
-    }
-    
-    public void createGrid() {
-        this.grid = new TowerDefenseGrid(gridSize - ditchSize * 2, pathSnakyness);
     }
 
     private void updatePathTileSize() {
@@ -460,8 +457,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
 
     @Override
-    public boolean load() {
-        createGrid();        
+    public boolean load() { 
         grid.generateGrid();
         
         initRawHeightmap();

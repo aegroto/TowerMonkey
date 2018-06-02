@@ -5,6 +5,7 @@
  */
 package com.aegroto.tof.states;
 
+import com.aegroto.tof.map.TowerDefenseGrid;
 import com.aegroto.tof.map.TowerDefenseHeightMap;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
@@ -20,7 +21,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.util.TangentBinormalGenerator;
 import com.jme3.util.mikktspace.MikktspaceTangentGenerator;
 
 import lombok.Getter;
@@ -30,7 +30,7 @@ import lombok.Getter;
  * @author lorenzo
  */
 public class MapAppState extends BaseAppState {
-    @Getter private TerrainQuad map;
+    @Getter private Node map;
     private Geometry seaGeom;
     private Material mapMaterial, seaMaterial;
     
@@ -68,7 +68,7 @@ public class MapAppState extends BaseAppState {
     }
     
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize) throws Exception {
-        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap();
+        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(new TowerDefenseGrid(gridSize - ditchSize * 2, 15));
         
         heightmapGenerator.setSize(size);
         heightmapGenerator.setGridSize(gridSize);
@@ -79,7 +79,7 @@ public class MapAppState extends BaseAppState {
 
         heightmapGenerator.setPathTileBorderFactor(.15f);
         heightmapGenerator.setPathTileBorderNeckFactor(.05f);
-        heightmapGenerator.setPathSnakyness(15);
+        // heightmapGenerator.setPathSnakyness(15);
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
