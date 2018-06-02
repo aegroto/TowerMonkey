@@ -8,6 +8,7 @@ package com.aegroto.tof.states;
 import com.aegroto.tof.map.TowerDefenseHeightMap;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.BlendMode;
@@ -19,6 +20,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.util.TangentBinormalGenerator;
+import com.jme3.util.mikktspace.MikktspaceTangentGenerator;
 
 import lombok.Getter;
 
@@ -97,9 +100,9 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.load();
         
         /** A white ambient light source. */ 
-        /*AmbientLight ambient = new AmbientLight();
+        AmbientLight ambient = new AmbientLight();
         ambient.setColor(ColorRGBA.White);
-        rootNode.addLight(ambient); */
+        rootNode.addLight(ambient);
         
         DirectionalLight sun = new DirectionalLight();
         sun.setDirection((new Vector3f(-0.5f, -0.5f, -0.5f)).normalizeLocal());
@@ -126,12 +129,7 @@ public class MapAppState extends BaseAppState {
 
         seaGeom.setLocalTranslation(-size/2f, -1f, size/2f);
         seaGeom.setLocalRotation(new Quaternion().fromAngles(-FastMath.HALF_PI, 0f, 0f));
+        MikktspaceTangentGenerator.generate(seaGeom);
         rootNode.attachChild(seaGeom);
-
-        /*TerrainQuad simpleMap = map.clone();
-        simpleMap.setLocalTranslation(70f, 0f, 0f);
-        Material simpleMapMaterial = getApplication().getAssetManager().loadMaterial("Materials/LightTerrain.j3m");  
-        simpleMap.setMaterial(simpleMapMaterial);
-        rootNode.attachChild(simpleMap);*/
     }
 }

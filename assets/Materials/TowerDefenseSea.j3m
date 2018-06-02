@@ -12,7 +12,7 @@ Material Terrain : MatDefs/TowerDefenseSea/TowerDefenseSea.j3md {
         ParallaxMapping : False
         SteepParallax : False
 
-        SpecularColor : 0.7 0.7 0.7 1
+        SpecularColor : 1.0 1.0 1.0 1.0
 
         Shininess : 255.0
         Alpha : 0.6
