@@ -1,21 +1,21 @@
 Material Terrain : MatDefs/TowerDefenseSea/TowerDefenseSea.j3md {
     MaterialParameters {
         DiffuseMap : Repeat Textures/sea/sea.png
-        NormalMap : Repeat Textures/sea/sea_ln.png
+        NormalMap : Repeat Textures/sea/sea_hn.png
         SpecularMap : Repeat Textures/sea/sea_s.png
         ParallaxMap : Repeat Textures/sea/sea_h.png
         TexScale : 32.0
         ParallaxHeight : 0.01
 
-        NormalMapping : False
+        NormalMapping : True
         SpecularMapping : True
         ParallaxMapping : False
         SteepParallax : False
 
         SpecularColor : 1.0 1.0 1.0 1.0
 
-        InterlacingFactor : 4
-        Shininess : 255.0
+        InterlacingFactor : 2
+        Shininess : 1024.0
         Alpha : 0.6
 
         RandomSeedVariationSpeed : 0.001
