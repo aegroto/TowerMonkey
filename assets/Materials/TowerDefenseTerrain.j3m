@@ -7,19 +7,19 @@ Material Terrain : MatDefs/TowerDefenseTerrain/TowerDefenseTerrain.j3md {
         DitchParallaxHeight : 0.005
 
         PathTex : Repeat Textures/better terrain/path/path_d.png
-        PathNormalMap : Repeat Textures/better terrain/path/path_ln.png
+        PathNormalMap : Repeat Textures/better terrain/path/path_mn.png
         PathSpecularMap : Repeat Textures/better terrain/path/path_s.png
         PathParallaxMap : Repeat Textures/better terrain/path/path_h.png
         PathParallaxHeight : 0.005
 
         HillTex : Repeat Textures/better terrain/hill/hill_d.png
-        HillNormalMap : Repeat Textures/better terrain/hill/hill_ln.png
+        HillNormalMap : Repeat Textures/better terrain/hill/hill_mn.png
         HillSpecularMap : Repeat Textures/better terrain/hill/hill_s.png
         HillParallaxMap : Repeat Textures/better terrain/hill/hill_h.png
         HillParallaxHeight : 0.01
         
         MountainTex : Repeat Textures/better terrain/mountain/mountain_d.png
-        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_ln.png
+        MountainNormalMap : Repeat Textures/better terrain/mountain/mountain_mn.png
         MountainSpecularMap : Repeat Textures/better terrain/mountain/mountain_s.png
         MountainParallaxMap : Repeat Textures/better terrain/mountain/mountain_h.png
         MountainParallaxHeight : 0.005
