@@ -1,8 +1,8 @@
 #import "ShaderLib/TextureInterlace.glsllib"
 
 void main(){
-    // vec4 diffuseColor = texture2D(diffuseMapTex, texCoord * TexScale) * light.x;
-    vec4 diffuseColor = interlaceTexture(diffuseMapTex, texCoord, TexScale, 2);
+    // vec4 diffuseColor = texture2D(DiffuseMapTex, texCoord * TexScale) * light.x;
+    vec4 diffuseColor = interlaceTexture(DiffuseMapTex, texCoord, TexScale, randomSeed, InterlacingFactor);
 
     diffuseColor *= light.x;
     diffuseColor.a = alpha;

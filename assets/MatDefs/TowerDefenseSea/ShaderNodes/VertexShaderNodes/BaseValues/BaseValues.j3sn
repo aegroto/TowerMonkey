@@ -9,12 +9,17 @@ ShaderNodeDefinitions {
             vec3 inPosition;
             vec3 inNormal;
             vec2 inTexCoord;
+
+            float Time;
+            float RandomSeedVariation;
         }
 
         Output {
             vec3 vPosition;
             vec3 vNormal;
             vec2 texCoord;
+
+            float randomSeed;
         }
     }
 } 

@@ -14,9 +14,11 @@ MaterialDef TowerDefenseSea {
 
         Color SpecularColor : 0 0 0 1
 
+        Int InterlacingFactor : 1
         Float Shininess : 1.0
         Float Alpha : 1.0
-        Float MotionSpeed : 0.01
+
+        Float RandomSeedVariationSpeed : 0.01
     }
 
     Technique {
@@ -52,6 +54,9 @@ MaterialDef TowerDefenseSea {
                     inPosition = Attr.inPosition;
                     inNormal = Attr.inNormal;
                     inTexCoord = Attr.inTexCoord;
+
+                    Time = WorldParam.Time
+                    RandomSeedVariation = MatParam.RandomSeedVariationSpeed
                 }
             }
 
@@ -116,9 +121,7 @@ MaterialDef TowerDefenseSea {
 
                 InputMappings {
                     texCoord = BaseValues.texCoord;
-                    Time = WorldParam.Time;
-
-                    speed = MatParam.MotionSpeed;
+                    randomSeed = BaseValues.randomSeed;
                 }
             }
 
@@ -147,6 +150,9 @@ MaterialDef TowerDefenseSea {
                     NormalMapTex = MatParam.NormalMap;
                     texCoord = Parallax.texCoordParallax;
                     TexScale = MatParam.TexScale;
+
+                    randomSeed = BaseValues.randomSeed;
+                    InterlacingFactor = MatParam.InterlacingFactor;
                 }
             }
 
@@ -161,6 +167,9 @@ MaterialDef TowerDefenseSea {
                     TexScale = MatParam.TexScale;
 
                     fixedShininess = MatParam.Shininess;
+
+                    randomSeed = BaseValues.randomSeed;
+                    InterlacingFactor = MatParam.InterlacingFactor;
                 }
             }
 
@@ -183,7 +192,7 @@ MaterialDef TowerDefenseSea {
                 Definition : ColorMix : MatDefs/TowerDefenseSea/ShaderNodes/FragmentShaderNodes/ColorMix/ColorMix.j3sn
 
                 InputMappings {
-                    diffuseMapTex = MatParam.DiffuseMap;
+                    DiffuseMapTex = MatParam.DiffuseMap;
                     texCoord = Parallax.texCoordParallax;
                     TexScale = MatParam.TexScale;
                     alpha = MatParam.Alpha;
@@ -193,6 +202,9 @@ MaterialDef TowerDefenseSea {
                     specularSum = MatParam.SpecularColor;
 
                     light = Light.light;
+
+                    randomSeed = BaseValues.randomSeed;
+                    InterlacingFactor = MatParam.InterlacingFactor
                 }
 
                 OutputMappings {

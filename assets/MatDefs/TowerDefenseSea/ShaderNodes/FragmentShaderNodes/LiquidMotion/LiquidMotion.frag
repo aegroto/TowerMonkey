@@ -1,4 +1,4 @@
 void main(){
-    motionedTexCoord = texCoord + fract(Time * speed);
+    motionedTexCoord = texCoord + randomSeed;
 }
 

@@ -8,8 +8,7 @@ ShaderNodeDefinitions {
         Input {
             vec2 texCoord;
 
-            float Time;
-            float speed;
+            float randomSeed;
         }
 
         Output {

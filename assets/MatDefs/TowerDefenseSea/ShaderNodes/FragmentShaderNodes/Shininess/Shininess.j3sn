@@ -15,6 +15,10 @@ ShaderNodeDefinitions {
             float fixedShininess;
 
             vec2 texCoord;
+
+            float randomSeed;
+            
+            int InterlacingFactor;
         }
 
         Output {

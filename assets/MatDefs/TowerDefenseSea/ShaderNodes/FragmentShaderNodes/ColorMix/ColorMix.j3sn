@@ -6,7 +6,7 @@ ShaderNodeDefinitions {
         Documentation { }
 
         Input {
-            sampler2D diffuseMapTex;
+            sampler2D DiffuseMapTex;
             vec2 texCoord;
             float TexScale;
             float alpha;
@@ -16,6 +16,10 @@ ShaderNodeDefinitions {
             vec4 specularSum;
 
             vec2 light;
+
+            float randomSeed;
+            
+            int InterlacingFactor;
         }
 
         Output {
