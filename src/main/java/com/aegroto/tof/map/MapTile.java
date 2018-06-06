@@ -12,6 +12,7 @@ import lombok.Getter;
  *
  * @author lorenzo
  */
+
 public class MapTile {
     public static final byte
         TYPE_PATH = 0,
@@ -26,7 +27,6 @@ public class MapTile {
     
     @Getter private final byte type;
     @Getter private final Vector2i pos;
-    // @Getter @Setter private MapTile previousTile;
 
     MapTile(Vector2i pos, byte type) {
         this.pos = pos;

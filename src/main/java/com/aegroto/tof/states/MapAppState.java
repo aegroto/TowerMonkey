@@ -21,7 +21,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Quad;
 import com.jme3.terrain.geomipmap.TerrainQuad;
-import com.jme3.util.mikktspace.MikktspaceTangentGenerator;
+import com.jme3.util.TangentBinormalGenerator;
 
 import lombok.Getter;
 
@@ -79,7 +79,6 @@ public class MapAppState extends BaseAppState {
 
         heightmapGenerator.setPathTileBorderFactor(.15f);
         heightmapGenerator.setPathTileBorderNeckFactor(.05f);
-        // heightmapGenerator.setPathSnakyness(15);
         heightmapGenerator.setPathVariation(.25f);
         
         heightmapGenerator.setMinHillHeight(2f);        
@@ -99,7 +98,6 @@ public class MapAppState extends BaseAppState {
         
         heightmapGenerator.load();
         
-        /** A white ambient light source. */ 
         AmbientLight ambient = new AmbientLight();
         ambient.setColor(ColorRGBA.White);
         rootNode.addLight(ambient);
@@ -113,13 +111,6 @@ public class MapAppState extends BaseAppState {
         
         mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
 
-        // Scaling mesh, adapting to a lower or higher size
-        // float scale = size / MAP_WORLD_SIZE;
-        // map.setLocalScale(scale);
-        /*mapMaterial.setFloat("PathTexScale",     ((float) mapMaterial.getParam("PathTexScale").getValue()) * scale);
-        mapMaterial.setFloat("HillTexScale",     ((float) mapMaterial.getParam("HillTexScale").getValue()) * scale);
-        mapMaterial.setFloat("MountainTexScale", ((float) mapMaterial.getParam("MountainTexScale").getValue()) * scale);*/
-
         map.setMaterial(mapMaterial);
 
         seaGeom = new Geometry("Sea", new Quad(size, size));
@@ -129,7 +120,7 @@ public class MapAppState extends BaseAppState {
 
         seaGeom.setLocalTranslation(-size/2f, -1f, size/2f);
         seaGeom.setLocalRotation(new Quaternion().fromAngles(-FastMath.HALF_PI, 0f, 0f));
-        MikktspaceTangentGenerator.generate(seaGeom);
+        TangentBinormalGenerator.generate(seaGeom);
         rootNode.attachChild(seaGeom);
     }
 }
