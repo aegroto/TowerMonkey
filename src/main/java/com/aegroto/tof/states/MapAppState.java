@@ -99,7 +99,7 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.load();
         
         AmbientLight ambient = new AmbientLight();
-        ambient.setColor(new ColorRGBA(.6f, .6f, .6f, 1f));
+        ambient.setColor(new ColorRGBA(.7f, .7f, .7f, 1f));
         rootNode.addLight(ambient);
         
         DirectionalLight sun = new DirectionalLight();
