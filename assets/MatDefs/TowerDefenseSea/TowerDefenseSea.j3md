@@ -137,6 +137,9 @@ MaterialDef TowerDefenseSea {
 
                     parallaxMapTex = MatParam.ParallaxMap;
                     texScale = MatParam.TexScale;
+
+                    randomSeed = BaseValues.randomSeed;
+                    InterlacingFactor = MatParam.InterlacingFactor;
                 }
             }
 

@@ -16,6 +16,9 @@ ShaderNodeDefinitions {
 
             sampler2D parallaxMapTex;
             float texScale;
+
+            float randomSeed;
+            int InterlacingFactor;
         }
 
         Output {

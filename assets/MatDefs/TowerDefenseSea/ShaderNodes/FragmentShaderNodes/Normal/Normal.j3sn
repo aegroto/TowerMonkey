@@ -17,7 +17,6 @@ ShaderNodeDefinitions {
             vec2 texCoord;
 
             float randomSeed;
-            
             int InterlacingFactor;
         }
 

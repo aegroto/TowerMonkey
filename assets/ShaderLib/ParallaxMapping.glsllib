@@ -1,3 +1,5 @@
+// #import "ShaderLib/TextureInterlace.glsllib"
+
 vec2 steepParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir,vec2 texCoord,float parallaxHeight){
     vec2 vParallaxDirection = normalize(vViewDir.xy);
 
@@ -59,17 +61,10 @@ vec2 parallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec2 t
     return texCoord + (h * normalizedViewDir.xy);
 }
 
-/*vec3 triplanarParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec3 vVertex, float parallaxHeight, vec3 blending) {
-    float h = (texture2D(parallaxMap, vVertex.yz * texScale) * blending.x +
-              texture2D(parallaxMap, vVertex.xz * texScale) * blending.y +
-              texture2D(parallaxMap, vVertex.xy * texScale) * blending.z).r;
-
-    float heightBias = parallaxHeight * -0.6;
+/*vec2 interlacedParallaxOffset(sampler2D parallaxMap, float texScale, vec3 vViewDir, vec2 texCoord, float parallaxHeight, float randomSeed, int interlacingFactor) {
+    float h = interlaceTexture(parallaxMap, texCoord, texScale, randomSeed, interlacingFactor).r;
+    float heightBias = parallaxHeight * 0.5;
     vec3 normalizedViewDir = normalize(vViewDir);       
     h = (h * parallaxHeight + heightBias) * normalizedViewDir.z;
-    vec3 vVertex2 = vVertex;
-    vVertex2.yz = vVertex2.yz + (h * normalizedViewDir.xy);
-    vVertex2.xz = vVertex2.xz + (h * normalizedViewDir.xy);
-    vVertex2.xy = vVertex2.xy + (h * normalizedViewDir.xy);
-    return vVertex2;
+    return texCoord + (h * normalizedViewDir.xy);
 }*/
