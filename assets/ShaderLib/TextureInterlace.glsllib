@@ -21,7 +21,7 @@ vec4 interlaceTexture(sampler2D tex, vec2 texCoord, float scale, float randomSee
         for(int i = 1; i <= iterations; ++i) {
             newTexCoord += vec2(
                 rand(vec4(texCoord.xy, slowedRandomSeed, i)),
-                slowedRandomSeed * float(i)
+                randomSeed * float(i)
             );
 
             newTexCoord /= abs(rand(vec4(0, 0, i, 0)));

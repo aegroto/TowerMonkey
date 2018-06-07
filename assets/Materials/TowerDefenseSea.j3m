@@ -7,14 +7,14 @@ Material Terrain : MatDefs/TowerDefenseSea/TowerDefenseSea.j3md {
         TexScale : 32.0
         ParallaxHeight : 0.01
 
-        NormalMapping : False
+        NormalMapping : True
         SpecularMapping : True
         ParallaxMapping : False
         SteepParallax : False
 
         SpecularColor : 1.0 1.0 1.0 1.0
 
-        InterlacingFactor : 4
+        InterlacingFactor : 4 
         Shininess : 64.0
         Alpha : 0.8
 
