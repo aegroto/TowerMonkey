@@ -7,7 +7,9 @@ package com.aegroto.tof.map;
 
 import com.aegroto.tof.utils.Vector2i;
 import com.jme3.math.FastMath;
+import com.jme3.math.Vector2f;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +30,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     private int 
               gridSize, ditchSize,
               pathTileSize, pathTileBorder, pathTileBorderNeck;
+
+    @Setter private Vector2i battlegroundOffset = new Vector2i(0, 0);
     
     @Getter @Setter private float 
             ditchVariation, pathVariation, hillVariation, mountainVariation,
@@ -82,24 +86,23 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
 
     private void generateBattleground() {
         int battlegroundSize = gridSize - ditchSize * 2;
-        int battlegroundTopBorder = gridSize - battlegroundSize - ditchSize;
+        int xStart = battlegroundOffset.getX(),
+            zStart = battlegroundOffset.getY();
 
-        for(int x = battlegroundTopBorder; x < battlegroundTopBorder + battlegroundSize; ++x) {
-            for(int z = battlegroundTopBorder; z < battlegroundTopBorder + battlegroundSize; ++z) {
+        for(int x = xStart; x < xStart + battlegroundSize; ++x) {
+            for(int z = zStart; z < zStart + battlegroundSize; ++z) {
                 generateHillTile(x, z);
-                generateHillTile(z, x);
-                generateHillTile(x, gridSize - z - 1);
-                generateHillTile(gridSize - z - 1, x);
             }
         }
     }
 
     private void generateBattlegroundBorder() {
         int battlegroundSize = gridSize - ditchSize * 2;
-        int battlegroundBorderStart = tileToMeshScale(gridSize - battlegroundSize - ditchSize - 1);
+        int xStart = tileToMeshScale(battlegroundOffset.getX() - 1),
+            zStart = tileToMeshScale(battlegroundOffset.getY() - 1);
 
-        for(int x = battlegroundBorderStart; x < battlegroundBorderStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2; ++x) {
-            for(int z = battlegroundBorderStart; z < battlegroundBorderStart + pathTileSize; ++z) {
+        for(int x = xStart; x < xStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2; ++x) {
+            for(int z = zStart; z < zStart + pathTileSize; ++z) {
                 heightData[arrayIndex(x, z)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(z, x)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(x, tileToMeshScale(battlegroundSize) + pathTileSize + z)] = randomBattlegroundBorderPointHeight();
@@ -110,11 +113,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
 
     private void generateDitch() {       
         for(int x = 0; x < gridSize; ++x) {
-            for(int z = 0; z < ditchSize; ++z) {
+            for(int z = 0; z < gridSize; ++z) {
                 generateDitchTile(x, z);
-                generateDitchTile(z, x);
-                generateDitchTile(x, gridSize - z - 1);
-                generateDitchTile(gridSize - z - 1, x);
             }
         }
     }
@@ -285,8 +285,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void generatePathTile(int x, int z) {
-        x += ditchOffset();
-        z += ditchOffset();
+        x += battlegroundOffset.getX();
+        z += battlegroundOffset.getY();
 
         int iStart = x * pathTileSize + pathTileBorder,
             jStart = z * pathTileSize + pathTileBorder,
@@ -352,7 +352,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathUpConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
+        Vector2i firstPos = firstTile.getPos().add(battlegroundOffset);
         
         int iStart = tileToMeshScale(firstPos.getX()),
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileBorder,
@@ -368,7 +368,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathDownConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
+        Vector2i firstPos = firstTile.getPos().add(battlegroundOffset);
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize,
@@ -384,7 +384,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathLeftConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
+        Vector2i firstPos = firstTile.getPos().add(battlegroundOffset);
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileBorder + pathTileBorderNeck,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder - pathTileBorderNeck,
@@ -400,7 +400,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyPathRightConjunction(MapTile firstTile) {
-        Vector2i firstPos = firstTile.getPos().add(ditchOffset(), ditchOffset());
+        Vector2i firstPos = firstTile.getPos().add(battlegroundOffset);
         
         int iStart = tileToMeshScale(firstPos.getX()) + pathTileBorder + pathTileBorderNeck,
             iLimit = tileToMeshScale(firstPos.getX()) + pathTileSize - pathTileBorder - pathTileBorderNeck,
@@ -450,10 +450,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     
     private float randomMountainPointHeight() {
         return FastMath.nextRandomFloat() * mountainVariation;
-    }
-
-    private int ditchOffset() {
-        return ditchSize;
     }
 
     @Override

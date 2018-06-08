@@ -7,6 +7,7 @@ package com.aegroto.tof.states;
 
 import com.aegroto.tof.map.TowerDefenseGrid;
 import com.aegroto.tof.map.TowerDefenseHeightMap;
+import com.aegroto.tof.utils.Vector2i;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
@@ -53,7 +54,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(256, 64, (64 - 16) / 2);
+            generateMapGeometry(256, 64, 24, new Vector2i(24, 24));
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -67,13 +68,14 @@ public class MapAppState extends BaseAppState {
     
     }
     
-    private void generateMapGeometry(final int size, final int gridSize, final int ditchSize) throws Exception {
+    private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset) throws Exception {
         TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(new TowerDefenseGrid(gridSize - ditchSize * 2, 15));
         
         heightmapGenerator.setSize(size);
         heightmapGenerator.setGridSize(gridSize);
         heightmapGenerator.setDitchSize(ditchSize);
-        
+        heightmapGenerator.setBattlegroundOffset(battlegroundOffset);
+
         heightmapGenerator.setMinDitchHeight(-8.0f);
         heightmapGenerator.setDitchVariation(.5f);
 
