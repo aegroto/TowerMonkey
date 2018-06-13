@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aegroto.tof.utils;
+package com.aegroto.towermonkey.utils;
 
 import lombok.Getter;
 import lombok.Setter;

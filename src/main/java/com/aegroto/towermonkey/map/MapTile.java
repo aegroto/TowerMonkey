@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aegroto.tof.map;
+package com.aegroto.towermonkey.map;
 
-import com.aegroto.tof.utils.Vector2i;
+import com.aegroto.towermonkey.utils.Vector2i;
 import lombok.Getter;
 
 /**

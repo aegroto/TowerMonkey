@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aegroto.tof.states;
+package com.aegroto.towermonkey.states;
 
-import com.aegroto.tof.map.TowerDefenseGrid;
-import com.aegroto.tof.map.TowerDefenseHeightMap;
-import com.aegroto.tof.utils.Vector2i;
+import com.aegroto.towermonkey.map.TowerDefenseGrid;
+import com.aegroto.towermonkey.map.TowerDefenseHeightMap;
+import com.aegroto.towermonkey.utils.Vector2i;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
