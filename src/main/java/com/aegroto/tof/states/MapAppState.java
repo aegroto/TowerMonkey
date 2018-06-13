@@ -38,9 +38,16 @@ public class MapAppState extends BaseAppState {
     private final Node rootNode;
 
     private static final float MAP_WORLD_SIZE = 256f;
+
+    private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
     
-    public MapAppState(Node rootNode) {
+    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
         this.rootNode = rootNode;
+        this.mapSize = mapSize;
+        this.gridSize = gridSize;
+        this.ditchSize = ditchSize;
+        this.battlegroundOffsetX = battlegroundOffsetX;
+        this.battlegroundOffsetY = battlegroundOffsetY;
     }
     
     @Override
@@ -54,7 +61,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(256, 64, 24, new Vector2i(24, 24));
+            generateMapGeometry(mapSize, gridSize, ditchSize, new Vector2i(battlegroundOffsetX, battlegroundOffsetY));
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();

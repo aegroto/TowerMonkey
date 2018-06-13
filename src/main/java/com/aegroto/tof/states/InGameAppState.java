@@ -15,7 +15,7 @@ public class InGameAppState extends BaseAppState {
     private final MapAppState mapAppState;
     
     public InGameAppState(Node rootNode) {
-        this.mapAppState = new MapAppState(rootNode);
+        this.mapAppState = new MapAppState(rootNode, 256, 64, 24, 24 ,24);
     }
 
     @Override
