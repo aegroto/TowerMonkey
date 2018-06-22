@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.aegroto.towermonkey.map;
 
 import java.util.LinkedList;
 
-import com.aegroto.towermonkey.utils.Vector2i;
+import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.math.FastMath;
 
 import lombok.Getter;

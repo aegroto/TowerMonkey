@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.aegroto.towermonkey.states;
+package com.aegroto.towermonkey.state;
 
 import com.aegroto.towermonkey.map.TowerDefenseGrid;
 import com.aegroto.towermonkey.map.TowerDefenseHeightMap;
-import com.aegroto.towermonkey.utils.Vector2i;
+import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
