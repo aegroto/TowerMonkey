@@ -35,8 +35,6 @@ public class MapAppState extends BaseAppState {
     
     private final Node rootNode;
 
-    private static final float MAP_WORLD_SIZE = 256f;
-
     private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
 
     private LinkedList<Vector2f> pathPoints;
