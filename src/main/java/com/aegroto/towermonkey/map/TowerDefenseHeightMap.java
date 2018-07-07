@@ -1,5 +1,7 @@
 package com.aegroto.towermonkey.map;
 
+import java.util.LinkedList;
+
 import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
@@ -461,5 +463,15 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         applyPathToHeightmap();
 
         return true;
+    }
+
+    public LinkedList<Vector2f> getPathPoints() {
+        LinkedList<Vector2f> pathPoints = new LinkedList<>();
+        int battlegroundSize = gridSize - ditchSize * 2;
+        grid.getPathTiles().stream()
+                           .forEach(tile -> pathPoints.add(new Vector2f(
+                               tileToMeshScale(tile.getPos().getX() - battlegroundSize/2),
+                               tileToMeshScale(tile.getPos().getY() - battlegroundSize/2))));
+        return pathPoints;
     }
 }

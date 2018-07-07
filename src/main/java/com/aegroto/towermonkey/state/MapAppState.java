@@ -1,5 +1,7 @@
 package com.aegroto.towermonkey.state;
 
+import java.util.LinkedList;
+
 import com.aegroto.towermonkey.map.TowerDefenseGrid;
 import com.aegroto.towermonkey.map.TowerDefenseHeightMap;
 import com.aegroto.towermonkey.util.Vector2i;
@@ -12,6 +14,7 @@ import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -35,6 +38,9 @@ public class MapAppState extends BaseAppState {
     private static final float MAP_WORLD_SIZE = 256f;
 
     private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
+
+    private LinkedList<Vector2f> pathPoints;
+    private PathAppState pathAppState;
     
     public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
         this.rootNode = rootNode;
@@ -63,6 +69,9 @@ public class MapAppState extends BaseAppState {
         }
         
         rootNode.attachChild(map);
+
+        pathAppState = new PathAppState(pathPoints, rootNode);
+        this.getApplication().getStateManager().attach(pathAppState);
     }
 
     @Override
@@ -71,7 +80,8 @@ public class MapAppState extends BaseAppState {
     }
     
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset) throws Exception {
-        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(new TowerDefenseGrid(gridSize - ditchSize * 2, 15));
+        TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15);
+        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid);
         
         heightmapGenerator.setSize(size);
         heightmapGenerator.setGridSize(gridSize);
@@ -101,6 +111,8 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setMountainBaseTerrainThreshold(3f);
         
         heightmapGenerator.load();
+        
+        pathPoints = heightmapGenerator.getPathPoints();
         
         AmbientLight ambient = new AmbientLight();
         ambient.setColor(new ColorRGBA(.7f, .7f, .7f, 1f));
