@@ -17,9 +17,10 @@ public class PathAppState extends BaseAppState {
     private ArrayList<Entity> entities;
     private Node rootNode;
 
-    public PathAppState(LinkedList<Vector2f> pathPoints, Node rootNode) {
+    public PathAppState(LinkedList<Vector2f> pathPoints, Node sceneRootNode) {
         this.pathPoints = pathPoints;
-        this.rootNode = rootNode;
+        this.rootNode = new Node();
+        sceneRootNode.attachChild(rootNode);
     }
 
     @Override
@@ -39,12 +40,14 @@ public class PathAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         if(DEBUG) {
-            entities.forEach(entities -> rootNode.attachChild(entities));
+            entities.forEach(entity -> rootNode.attachChild(entity));
         }
     }
 
     @Override
     protected void onDisable() {
-    
+        if(DEBUG) {
+            entities.forEach(entity -> entity.removeFromParent());
+        }
     }
 }
