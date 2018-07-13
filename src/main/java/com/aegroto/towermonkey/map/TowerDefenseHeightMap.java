@@ -2,6 +2,7 @@ package com.aegroto.towermonkey.map;
 
 import java.util.LinkedList;
 
+import com.aegroto.towermonkey.util.FastRandom;
 import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
@@ -39,9 +40,16 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             mountainBaseTerrainThreshold = minMountainHeight * .75f;
     
     @Getter private TowerDefenseGrid grid;
+
+    private FastRandom randomizer;
     
-    public TowerDefenseHeightMap(TowerDefenseGrid grid) {
+    public TowerDefenseHeightMap(TowerDefenseGrid grid, long seed) {
         this.grid = grid;
+        randomizer = new FastRandom(seed);
+    }
+
+    public TowerDefenseHeightMap(TowerDefenseGrid grid) {
+        this(grid, 0);
     }
     
     @Override
@@ -122,10 +130,10 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         mountains = generationTries = 0;
         
         while(mountains < totalMountains) {
-            mountainSizeX = FastMath.nextRandomInt(mountainMinSize, mountainMaxSize);
-            mountainSizeZ = FastMath.nextRandomInt(mountainMinSize, mountainMaxSize);
-            x = FastMath.nextRandomInt(0, size);
-            z = FastMath.nextRandomInt(0, size);
+            mountainSizeX = randomizer.randomIntInRange(mountainMinSize, mountainMaxSize);
+            mountainSizeZ = randomizer.randomIntInRange(mountainMinSize, mountainMaxSize);
+            x = randomizer.randomIntInRange(0, size);
+            z = randomizer.randomIntInRange(0, size);
             
             if(isMountainGenerableIn(x, z, mountainSizeX, mountainSizeZ)) {
                 generateMountain(x, z, mountainSizeX, mountainSizeZ);
@@ -193,7 +201,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void generateMountain(int x, int z, int mountainSizeX, int mountainSizeZ) {
-        int mountainLevels = FastMath.nextRandomInt(mountainMinLevels, mountainMaxLevels);        
+        int mountainLevels = randomizer.randomIntInRange(mountainMinLevels, mountainMaxLevels);        
         int k = 0;
         
         int xMin = x - mountainSizeX / 2,
@@ -205,16 +213,16 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         zMin = zMin >= 0 ? zMin : 0;
         
         while(k < mountainLevels) {            
-            x += FastMath.nextRandomInt(-2, 2);
+            x += randomizer.randomIntInRange(-2, 2);
             x = (int) FastMath.clamp(x, xMin, xMax);
             
-            z += FastMath.nextRandomInt(-2, 2);
+            z += randomizer.randomIntInRange(-2, 2);
             z = (int) FastMath.clamp(z, zMin, zMax);
             
-            mountainSizeX -= FastMath.nextRandomFloat() - .95f > 0 ? 1 : 0;
+            mountainSizeX -= randomizer.nextRandomFloat() - .95f > 0 ? 1 : 0;
             if(mountainSizeX < 3) mountainSizeX = 3;
             
-            mountainSizeZ -= FastMath.nextRandomFloat() - .95f > 0 ? 1 : 0;
+            mountainSizeZ -= randomizer.nextRandomFloat() - .95f > 0 ? 1 : 0;
             if(mountainSizeZ < 3) mountainSizeZ = 3;
             
             applyMountainBorder(x, z, mountainSizeX, mountainSizeZ);
@@ -237,13 +245,13 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     
     private void applyMountainBorder(int x, int z, int mountainSizeX, int mountainSizeZ) {
         for(int i = 1; i < mountainSizeX / 2 + 1; ++i) {
-            if(FastMath.nextRandomFloat() < mountainBorderFragmentation) {
+            if(randomizer.nextRandomFloat() < mountainBorderFragmentation) {
                 mountainBorderPass(x, z, i, 0, mountainSizeX, mountainSizeZ);
             }
         }
         
         for(int j = 1; j < mountainSizeZ / 2 + 1; ++j) {
-            if(FastMath.nextRandomFloat() < mountainBorderFragmentation) {
+            if(randomizer.nextRandomFloat() < mountainBorderFragmentation) {
                 mountainBorderPass(x, z, 0, j, mountainSizeX, mountainSizeZ);
             }
         }
@@ -429,24 +437,24 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
 
     private float randomDitchPointHeight() {
-        return minDitchHeight + FastMath.nextRandomFloat() * ditchVariation;
+        return minDitchHeight + randomizer.nextRandomFloat() * ditchVariation;
     }
 
     private float randomBattlegroundBorderPointHeight() {
-        float balance = FastMath.nextRandomFloat() * .6f;
+        float balance = randomizer.nextRandomFloat() * .6f;
         return randomDitchPointHeight() * (1f - balance) * .4f + randomHillPointHeight() * balance * .6f;
     }
     
     private float randomPathPointHeight() {
-        return FastMath.nextRandomFloat() * pathVariation;
+        return randomizer.nextRandomFloat() * pathVariation;
     }
     
     private float randomHillPointHeight() {
-        return minHillHeight + FastMath.nextRandomFloat() * hillVariation;
+        return minHillHeight + randomizer.nextRandomFloat() * hillVariation;
     }
     
     private float randomMountainPointHeight() {
-        return FastMath.nextRandomFloat() * mountainVariation;
+        return randomizer.nextRandomFloat() * mountainVariation;
     }
 
     @Override

@@ -2,8 +2,9 @@ package com.aegroto.towermonkey.map;
 
 import java.util.LinkedList;
 
+import com.aegroto.towermonkey.util.FastRandom;
 import com.aegroto.towermonkey.util.Vector2i;
-import com.jme3.math.FastMath;
+// import com.jme3.math.FastMath;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,12 +28,19 @@ public class TowerDefenseGrid {
     @Getter private final MapTile[][] grid;
     
     @Getter private final LinkedList<MapTile> pathTiles;
+
+    private FastRandom randomizer;
     
-    public TowerDefenseGrid(int gridSize, int snakyness) {
+    public TowerDefenseGrid(int gridSize, int snakyness, long seed) {
         this.gridSize = gridSize;
         this.snakyness = snakyness;
         grid = new MapTile[gridSize][gridSize];
         pathTiles = new LinkedList<>();
+        randomizer = new FastRandom(seed);
+    }
+
+    public TowerDefenseGrid(int gridSize, int snakyness) {
+        this(gridSize, snakyness, 0);
     }
     
     public void generateGrid() {
@@ -67,7 +75,7 @@ public class TowerDefenseGrid {
         float tuckProbability = 1f;        
         
         while(snakySteps < snakyness) {
-            if(FastMath.nextRandomFloat() <= tuckProbability
+            if(randomizer.nextRandomFloat() <= tuckProbability
                || isPosOutOfRange(currentTilePos.add(lastShift))) {
                 lastShift = randomPosShift(currentTilePos, lastShift);
                 tuckProbability = 0f;
@@ -122,8 +130,8 @@ public class TowerDefenseGrid {
             }
             
             Vector2i midTile = new Vector2i(
-                    FastMath.nextRandomInt(minX, maxX),
-                    FastMath.nextRandomInt(minY, maxY));        
+                    randomizer.randomIntInRange(minX, maxX),
+                    randomizer.randomIntInRange(minY, maxY));        
             
             placeTileIfEmpty(midTile);
             
@@ -172,7 +180,7 @@ public class TowerDefenseGrid {
     }
     
     private Vector2i randomPosShift(Vector2i pos, Vector2i lastShift) {
-        float randomFactor = FastMath.nextRandomFloat();
+        float randomFactor = randomizer.nextRandomFloat();
         
         if(randomFactor < .25f && canDownShift(pos, lastShift)) {
             return SHIFT_DOWN;
@@ -205,8 +213,8 @@ public class TowerDefenseGrid {
         if(referenceTile == null)
             referenceTile = new Vector2i(-minDistance - 1, -minDistance - 1);
 
-        final float sideRandomFactor = FastMath.nextRandomFloat();
-        final int randomOffset = FastMath.nextRandomInt(0, gridSize - 1);
+        final float sideRandomFactor = randomizer.nextRandomFloat();
+        final int randomOffset = randomizer.randomIntInRange(0, gridSize - 1);
         Vector2i coords = null;
 
         do {

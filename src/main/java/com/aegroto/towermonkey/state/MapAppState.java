@@ -80,8 +80,9 @@ public class MapAppState extends BaseAppState {
     }
     
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset) throws Exception {
-        TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15);
-        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid);
+        long seed = 1000;
+        TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15, seed);
+        TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid, seed);
         
         heightmapGenerator.setSize(size);
         heightmapGenerator.setGridSize(gridSize);
