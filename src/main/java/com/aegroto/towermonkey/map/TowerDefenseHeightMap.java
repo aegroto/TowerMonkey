@@ -1,6 +1,7 @@
 package com.aegroto.towermonkey.map;
 
 import java.util.LinkedList;
+import java.util.stream.IntStream;
 
 import com.aegroto.towermonkey.util.FastRandom;
 import com.aegroto.towermonkey.util.Vector2i;
@@ -94,11 +95,11 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int xStart = battlegroundOffset.getX(),
             zStart = battlegroundOffset.getY();
 
-        for(int x = xStart; x < xStart + battlegroundSize; ++x) {
-            for(int z = zStart; z < zStart + battlegroundSize; ++z) {
+        IntStream.rangeClosed(xStart, xStart + battlegroundSize - 1).forEach(x -> {
+            IntStream.rangeClosed(zStart, zStart + battlegroundSize - 1).forEach(z -> {
                 generateHillTile(x, z);
-            }
-        }
+            });
+        });
     }
 
     private void generateBattlegroundBorder() {
@@ -106,22 +107,22 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int xStart = tileToMeshScale(battlegroundOffset.getX() - 1),
             zStart = tileToMeshScale(battlegroundOffset.getY() - 1);
 
-        for(int x = xStart; x < xStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2; ++x) {
-            for(int z = zStart; z < zStart + pathTileSize; ++z) {
+        IntStream.rangeClosed(xStart, xStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2 - 1).forEach(x -> { 
+            IntStream.rangeClosed(zStart, zStart + pathTileSize - 1).forEach(z -> {
                 heightData[arrayIndex(x, z)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(z, x)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(x, tileToMeshScale(battlegroundSize) + pathTileSize + z)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(tileToMeshScale(battlegroundSize) + pathTileSize + z, x)] = randomBattlegroundBorderPointHeight();
-            }
-        }
+            });
+        });
     }
 
     private void generateDitch() {       
-        for(int x = 0; x < gridSize; ++x) {
-            for(int z = 0; z < gridSize; ++z) {
+        IntStream.rangeClosed(0, gridSize - 1).forEach(x -> {
+            IntStream.rangeClosed(0, gridSize - 1).forEach(z -> {
                 generateDitchTile(x, z);
-            }
-        }
+            });
+        });
     }
     
     
@@ -236,11 +237,11 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int iLimit = x + mountainSizeX - 1,
             jLimit = z + mountainSizeZ - 1;
         
-        for(int i = x + 1; i < iLimit; ++i) {
-            for(int j = z + 1; j < jLimit; ++j) {
+        IntStream.rangeClosed(x + 1, iLimit - 1).forEach(i -> {
+            IntStream.rangeClosed(z + 1, jLimit - 1).forEach(j -> {    
                 applyRandomMountainPoint(i, j);
-            }
-        }
+            });
+        });
     }
     
     private void applyMountainBorder(int x, int z, int mountainSizeX, int mountainSizeZ) {
