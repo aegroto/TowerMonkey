@@ -41,14 +41,21 @@ public class MapAppState extends BaseAppState {
 
     private LinkedList<Vector2f> pathPoints;
     private PathAppState pathAppState;
+
+    private long seed;
     
-    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
+    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY, long seed) {
         this.rootNode = rootNode;
         this.mapSize = mapSize;
         this.gridSize = gridSize;
         this.ditchSize = ditchSize;
         this.battlegroundOffsetX = battlegroundOffsetX;
         this.battlegroundOffsetY = battlegroundOffsetY;
+        this.seed = seed;
+    }
+
+    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
+        this(rootNode, mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY, 0);
     }
     
     @Override
@@ -62,7 +69,7 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onEnable() {
         try {
-            generateMapGeometry(mapSize, gridSize, ditchSize, new Vector2i(battlegroundOffsetX, battlegroundOffsetY));
+            generateMapGeometry(mapSize, gridSize, ditchSize, new Vector2i(battlegroundOffsetX, battlegroundOffsetY), seed);
         } catch(Exception e) {
             System.err.println("Error generating map:");
             e.printStackTrace();
@@ -79,8 +86,7 @@ public class MapAppState extends BaseAppState {
     
     }
     
-    private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset) throws Exception {
-        long seed = 1000;
+    private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset, long seed) throws Exception {
         TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15, seed);
         TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid, seed);
         
