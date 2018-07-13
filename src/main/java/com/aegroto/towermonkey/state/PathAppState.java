@@ -1,36 +1,36 @@
 package com.aegroto.towermonkey.state;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-import com.aegroto.towermonkey.entity.Entity;
-import com.aegroto.towermonkey.entity.EntityPathMarker;
+import com.aegroto.towermonkey.util.PathMarker;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 
-public class PathAppState extends BaseAppState {
-    protected static boolean DEBUG = true;
+import lombok.Setter;
 
-    private LinkedList<Vector2f> pathPoints;
-    private ArrayList<Entity> entities;
-    private Node rootNode;
+public class PathAppState extends BaseAppState {
+    private static boolean DEBUG = true;
+
+    @Setter private LinkedList<Vector2f> pathPoints;
+    private Node sceneRootNode, rootNode;
 
     public PathAppState(LinkedList<Vector2f> pathPoints, Node sceneRootNode) {
-        this.pathPoints = pathPoints;
+        this.sceneRootNode = sceneRootNode;
         this.rootNode = new Node();
-        sceneRootNode.attachChild(rootNode);
+        this.pathPoints = pathPoints;
     }
 
     @Override
     protected void initialize(Application aplctn) {
-        this.entities = new ArrayList<>();
-        pathPoints.forEach(point -> {
-                    EntityPathMarker marker = new EntityPathMarker(DEBUG, getApplication().getAssetManager());
-                    marker.setLocalTranslation(point.y, 2.5f, point.x); 
-                    entities.add(marker);
-                });
+        if(DEBUG) {
+            pathPoints.forEach(point -> {
+                PathMarker marker = new PathMarker(getApplication().getAssetManager());
+                rootNode.attachChild(marker);
+                marker.setLocalTranslation(point.y, 2.5f, point.x); 
+            });
+        }
     }
     
     @Override
@@ -39,15 +39,12 @@ public class PathAppState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        if(DEBUG) {
-            entities.forEach(entity -> rootNode.attachChild(entity));
-        }
+        sceneRootNode.attachChild(rootNode);
+
     }
 
     @Override
     protected void onDisable() {
-        if(DEBUG) {
-            entities.forEach(entity -> entity.removeFromParent());
-        }
+        rootNode.removeFromParent();
     }
 }

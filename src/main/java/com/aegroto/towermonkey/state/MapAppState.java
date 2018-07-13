@@ -37,7 +37,7 @@ public class MapAppState extends BaseAppState {
 
     private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
 
-    private LinkedList<Vector2f> pathPoints;
+    @Getter private LinkedList<Vector2f> pathPoints;
     private PathAppState pathAppState;
 
     private long seed;
@@ -58,6 +58,15 @@ public class MapAppState extends BaseAppState {
     
     @Override
     protected void initialize(Application aplctn) {
+        try {
+            generateMapGeometry(mapSize, gridSize, ditchSize, new Vector2i(battlegroundOffsetX, battlegroundOffsetY), seed);
+        } catch(Exception e) {
+            System.err.println("Error generating map:");
+            e.printStackTrace();
+        }
+
+        pathAppState = new PathAppState(pathPoints, rootNode);
+        getStateManager().attach(pathAppState);
     }
     
     @Override
@@ -66,17 +75,7 @@ public class MapAppState extends BaseAppState {
 
     @Override
     protected void onEnable() {
-        try {
-            generateMapGeometry(mapSize, gridSize, ditchSize, new Vector2i(battlegroundOffsetX, battlegroundOffsetY), seed);
-        } catch(Exception e) {
-            System.err.println("Error generating map:");
-            e.printStackTrace();
-        }
-        
         rootNode.attachChild(map);
-
-        pathAppState = new PathAppState(pathPoints, rootNode);
-        this.getApplication().getStateManager().attach(pathAppState);
     }
 
     @Override
