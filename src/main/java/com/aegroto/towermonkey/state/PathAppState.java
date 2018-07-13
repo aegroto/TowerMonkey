@@ -25,9 +25,7 @@ public class PathAppState extends BaseAppState {
     @Override
     protected void initialize(Application aplctn) {
         this.pathMarkers = new ArrayList<>();
-        pathPoints.stream()
-                .peek(point -> System.out.println("Point at: " + point))
-                .forEach(point -> {
+        pathPoints.forEach(point -> {
                     EntityPathMarker marker = new EntityPathMarker(DEBUG, getApplication().getAssetManager());
                     marker.setLocalTranslation(point.y, 2.5f, point.x); 
                     pathMarkers.add(marker);
