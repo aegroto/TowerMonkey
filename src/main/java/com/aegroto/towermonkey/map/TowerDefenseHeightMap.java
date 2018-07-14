@@ -94,8 +94,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int xStart = battlegroundOffset.getX(),
             zStart = battlegroundOffset.getY();
 
-        for(int x = xStart; x < xStart + battlegroundSize - 1; ++x) {
-            for(int z = zStart; z < zStart + battlegroundSize - 1; ++z) {
+        for(int x = xStart; x < xStart + battlegroundSize; ++x) {
+            for(int z = zStart; z < zStart + battlegroundSize; ++z) {
                 generateHillTile(x, z);
             } 
         }
@@ -106,8 +106,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int xStart = tileToMeshScale(battlegroundOffset.getX() - 1),
             zStart = tileToMeshScale(battlegroundOffset.getY() - 1);
 
-        for(int x = xStart; x < xStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2 - 1; ++x) { 
-            for(int z = zStart; z < zStart + pathTileSize - 1; ++z) {
+        for(int x = xStart; x < xStart + tileToMeshScale(battlegroundSize) + pathTileSize * 2; ++x) { 
+            for(int z = zStart; z < zStart + pathTileSize; ++z) {
                 heightData[arrayIndex(x, z)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(z, x)] = randomBattlegroundBorderPointHeight();
                 heightData[arrayIndex(x, tileToMeshScale(battlegroundSize) + pathTileSize + z)] = randomBattlegroundBorderPointHeight();
@@ -117,8 +117,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
 
     private void generateDitch() {       
-        for(int x = 0; x < gridSize - 1; ++x) {
-            for(int z = 0; z < gridSize - 1; ++z) {
+        for(int x = 0; x < gridSize; ++x) {
+            for(int z = 0; z < gridSize; ++z) {
                 generateDitchTile(x, z);
             }
         }
@@ -233,8 +233,8 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
     }
     
     private void applyMountainLevel(int x, int z, int mountainSizeX, int mountainSizeZ) {
-        int iLimit = x + mountainSizeX - 2,
-            jLimit = z + mountainSizeZ - 2;
+        int iLimit = x + mountainSizeX - 1,
+            jLimit = z + mountainSizeZ - 1;
         
         for(int i = x + 1; i < iLimit; ++i) {
             for(int j = x + 1; j < jLimit; ++j) {
