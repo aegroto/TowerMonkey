@@ -237,7 +237,7 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
             jLimit = z + mountainSizeZ - 1;
         
         for(int i = x + 1; i < iLimit; ++i) {
-            for(int j = x + 1; j < jLimit; ++j) {
+            for(int j = z + 1; j < jLimit; ++j) {
                 applyRandomMountainPoint(i, j);
             }
         }
