@@ -38,6 +38,8 @@ MaterialDef TowerDefenseTerrain {
 
         Float MountainMinHeight
 
+        Float TriplanarMaxBlending
+
         Boolean TriPlanarMapping
         Boolean NormalMapping
         Boolean SpecularMapping
@@ -145,6 +147,7 @@ MaterialDef TowerDefenseTerrain {
 
                 InputMappings {
                     vNormal = TerrainBaseValues.vNormal;
+                    triplanarMaxBlending = MatParam.TriplanarMaxBlending;
                 }
             }
 

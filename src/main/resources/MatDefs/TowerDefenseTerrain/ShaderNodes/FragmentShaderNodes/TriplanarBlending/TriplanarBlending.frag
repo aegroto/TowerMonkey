@@ -1,5 +1,5 @@
 #import "ShaderLib/TriplanarMapping.glsllib"
 
 void main(){
-    blending = calculateBlending(vNormal);
+    blending = calculateBlending(vNormal, triplanarMaxBlending);
 }

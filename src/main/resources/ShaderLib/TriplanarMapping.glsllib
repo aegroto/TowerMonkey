@@ -1,6 +1,6 @@
-vec3 calculateBlending(vec3 vNormal) {
+vec3 calculateBlending(vec3 vNormal, float maxBlending) {
     vec3 blending = abs(vNormal);
-    blending = normalize(max(blending, 0.00001));
+    blending = normalize(max(blending, maxBlending));
     float b = (blending.x + blending.y + blending.z);
     blending /= vec3(b, b, b);
     return blending;
