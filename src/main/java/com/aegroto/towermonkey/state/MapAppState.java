@@ -10,7 +10,6 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
@@ -23,15 +22,16 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.util.TangentBinormalGenerator;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author lorenzo
  */
 public class MapAppState extends BaseAppState {
-    @Getter private Node map;
+    @Getter private Node mapGeom;
     private Geometry seaGeom;
-    private Material mapMaterial, seaMaterial;
+    @Setter private Material mapMaterial, seaMaterial;
     
     private final Node rootNode;
 
@@ -66,22 +66,21 @@ public class MapAppState extends BaseAppState {
         }
 
         pathAppState = new PathAppState(pathPoints, rootNode);
-        getStateManager().attach(pathAppState);
     }
     
     @Override
-    protected void cleanup(Application aplctn) {
-    }
+    protected void cleanup(Application aplctn) { }
 
     @Override
     protected void onEnable() {
-        rootNode.attachChild(map);
+        rootNode.attachChild(mapGeom);
+        rootNode.attachChild(seaGeom);
+
+        getStateManager().attach(pathAppState);
     }
 
     @Override
-    protected void onDisable() {
-    
-    }
+    protected void onDisable() { }
     
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset, long seed) throws Exception {
         TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15, seed);
@@ -127,20 +126,19 @@ public class MapAppState extends BaseAppState {
         sun.setColor(ColorRGBA.White);
         rootNode.addLight(sun);
         
-        map = new TerrainQuad("Map mesh", (int) FastMath.pow(2, 9) + 1, size + 1, heightmapGenerator.getHeightMap());
-        
-        mapMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseTerrain.j3m");        
-
-        map.setMaterial(mapMaterial);
+        mapGeom = new TerrainQuad("Map mesh", (int) FastMath.pow(2, 9) + 1, size + 1, heightmapGenerator.getHeightMap());
 
         seaGeom = new Geometry("Sea", new Quad(size, size));
-        seaMaterial = getApplication().getAssetManager().loadMaterial("Materials/TowerDefenseSea.j3m"); 
-        seaMaterial.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);     
-        seaGeom.setMaterial(seaMaterial);
-
         seaGeom.setLocalTranslation(-size/2f, -1f, size/2f);
         seaGeom.setLocalRotation(new Quaternion().fromAngles(-FastMath.HALF_PI, 0f, 0f));
         TangentBinormalGenerator.generate(seaGeom);
-        rootNode.attachChild(seaGeom);
+
+        updateMaterials();
+    }
+
+
+    public void updateMaterials() {
+        mapGeom.setMaterial(mapMaterial);
+        seaGeom.setMaterial(seaMaterial);
     }
 }
