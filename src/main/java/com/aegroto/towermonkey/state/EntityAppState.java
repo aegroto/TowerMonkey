@@ -7,12 +7,29 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.scene.Node;
 
+/**
+ * 
+ * App state used to manage entities spawned on the map
+ * 
+ * @author aegroto
+ * 
+ */
+
 public class EntityAppState extends BaseAppState {
     private static final boolean DEBUG = true;
 
     private Node sceneRootNode, rootNode;
     private ArrayList<Entity> entities;
 
+    /**
+     * EntityAppState constructor
+     * 
+     * @param sceneRootNode Scene root node
+     * 
+     * @author aegroto
+     * 
+     */
+    
     public EntityAppState(Node sceneRootNode) {
         this.sceneRootNode = sceneRootNode;
         this.rootNode = new Node();

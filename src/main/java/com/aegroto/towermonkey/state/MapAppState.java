@@ -26,8 +26,11 @@ import lombok.Setter;
 
 /**
  *
- * @author lorenzo
+ * App state used to setup and generate a tower defense map.
+ * 
+ * @author aegroto 
  */
+
 public class MapAppState extends BaseAppState {
     @Getter protected Node mapGeom;
     protected Geometry seaGeom;
@@ -41,6 +44,22 @@ public class MapAppState extends BaseAppState {
     private PathAppState pathAppState;
 
     private long seed;
+
+    /**
+     * 
+     * MapAppState constructor.
+     * 
+     * @param rootNode Scene root node
+     * @param mapSize Map size
+     * @param gridSize Grid size
+     * @param ditchSize Ditch size
+     * @param battlegroundOffsetX Battleground offset X coordinate
+     * @param battlegroundOffsetY Battleground offset Y coordinate
+     * @param seed Pseudorandom seed
+     * 
+     * @author aegroto
+     * 
+     */
     
     public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY, long seed) {
         this.rootNode = rootNode;
@@ -51,6 +70,21 @@ public class MapAppState extends BaseAppState {
         this.battlegroundOffsetY = battlegroundOffsetY;
         this.seed = seed;
     }
+
+    /**
+     * 
+     * MapAppState constructor which uses a random seed.
+     * 
+     * @param rootNode Scene root node
+     * @param mapSize Map size
+     * @param gridSize Grid size
+     * @param ditchSize Ditch size
+     * @param battlegroundOffsetX Battleground offset X coordinate
+     * @param battlegroundOffsetY Battleground offset Y coordinate
+     * 
+     * @author aegroto
+     * 
+     */
 
     public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
         this(rootNode, mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY, 0);
@@ -81,7 +115,20 @@ public class MapAppState extends BaseAppState {
 
     @Override
     protected void onDisable() { }
-    
+
+    /**
+     * 
+     * MapAppState constructor which uses a random seed.
+     * 
+     * @param size Map size
+     * @param gridSize Grid size
+     * @param ditchSize Ditch size
+     * @param battlegroundOffset Battleground offset coordinates
+     * 
+     * @author aegroto
+     * 
+     */
+
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset, long seed) throws Exception {
         TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15, seed);
         TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid, seed);
@@ -136,6 +183,13 @@ public class MapAppState extends BaseAppState {
         updateMaterials();
     }
 
+    /**
+     * 
+     * Updates map materials.
+     * 
+     * @author aegroto
+     * 
+     */
 
     public void updateMaterials() {
         mapGeom.setMaterial(mapMaterial);

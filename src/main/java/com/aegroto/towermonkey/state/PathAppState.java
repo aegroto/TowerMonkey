@@ -9,6 +9,13 @@ import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 
 import lombok.Setter;
+/**
+ * 
+ * App state used to manage a tower defense path.
+ * 
+ * @author aegroto
+ * 
+ */
 
 public class PathAppState extends BaseAppState {
     private static boolean DEBUG = true;
