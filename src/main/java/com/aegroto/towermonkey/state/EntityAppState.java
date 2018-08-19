@@ -1,10 +1,12 @@
 package com.aegroto.towermonkey.state;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.aegroto.towermonkey.entity.Entity;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 
 /**
@@ -20,6 +22,8 @@ public class EntityAppState extends BaseAppState {
 
     private Node sceneRootNode, rootNode;
     private ArrayList<Entity> entities;
+
+    private PathAppState pathAppState; 
 
     /**
      * EntityAppState constructor
@@ -37,6 +41,7 @@ public class EntityAppState extends BaseAppState {
 
     protected void initialize(Application application) {
         this.entities = new ArrayList<>();
+        pathAppState = getApplication().getStateManager().getState(PathAppState.class);
     }
 
     protected void cleanup(Application application) { }
@@ -48,4 +53,15 @@ public class EntityAppState extends BaseAppState {
     protected void onDisable() {
         rootNode.removeFromParent();
     } 
+
+    @Override
+    public void update(float tpf) {
+    }
+
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+
+        rootNode.attachChild(entity);
+        entity.setLocalTranslation(pathAppState.getPathPoints().getFirst().y, 2.5f, pathAppState.getPathPoints().getFirst().x);
+    }
 }

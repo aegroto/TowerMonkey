@@ -1,7 +1,6 @@
 package com.aegroto.towermonkey.entity;
 
-import lombok.Getter;
-import com.jme3.math.Vector2f;
+import com.jme3.asset.AssetManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
@@ -17,6 +16,13 @@ import com.jme3.scene.Node;
 public abstract class Entity extends Node {
     protected Geometry geometry;        
 
+    public Entity(AssetManager assetManager) {
+        initializeGeometry(assetManager);
+
+        this.attachChild(geometry);
+    }
+
+    protected abstract void initializeGeometry(AssetManager assetManager);
     /**
      * 
      * update() method is called once per frame during

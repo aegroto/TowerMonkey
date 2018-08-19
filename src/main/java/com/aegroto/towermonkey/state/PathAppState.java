@@ -8,6 +8,7 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 
+import lombok.Getter;
 import lombok.Setter;
 /**
  * 
@@ -20,7 +21,7 @@ import lombok.Setter;
 public class PathAppState extends BaseAppState {
     private static boolean DEBUG = true;
 
-    @Setter private LinkedList<Vector2f> pathPoints;
+    @Getter @Setter private LinkedList<Vector2f> pathPoints;
     private Node sceneRootNode, rootNode;
 
     public PathAppState(LinkedList<Vector2f> pathPoints, Node sceneRootNode) {
@@ -54,4 +55,7 @@ public class PathAppState extends BaseAppState {
     protected void onDisable() {
         rootNode.removeFromParent();
     }
+
+    @Override
+    public void update(float tpf) { }
 }
