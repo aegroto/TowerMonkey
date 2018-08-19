@@ -62,6 +62,8 @@ public class EntityAppState extends BaseAppState {
         entities.add(entity);
 
         rootNode.attachChild(entity);
-        entity.setLocalTranslation(pathAppState.getPathPoints().getFirst().y, 2.5f, pathAppState.getPathPoints().getFirst().x);
+
+        Vector2f position = pathAppState.getHeadPathPoint().getPosition();
+        entity.setLocalTranslation(position.x, 2.5f, position.y);
     }
 }

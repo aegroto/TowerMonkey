@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class PathPoint {
-    protected final Vector2f position;
+    @Getter protected final Vector2f position;
     @Getter @Setter protected PathPoint nextPathPoint;
 
     public PathPoint(Vector2f position) {

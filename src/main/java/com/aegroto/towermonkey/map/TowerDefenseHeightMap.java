@@ -835,7 +835,6 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
 
         return true;
     }
-
     /**
      * 
      * Calculates and store path points as a very simple linked list 
@@ -845,18 +844,27 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
      * @author aegroto
      */
 
-    public PathPoint getPathPoints() {
+    public PathPoint calculatePathPoints() {
         PathPoint headPathPoint = null,
                   currentPathPoint = null,
                   lastPathPoint = null;
 
         int battlegroundSize = gridSize - ditchSize * 2;
 
-        grid.getPathTiles().forEach(tile -> { 
+        for(MapTile tile : grid.getPathTiles()) {
             currentPathPoint = new PathPoint(new Vector2f(
-                tileToMeshScale(tile.getPos().getX() - battlegroundSize/2),
-                tileToMeshScale(tile.getPos().getY() - battlegroundSize/2)));
-        });
-        return ;
+                tileToMeshScale(tile.getPos().getY() - battlegroundSize/2),
+                tileToMeshScale(tile.getPos().getX() - battlegroundSize/2)));
+
+            if(headPathPoint == null)
+                headPathPoint = currentPathPoint;
+
+            if(lastPathPoint != null)
+                lastPathPoint.setNextPathPoint(currentPathPoint);
+
+            lastPathPoint = currentPathPoint;
+        }
+
+        return headPathPoint;
     }
 }

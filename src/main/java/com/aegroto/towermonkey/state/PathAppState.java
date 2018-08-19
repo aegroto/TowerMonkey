@@ -2,6 +2,7 @@ package com.aegroto.towermonkey.state;
 
 import java.util.LinkedList;
 
+import com.aegroto.towermonkey.path.PathPoint;
 import com.aegroto.towermonkey.util.PathMarker;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
@@ -21,23 +22,26 @@ import lombok.Setter;
 public class PathAppState extends BaseAppState {
     private static boolean DEBUG = true;
 
-    @Getter @Setter private LinkedList<Vector2f> pathPoints;
+    @Getter private PathPoint headPathPoint; 
     private Node sceneRootNode, rootNode;
 
-    public PathAppState(LinkedList<Vector2f> pathPoints, Node sceneRootNode) {
+    public PathAppState(PathPoint headPathPoint, Node sceneRootNode) {
         this.sceneRootNode = sceneRootNode;
         this.rootNode = new Node();
-        this.pathPoints = pathPoints;
+        this.headPathPoint = headPathPoint;
     }
 
     @Override
     protected void initialize(Application aplctn) {
         if(DEBUG) {
-            pathPoints.forEach(point -> {
+            PathPoint point = headPathPoint;
+            while(point != null) { 
                 PathMarker marker = new PathMarker(getApplication().getAssetManager());
                 rootNode.attachChild(marker);
-                marker.setLocalTranslation(point.y, 2.5f, point.x); 
-            });
+                marker.setLocalTranslation(point.getPosition().x, 2.5f, point.getPosition().y); 
+
+                point = point.getNextPathPoint();
+            };
         }
     }
     

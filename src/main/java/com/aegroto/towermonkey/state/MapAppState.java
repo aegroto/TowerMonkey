@@ -1,9 +1,8 @@
 package com.aegroto.towermonkey.state;
 
-import java.util.LinkedList;
-
 import com.aegroto.towermonkey.map.TowerDefenseGrid;
 import com.aegroto.towermonkey.map.TowerDefenseHeightMap;
+import com.aegroto.towermonkey.path.PathPoint;
 import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
@@ -13,7 +12,6 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -40,7 +38,7 @@ public class MapAppState extends BaseAppState {
 
     private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
 
-    @Getter private LinkedList<Vector2f> pathPoints;
+    @Getter private PathPoint headPathPoint; 
     private PathAppState pathAppState;
 
     private long seed;
@@ -99,7 +97,7 @@ public class MapAppState extends BaseAppState {
             e.printStackTrace();
         }
 
-        pathAppState = new PathAppState(pathPoints, rootNode);
+        pathAppState = new PathAppState(headPathPoint, rootNode);
     }
     
     @Override
@@ -162,7 +160,7 @@ public class MapAppState extends BaseAppState {
         
         heightmapGenerator.load();
         
-        pathPoints = heightmapGenerator.getPathPoints();
+        headPathPoint = heightmapGenerator.calculatePathPoints();
         
         AmbientLight ambient = new AmbientLight();
         ambient.setColor(new ColorRGBA(.7f, .7f, .7f, 1f));
