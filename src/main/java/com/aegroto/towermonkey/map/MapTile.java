@@ -5,6 +5,10 @@ import lombok.Getter;
 
 /**
  *
+ * Map tiles are used by TowerDefenseGrid to identify
+ * and describing a single map block, including
+ * its position and its type.
+ *  
  * @author lorenzo
  */
 
@@ -23,11 +27,31 @@ public class MapTile {
     @Getter private final byte type;
     @Getter private final Vector2i pos;
 
+    /**
+     * 
+     * MapTile constructor.
+     * 
+     * @param pos Tile's position
+     * @param type Tile's type (check MapTile's TILE_* fields)
+     * 
+     * @author aegroto
+     */
+
     MapTile(Vector2i pos, byte type) {
         this.pos = pos;
         this.type = type;
     }
-    
+
+    /**
+     * Returns a byte identifying how the parameter
+     * is oriented respect to the tile the method
+     * is called on.
+     * 
+     * @param otherTile Tile of which to check orientation
+     * 
+     * @author aegroto 
+     */
+
     public byte angleWithTile(MapTile otherTile) {
         if(pos.getY() == otherTile.pos.getY()) {
             if(pos.getX() == otherTile.pos.getX() + 1) {
@@ -46,7 +70,14 @@ public class MapTile {
         }
         return -1;
     }
-    
+   
+    /**
+     * 
+     * String conversion method for MapTile,
+     * mostly useful for debug purposes.
+     * 
+     * @author aegroto
+     */
     @Override
     public String toString() {
         return "{Tile " + type + ", " + pos + "}";

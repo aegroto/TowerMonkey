@@ -29,8 +29,8 @@ import lombok.Setter;
  * @author lorenzo
  */
 public class MapAppState extends BaseAppState {
-    @Getter private Node mapGeom;
-    private Geometry seaGeom;
+    @Getter protected Node mapGeom;
+    protected Geometry seaGeom;
     @Setter private Material mapMaterial, seaMaterial;
     
     private final Node rootNode;
