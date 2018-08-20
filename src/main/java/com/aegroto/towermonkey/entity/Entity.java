@@ -30,5 +30,5 @@ public abstract class Entity extends Node {
      * 
      * @author aegroto
      */
-    public abstract void update();
+    public abstract void update(float tpf);
 }

@@ -56,7 +56,7 @@ public class EntityAppState extends BaseAppState {
     @Override
     public void update(float tpf) {
         entities.forEach(entity -> {
-
+            entity.update(tpf);
         });
     }
 

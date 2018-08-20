@@ -2,6 +2,7 @@ package com.aegroto.towermonkey.entity;
 
 import com.aegroto.towermonkey.path.PathPoint;
 import com.jme3.asset.AssetManager;
+import com.jme3.math.Vector3f;
 
 public abstract class WalkingEntity extends Entity {
     private final float POINT_STEPS_THRESHOLD = .96f;
@@ -25,9 +26,9 @@ public abstract class WalkingEntity extends Entity {
         setLocalTranslation(currentPathPoint.getPosition());
     }
 
-    public void move() {
+    public void move(float moveQuantity) {
         if(nextPathPoint != null) {
-            currentPointSteps += walkingSpeed;
+            currentPointSteps += moveQuantity;
 
             if(currentPointSteps >= POINT_STEPS_THRESHOLD) {
                 currentPointSteps = 0f;
@@ -35,10 +36,17 @@ public abstract class WalkingEntity extends Entity {
                 setLocalTranslation(nextPathPoint.getPosition());
                 currentPathPoint = nextPathPoint;
                 nextPathPoint = nextPathPoint.getNextPathPoint();
+            } else {
+                Vector3f newPos = currentPathPoint.getPosition().clone();
+                setLocalTranslation(newPos.interpolateLocal(newPos, nextPathPoint.getPosition(), currentPointSteps));
             }
         } else {
             onPathEnd();
         }
+    }
+
+    public void update(float tpf) {
+        move(walkingSpeed * tpf);
     }
 
     protected abstract void onPathEnd();
