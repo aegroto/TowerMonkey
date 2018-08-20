@@ -4,7 +4,7 @@ import com.aegroto.towermonkey.path.PathPoint;
 import com.aegroto.towermonkey.util.FastRandom;
 import com.aegroto.towermonkey.util.Vector2i;
 import com.jme3.math.FastMath;
-import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.terrain.heightmap.AbstractHeightMap;
 
 import lombok.Getter;
@@ -852,8 +852,9 @@ public class TowerDefenseHeightMap extends AbstractHeightMap {
         int battlegroundSize = gridSize - ditchSize * 2;
 
         for(MapTile tile : grid.getPathTiles()) {
-            currentPathPoint = new PathPoint(new Vector2f(
+            currentPathPoint = new PathPoint(new Vector3f(
                 tileToMeshScale(tile.getPos().getY() - battlegroundSize/2),
+                2.5f,
                 tileToMeshScale(tile.getPos().getX() - battlegroundSize/2)));
 
             if(headPathPoint == null)

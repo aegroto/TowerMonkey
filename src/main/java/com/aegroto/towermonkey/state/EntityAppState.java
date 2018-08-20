@@ -1,12 +1,11 @@
 package com.aegroto.towermonkey.state;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import com.aegroto.towermonkey.entity.Entity;
+import com.aegroto.towermonkey.entity.WalkingEntity;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 
 /**
@@ -56,14 +55,15 @@ public class EntityAppState extends BaseAppState {
 
     @Override
     public void update(float tpf) {
+        entities.forEach(entity -> {
+
+        });
     }
 
-    public void addEntity(Entity entity) {
+    public void addWalkingEntity(WalkingEntity entity) {
         entities.add(entity);
+        entity.initializePathWalk(pathAppState.getHeadPathPoint());
 
-        rootNode.attachChild(entity);
-
-        Vector2f position = pathAppState.getHeadPathPoint().getPosition();
-        entity.setLocalTranslation(position.x, 2.5f, position.y);
+        rootNode.attachChild(entity);        
     }
 }

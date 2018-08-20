@@ -38,7 +38,7 @@ public class PathAppState extends BaseAppState {
             while(point != null) { 
                 PathMarker marker = new PathMarker(getApplication().getAssetManager());
                 rootNode.attachChild(marker);
-                marker.setLocalTranslation(point.getPosition().x, 2.5f, point.getPosition().y); 
+                marker.setLocalTranslation(point.getPosition()); 
 
                 point = point.getNextPathPoint();
             };
