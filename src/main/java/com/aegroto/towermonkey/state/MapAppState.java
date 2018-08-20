@@ -36,56 +36,34 @@ public class MapAppState extends BaseAppState {
     
     private final Node rootNode;
 
-    private final int mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY;
-
     @Getter private PathPoint headPathPoint; 
     private PathAppState pathAppState;
 
-    private long seed;
+    @Getter @Setter private int mapSize, gridSize, ditchSize,
+                    battlegroundOffsetX, battlegroundOffsetY;
+    @Getter @Setter private long seed;
+
+    @Getter @Setter private float minDitchHeight, ditchVariation,
+                  pathTileBorderFactor, pathTileBorderNeckFactor, pathVariation,
+                  minHillHeight, hillVariation, mountainBorderFragmentation,
+                  minMountainHeight, mountainVariation, mountainBaseTerrainThreshold;
+
+    @Getter @Setter private int totalMountains, 
+                                mountainMinSize, mountainMaxSize,
+                                mountainMinLevels, mountainMaxLevels;
 
     /**
      * 
      * MapAppState constructor.
      * 
      * @param rootNode Scene root node
-     * @param mapSize Map size
-     * @param gridSize Grid size
-     * @param ditchSize Ditch size
-     * @param battlegroundOffsetX Battleground offset X coordinate
-     * @param battlegroundOffsetY Battleground offset Y coordinate
-     * @param seed Pseudorandom seed
      * 
      * @author aegroto
      * 
      */
     
-    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY, long seed) {
+    public MapAppState(Node rootNode) {
         this.rootNode = rootNode;
-        this.mapSize = mapSize;
-        this.gridSize = gridSize;
-        this.ditchSize = ditchSize;
-        this.battlegroundOffsetX = battlegroundOffsetX;
-        this.battlegroundOffsetY = battlegroundOffsetY;
-        this.seed = seed;
-    }
-
-    /**
-     * 
-     * MapAppState constructor which uses a random seed.
-     * 
-     * @param rootNode Scene root node
-     * @param mapSize Map size
-     * @param gridSize Grid size
-     * @param ditchSize Ditch size
-     * @param battlegroundOffsetX Battleground offset X coordinate
-     * @param battlegroundOffsetY Battleground offset Y coordinate
-     * 
-     * @author aegroto
-     * 
-     */
-
-    public MapAppState(Node rootNode, int mapSize, int gridSize, int ditchSize, int battlegroundOffsetX, int battlegroundOffsetY) {
-        this(rootNode, mapSize, gridSize, ditchSize, battlegroundOffsetX, battlegroundOffsetY, 0);
     }
     
     @Override
@@ -114,19 +92,6 @@ public class MapAppState extends BaseAppState {
     @Override
     protected void onDisable() { }
 
-    /**
-     * 
-     * MapAppState constructor which uses a random seed.
-     * 
-     * @param size Map size
-     * @param gridSize Grid size
-     * @param ditchSize Ditch size
-     * @param battlegroundOffset Battleground offset coordinates
-     * 
-     * @author aegroto
-     * 
-     */
-
     private void generateMapGeometry(final int size, final int gridSize, final int ditchSize, final Vector2i battlegroundOffset, long seed) throws Exception {
         TowerDefenseGrid grid = new TowerDefenseGrid(gridSize - ditchSize * 2, 15, seed);
         TowerDefenseHeightMap heightmapGenerator = new TowerDefenseHeightMap(grid, seed);
@@ -136,27 +101,25 @@ public class MapAppState extends BaseAppState {
         heightmapGenerator.setDitchSize(ditchSize);
         heightmapGenerator.setBattlegroundOffset(battlegroundOffset);
 
-        heightmapGenerator.setMinDitchHeight(-8.0f);
-        heightmapGenerator.setDitchVariation(.5f);
+        heightmapGenerator.setMinDitchHeight(minDitchHeight);
+        heightmapGenerator.setDitchVariation(ditchVariation);
 
-        heightmapGenerator.setPathTileBorderFactor(.15f);
-        heightmapGenerator.setPathTileBorderNeckFactor(.05f);
-        heightmapGenerator.setPathVariation(.25f);
+        heightmapGenerator.setPathTileBorderFactor(pathTileBorderFactor);
+        heightmapGenerator.setPathTileBorderNeckFactor(pathTileBorderNeckFactor);
+        heightmapGenerator.setPathVariation(pathVariation);
         
-        heightmapGenerator.setMinHillHeight(2f);        
-        heightmapGenerator.setHillVariation(.25f);
-
-        int battlegroundGridSize = size - ditchSize * 2;
+        heightmapGenerator.setMinHillHeight(minHillHeight);        
+        heightmapGenerator.setHillVariation(hillVariation);
                 
-        heightmapGenerator.setTotalMountains(10);
-        heightmapGenerator.setMountainMinSize((int) (battlegroundGridSize * .05f));
-        heightmapGenerator.setMountainMaxSize((int) (battlegroundGridSize * .1f));
-        heightmapGenerator.setMountainMinLevels(battlegroundGridSize * 40);
-        heightmapGenerator.setMountainMaxLevels(battlegroundGridSize * 50);
-        heightmapGenerator.setMountainBorderFragmentation(.5f);
-        heightmapGenerator.setMinMountainHeight(2f);     
-        heightmapGenerator.setMountainVariation(.1f);
-        heightmapGenerator.setMountainBaseTerrainThreshold(3f);
+        heightmapGenerator.setTotalMountains(totalMountains);
+        heightmapGenerator.setMountainMinSize(mountainMinSize);
+        heightmapGenerator.setMountainMaxSize(mountainMaxSize);
+        heightmapGenerator.setMountainMinLevels(mountainMinLevels);
+        heightmapGenerator.setMountainMaxLevels(mountainMaxLevels);
+        heightmapGenerator.setMountainBorderFragmentation(mountainBorderFragmentation);
+        heightmapGenerator.setMinMountainHeight(minMountainHeight);     
+        heightmapGenerator.setMountainVariation(mountainVariation);
+        heightmapGenerator.setMountainBaseTerrainThreshold(mountainBaseTerrainThreshold);
         
         heightmapGenerator.load();
         
